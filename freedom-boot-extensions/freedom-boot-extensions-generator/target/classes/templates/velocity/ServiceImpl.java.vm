@@ -1,0 +1,45 @@
+package ${packageName}.${moduleName}.service.impl;
+
+import ${packageName}.common.base.BaseMapper;
+import ${packageName}.common.base.BaseServiceImpl;
+import ${packageName}.common.exception.GlobalException;
+import ${packageName}.common.exception.GlobalExceptionEnum;
+import ${packageName}.${moduleName}.mapper.${className}Mapper;
+import ${packageName}.${moduleName}.model.${className};
+import ${packageName}.${moduleName}.model.vo.${className}VO;
+import ${packageName}.${moduleName}.service.${className}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @Author ${author}
+ * @Title: ${className}ServiceImpl
+ * @ProjectName ${ProjectName}
+ * @Description: ${tableComment} ServiceImpl
+ * @Date ${dateTime}
+ */
+@Service
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${className}VO> implements ${className}Service {
+
+    @Autowired
+    private ${className}Mapper ${variableName}Mapper;
+
+    @Override
+    public BaseMapper<${className}> getBaseMapper() {
+        return this.${variableName}Mapper;
+    }
+
+    @Override
+    protected Example getExample(BaseRequest params) {
+
+        Example example = new Example(${className}.class);
+        if (params != null) {
+            Example.Criteria criteria = example.createCriteria();
+            ${className}DTO ${variableName}DTO = (${className}DTO) params;
+            // TODO 填充查询条件
+        }
+
+        return example;
+    }
+
+}

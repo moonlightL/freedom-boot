@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "core.default",
+      "type": "com.extlight.core.web.config.CoreConfig",
+      "sourceType": "com.extlight.core.web.config.CoreConfig"
+    },
+    {
+      "name": "core.shiro",
+      "type": "com.extlight.core.web.config.shiro.ShiroProperties",
+      "sourceType": "com.extlight.core.web.config.shiro.ShiroProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "core.default.avatar",
+      "type": "java.lang.String",
+      "description": "默认头像",
+      "sourceType": "com.extlight.core.web.config.CoreConfig"
+    },
+    {
+      "name": "core.default.password",
+      "type": "java.lang.String",
+      "description": "默认密码",
+      "sourceType": "com.extlight.core.web.config.CoreConfig"
+    },
+    {
+      "name": "core.shiro.cookie-timeout",
+      "type": "java.lang.Integer",
+      "description": "cookie 有效期，单位秒",
+      "sourceType": "com.extlight.core.web.config.shiro.ShiroProperties"
+    },
+    {
+      "name": "core.shiro.interval",
+      "type": "java.lang.Long",
+      "description": "检测有效 session 间隔时间，单位毫秒",
+      "sourceType": "com.extlight.core.web.config.shiro.ShiroProperties"
+    },
+    {
+      "name": "core.shiro.session-timeout",
+      "type": "java.lang.Long",
+      "description": "session 有效期，单位毫秒",
+      "sourceType": "com.extlight.core.web.config.shiro.ShiroProperties"
+    }
+  ],
+  "hints": []
+}

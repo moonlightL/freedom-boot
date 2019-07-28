@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="common :: header"></head>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css}">
+</head>
+
+<body>
+<!--Page content-->
+<div id="page-content" class=" animated fadeIn">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">系统日志列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="pad-btm form-inline">
+                        <div class="row">
+                            <div class="col-sm-12 table-toolbar-left" id="toolbar">
+                                <span th:each="button: ${buttonList}">
+                                    <button th:if="${#strings.containsIgnoreCase(button.code,'query')}" class="btn btn-success freedom-query" data-target="#query-modal" data-toggle="modal" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="listTable"
+                               data-toolbar="#toolbar"
+                               data-toggle="table"
+                               data-detail-view="true"
+                               data-minimum-count-columns="2"
+                               data-classes="table table-hover table-borderless"
+                               data-sort-order="desc">
+                            <thead>
+                                <tr>
+                                    <th data-align="center" data-checkbox="true"></th>
+                                    <th data-align="center" data-formatter="numFormatter">序号</th>
+                                    <th data-align="center" data-field="moduleName">模块名称</th>
+                                    <th data-align="center" data-field="actionName">操作类型</th>
+                                    <th data-field="methodName">方法名称</th>
+                                    <th data-align="center" data-field="userId">操作用户 id</th>
+                                    <th data-align="center" data-field="ip">操作 ip</th>
+                                    <th data-align="center" data-field="location">所在地</th>
+                                    <th data-align="center" data-field="createTime" data-width="200">操作时间</th>
+                                    <th data-align="center" data-formatter="actionFormatter">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="modal fade" id="query-modal" role="dialog" tabindex="-1" aria-labelledby="default-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" id="queryForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                        <h4 class="modal-title">查询</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--查询 input-->
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="userId">操作者 id</label>
+                                <div class="col-sm-9">
+                                    <input type="text" placeholder="操作者 id" id="userId" name="userId" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="startTime">开始日期</label>
+                                <div class="col-sm-9">
+                                    <input type="text" placeholder="  开始日期" id="startTime" name="startTime" class="form-control datepicker">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="endTime">结束日期</label>
+                                <div class="col-sm-9">
+                                    <input type="text" placeholder="  结束日期" id="endTime" name="endTime" class="form-control datepicker">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button">重置</button>
+                        <button class="btn btn-primary" type="submit">查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End page content-->
+<div th:include="common :: script"></div>
+<script th:src="@{/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
+<script type="text/javascript" th:inline="javascript" >
+
+    function numFormatter(value, row, index) {
+        return index + 1;
+    }
+
+    function actionFormatter(value, row) {
+        var btnArr = [];
+        var permissions = [[${permissions}]];
+        if (permissions.indexOf("system:role:query") > -1) {
+            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
+        }
+        return btnArr.join('');
+    }
+
+    $(function() {
+        /**
+         *  init 方法中可传入的参数:
+         *    id: "listTable",              // table id
+         *    baseUrl: "",                  // 基础路径
+         *    addUIUrl: "saveUI.html",       // 新增页面地址
+         *    editUIUrl: "updateUI.html",     // 编辑页面地址
+         *    deleteUrl: "remove.json",     // 删除地址
+         *    listUrl: "list.json",         // 列表地址
+         *    detailUIUrl: "detailUI.html", // 详情地址
+         *    queryFormId: "queryForm",     // 搜索框表单 id
+         *    columns：[],                  // bootstrap-table cell 参数，页面默认使用内嵌方式设置数据
+         *    pagination：true              // 是否分页
+         */
+        var prefix = [[${prefix}]];
+        $.freedom.table.init({
+            baseUrl: prefix
+        });
+
+        $('.datepicker').datepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd'
+        });
+
+    });
+
+</script>
+</body>
+</html>

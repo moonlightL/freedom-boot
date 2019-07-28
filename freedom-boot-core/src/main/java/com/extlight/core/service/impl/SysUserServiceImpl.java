@@ -5,7 +5,7 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
-import com.extlight.core.config.CoreConfig;
+import com.extlight.core.web.config.CoreConfig;
 import com.extlight.core.mapper.SysUserMapper;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.dto.SysUserDTO;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> implements SysUserService {
 
     @Autowired
-    private CoreConfig systemConfig;
+    private CoreConfig coreConfig;
 
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -126,8 +126,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
 
     @Override
     public int save(SysUser model) throws GlobalException {
-        model.setPassword(DigestUtils.md5DigestAsHex(this.systemConfig.getPassword().getBytes()));
-        model.setAvatar(this.systemConfig.getAvatar());
+        model.setPassword(DigestUtils.md5DigestAsHex(this.coreConfig.getPassword().getBytes()));
+        model.setAvatar(this.coreConfig.getAvatar());
         return super.save(model);
     }
 

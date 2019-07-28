@@ -56,6 +56,12 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
             <!-- flywaydb -->
             <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -204,13 +210,6 @@
                 <version>1.4.0</version>
             </dependency>
 
-            <!-- Shonlinesion 会话相关 -->
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-quartz</artifactId>
-                <version>1.4.0</version>
-            </dependency>
-
             <!-- Shiro 缓存相关 -->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
@@ -278,7 +277,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <version>${spring.boot.version}</version>
-                <optional>true</optional>
             </dependency>
 
         </dependencies>
@@ -299,11 +297,11 @@
                 <profiles.active>dev</profiles.active>
                 <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</master.url>
                 <master.username>root</master.username>
-                <master.password>tiger</master.password>
+                <master.password>Tiger123</master.password>
                 <slave.enabled>false</slave.enabled>
                 <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>tiger</slave.password>
+                <slave.password>Tiger123</slave.password>
             </properties>
             <activation>
                 <!-- 设置默认激活这个配置 -->
@@ -317,11 +315,11 @@
                 <profiles.active>pro</profiles.active>
                 <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</master.url>
                 <master.username>root</master.username>
-                <master.password>tiger</master.password>
+                <master.password>Tiger123</master.password>
                 <slave.enabled>false</slave.enabled>
                 <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>tiger</slave.password>
+                <slave.password>Tiger123</slave.password>
             </properties>
         </profile>
     </profiles>

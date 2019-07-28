@@ -8,7 +8,7 @@ import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
-import com.extlight.core.web.component.ShiroService;
+import com.extlight.core.component.ShiroService;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

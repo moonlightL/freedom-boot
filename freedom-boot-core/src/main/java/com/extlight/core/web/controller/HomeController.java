@@ -4,7 +4,7 @@ import com.extlight.common.base.BaseController;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
-import com.extlight.core.web.component.ShiroService;
+import com.extlight.core.component.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

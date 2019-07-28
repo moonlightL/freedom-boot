@@ -23,6 +23,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+
         <!-- jdbc 驱动包 -->
         <dependency>
             <groupId>mysql</groupId>

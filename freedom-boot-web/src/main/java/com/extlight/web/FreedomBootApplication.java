@@ -12,14 +12,14 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author MoonlightL
- * @Title: FreedomApplication
+ * @ClassName: FreedomApplication
  * @ProjectName freedom-boot
  * @Description: 启动类
  * @date 2019/5/30 13:40
  */
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.extlight.*"})
-@MapperScan(basePackages = {"com.extlight.*.mapper", "com.extlight.*.*.mapper"})
+@MapperScan(basePackages = {"com.extlight.*.mapper", "com.extlight.extensions.*.mapper"})
 @Slf4j
 public class FreedomBootApplication extends SpringBootServletInitializer {
 

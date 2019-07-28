@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:include="common :: header"></head>
+    <!--Font Awesome [ OPTIONAL ]-->
+    <link th:href="@{/assets/css/magic-check.min.css}" rel="stylesheet">
+</head>
+
+<body>
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" method="post">
+                    <div class="panel-body">
+                        <p class="text-main text-bold">为【[[${target.username}]]】分配角色</p>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">角色</label>
+                            <div class="col-lg-7">
+                                <div class="checkbox" th:each="role: ${roleList}">
+                                    <input th:id="'checkbox-'+${role.id}" class="magic-checkbox" type="checkbox" name="roleId" th:value="${role.id}" th:attr ="checked=${role.checked}">
+                                    <label th:for="'checkbox-'+${role.id}" th:text="${role.name}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button id="save-btn" class="btn btn-primary" type="button">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<!-- END SETTINGS -->
+<div th:include="common :: script"></div>
+<script type="text/javascript" th:inline="javascript" >
+    $(function() {
+
+        $("#save-btn").on("click", function() {
+
+            var roleIdArr = [];
+            $("input[name='roleId']:checked").each(function(index,domEle) {
+                roleIdArr.push($(domEle).val());
+            });
+
+            var param = {
+                "userId": [[${target.id}]],
+                "roleIdStr": roleIdArr.join(",")
+            };
+
+            /**
+             * 参数一：url   请求地址
+             * 参数二：data  obj 类型数据
+             * 参数三：fn    回调函数
+             */
+            $.freedom.action.request(document.getElementsByTagName("form")[0].action, param, function(resp) {
+                $.freedom.modal.msg(resp.msg, 1, function() {
+                    window.parent.$.freedom.modal.closeAll();
+                    window.parent.$.freedom.table.refreshData();
+                });
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

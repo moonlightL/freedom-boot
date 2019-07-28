@@ -1,0 +1,36 @@
+package ${packageName}.${moduleName}.model.dto;
+
+import ${packageName}.common.base.BaseRequest;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+/**
+ * @Author ${author}
+ * @Title: ${className}DTO
+ * @ProjectName ${ProjectName}
+ * @Description: ${tableComment}请求对象
+ * @Date ${dateTime}
+ */
+@Setter
+@Getter
+@ToString
+public class ${className}DTO extends BaseRequest {
+
+#foreach ($column in $columnList)
+
+	/**
+	 * $column.columnComment
+	 */
+	private $column.attrType $column.attrName;
+#end
+
+}
