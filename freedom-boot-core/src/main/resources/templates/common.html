@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Open Sans Font [ OPTIONAL ]-->
+    <link th:href="@{/assets/css/26707bedc25a4344bb99d7e1215825f4.css}" rel='stylesheet' type='text/css'>
+    <!-- Font-Awesome -->
+    <link th:href="@{/plugins/fonts/font-awesome/css/font-awesome.min.css}" rel='stylesheet' type='text/css'>
+    <!--animate Stylesheet-->
+    <!--<link th:href="@{/plugins/animate/animate.css}" rel="stylesheet">-->
+    <!--Bootstrap Stylesheet-->
+    <link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Layer  Stylesheet-->
+    <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}">
+    <!--Bootstrap Table Stylesheet-->
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap-table/bootstrap-table.min.css}">
+    <!-- Jquery Treegrid Stylesheet -->
+    <link rel="stylesheet" th:href="@{/plugins/jquery-treegrid/css/jquery.treegrid.css}">
+    <!--Bootstrap Validator Stylesheet-->
+    <link th:href="@{/assets/css/bootstrapvalidator.min.css}" rel="stylesheet">
+    <!--zTree Stylesheet-->
+    <link rel="stylesheet" th:href="@{/plugins/zTree/css/zTreeStyle/zTreeStyle.css}">
+    <!--Nifty Stylesheet-->
+    <link th:href="@{/assets/css/nifty.min.css}" rel="stylesheet">
+    <style>
+        .table-responsive {
+            min-height: 0.01%;
+            overflow-x: unset !important;
+        }
+    </style>
+</head>
+
+<div th:fragment="script">
+    <!-- jQuery -->
+    <script type="text/javascript" th:src="@{/plugins/jquery.min.js}"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- Layer -->
+    <script type="text/javascript" th:src="@{/plugins/layer/layer.js}"></script>
+    <!-- Bootstrap Table-->
+    <script type="text/javascript" th:src="@{/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script type="text/javascript" th:src="@{/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- Jquery Treegrid -->
+    <script type="text/javascript" th:src="@{/plugins/jquery-treegrid/js/jquery.treegrid.js}"></script>
+    <!-- Bootstrap Table treegrid -->
+    <script type="text/javascript" th:src="@{/plugins/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js}"></script>
+    <!--Bootstrap Validator -->
+    <script th:src="@{/assets/js/bootstrapvalidator.min.js}"></script>
+    <!-- zTree -->
+    <script type="text/javascript" th:src="@{/plugins/zTree/js/jquery.ztree.all.min.js}"></script>
+    <!-- Freedom 专属工具 -->
+    <script type="text/javascript" th:src="@{/business/freedom-tool.js}"></script>
+</div>
