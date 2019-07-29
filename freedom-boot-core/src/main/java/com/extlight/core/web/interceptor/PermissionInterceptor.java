@@ -1,8 +1,9 @@
 package com.extlight.core.web.interceptor;
 
 import com.extlight.common.exception.GlobalExceptionEnum;
-import com.extlight.common.utils.JsonUtil;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.JsonUtil;
+import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.vo.SysPermissionVO;
@@ -44,7 +45,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         Object obj = request.getSession().getAttribute(SystemContant.CURRENT_USER);
         if (obj == null) {
             if (this.isAjax(request)) {
-                this.print(response, JsonUtil.toStr(Result.fail(GlobalExceptionEnum.ERROR_LOGIN_EXPIRE), false));
+                this.print(response, JsonUtil.toStr(Result.fail(CoreExceptionEnum.ERROR_LOGIN_EXPIRE), false));
             } else {
                 response.sendRedirect("/");
             }
@@ -54,7 +55,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         SysUserVO sysUserVO = (SysUserVO) obj;
         if (sysUserVO.getState() != 1) {
             if (this.isAjax(request)) {
-                this.print(response, JsonUtil.toStr(Result.fail(GlobalExceptionEnum.ERROR_USER_STATE_WRONG), false));
+                this.print(response, JsonUtil.toStr(Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG), false));
             } else {
                 response.sendRedirect("/");
             }

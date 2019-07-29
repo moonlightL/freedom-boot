@@ -1,0 +1,9 @@
+# Druid 监控请求配置
+spring:
+    datasource:
+        druid:
+            stat-view-servlet:
+                enabled: true
+                 url-pattern: /druid/*
+#                 login-password: druid123
+#                 login-username: druid

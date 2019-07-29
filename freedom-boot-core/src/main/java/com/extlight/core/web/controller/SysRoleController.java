@@ -6,9 +6,9 @@ import com.extlight.common.component.annotation.ActionLog;
 import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
-import com.extlight.common.exception.GlobalExceptionEnum;
-import com.extlight.common.utils.JsonUtil;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.JsonUtil;
+import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.dto.SysRoleDTO;
 import com.extlight.core.model.vo.SysRoleVO;
@@ -70,7 +70,7 @@ public class SysRoleController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -103,7 +103,7 @@ public class SysRoleController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -147,7 +147,7 @@ public class SysRoleController extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) SysRoleDTO sysRoleDTO) throws GlobalException {
         SysRoleVO dbData = this.sysRoleService.getById(sysRoleDTO.getId());
         if (dbData == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         SysRole sysRole = sysRoleDTO.toDo(SysRole.class);

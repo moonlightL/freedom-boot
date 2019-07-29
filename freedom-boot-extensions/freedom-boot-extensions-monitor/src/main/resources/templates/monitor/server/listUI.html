@@ -16,7 +16,7 @@
                     <span class="panel-title">JVM 总内存</span>
                 </div>
                 <div class="panel-body">
-                    <p id="totalMemory" th:text="${server.jvm.totalMemory}">正在加载...</p>
+                    <p id="totalMemory">正在加载...</p>
                 </div>
 
             </div>
@@ -27,7 +27,7 @@
                     <span class="panel-title">JVM 已用内存</span>
                 </div>
                 <div class="panel-body">
-                    <p id="runTimeMemory" th:text="${server.jvm.runTimeMemory}">正在加载...</p>
+                    <p id="runTimeMemory">正在加载...</p>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <span class="panel-title">JVM 剩余内存</span>
                 </div>
                 <div class="panel-body">
-                    <p id="freeMemory" th:text="${server.jvm.freeMemory}">正在加载...</p>
+                    <p id="freeMemory">正在加载...</p>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                     <span class="panel-title">JDK 目录</span>
                 </div>
                 <div class="panel-body">
-                    <p id="home" th:text="${server.jvm.home}">正在加载...</p>
+                    <p id="home">正在加载...</p>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                     <span class="panel-title">启动时间</span>
                 </div>
                 <div class="panel-body">
-                    <p id="startTime" th:text="${server.jvm.startTime}">正在加载...</p>
+                    <p id="startTime">正在加载...</p>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                     <span class="panel-title">运行时长</span>
                 </div>
                 <div class="panel-body">
-                    <p id="runTime" th:text="${server.jvm.runTime}">正在加载...</p>
+                    <p id="runTime">正在加载...</p>
                 </div>
             </div>
         </div>
@@ -86,19 +86,19 @@
                             <tbody>
                             <tr>
                                 <td><span style="font-weight: 600">名称</span></td>
-                                <td id="sysName" th:text="${server.basic.sysName}">正在加载...</td>
+                                <td id="sysName">正在加载...</td>
                                 <td><span style="font-weight: 600">架构</span></td>
-                                <td id="sysArch" th:text="${server.basic.sysArch}">正在加载...</td>
+                                <td id="sysArch">正在加载...</td>
                             </tr>
                             <tr>
                                 <td><span style="font-weight: 600">版本</span></td>
-                                <td id="sysVersion" th:text="${server.basic.sysVersion}">正在加载...</td>
+                                <td id="sysVersion">正在加载...</td>
                                 <td><span style="font-weight: 600">IP 地址</span></td>
-                                <td id="sysIp" th:text="${server.basic.sysIp}">正在加载...</td>
+                                <td id="sysIp">正在加载...</td>
                             </tr>
                             <tr>
                                 <td><span style="font-weight: 600">项目部署目录</span></td>
-                                <td id="userDir" colspan="3" th:text="${server.basic.userDir}">正在加载...</td>
+                                <td id="userDir" colspan="3">正在加载...</td>
                             </tr>
                             </tbody>
                         </table>
@@ -121,19 +121,19 @@
                             <tbody>
                             <tr>
                                 <th>名称</th>
-                                <td id="name" th:text="${server.cpu.name}">正在加载...</td>
+                                <td id="name">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>核心数</th>
-                                <td id="physicalCount" th:text="${server.cpu.physicalCount}">正在加载...</td>
+                                <td id="physicalCount">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>逻辑数</th>
-                                <td id="logicalCount" th:text="${server.cpu.logicalCount}">正在加载...</td>
+                                <td id="logicalCount">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>当前线程数</th>
-                                <td id="threadCount" th:text="${server.cpu.threadCount}">正在加载...</td>
+                                <td id="threadCount">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>其他</th>
@@ -157,23 +157,23 @@
                             <tbody>
                             <tr>
                                 <th>总内存</th>
-                                <td id="total" th:text="${server.memory.total}">正在加载...</td>
+                                <td id="total">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>已使用内存</th>
-                                <td id="used" th:text="${server.memory.used}">正在加载...</td>
+                                <td id="used">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>可用内存</th>
-                                <td id="available" th:text="${server.memory.available}">正在加载...</td>
+                                <td id="available">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>总交换内存</th>
-                                <td id="swapTotal" th:text="${server.memory.swapTotal}">正在加载...</td>
+                                <td id="swapTotal">正在加载...</td>
                             </tr>
                             <tr>
                                 <th>已使用交换内存</th>
-                                <td id="swapUsed" th:text="${server.memory.swapUsed}">正在加载...</td>
+                                <td id="swapUsed">正在加载...</td>
                             </tr>
                             </tbody>
                         </table>
@@ -203,13 +203,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="hardware : ${server.hardwareList}">
-                                <td class='w200' style='text-align: left' th:text="${hardware.name}"></td>
-                                <td th:text="${hardware.type}"></td>
-                                <td th:text="${hardware.totalSpace}"></td>
-                                <td th:text="${hardware.usabledSpace}"></td>
-                                <td th:text="${hardware.freeSpace}"></td>
-                            </tr>
+                                <tr><td colspan="5">正在加载...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -223,10 +217,61 @@
 <div th:include="common :: script"></div>
 <script type="text/javascript" th:inline="javascript" >
 
+    var prefix = [[${prefix}]];
+
     $(function() {
-
-
+        ServerInfo.init();
+//        setInterval(function() {
+//            getServerInfo();
+//        }, 2000);
     });
+
+    var ServerInfo = {
+        init: function() {
+            $.freedom.action.request(prefix + "/getServerInfo.json",null, function(resp) {
+                var server = resp.data;
+                ServerInfo.setJvmInfo(server.jvm);
+                ServerInfo.setBasicInfo(server.basic);
+                ServerInfo.setCpuInfo(server.cpu);
+                ServerInfo.setMemoryInfo(server.memory);
+                ServerInfo.setHardwareInfo(server.hardwareList);
+            });
+        },
+        setJvmInfo: function(jvm) {
+            for (var key in jvm) {
+                $("#" + key).text(jvm[key]);
+            }
+        },
+        setBasicInfo: function(basic) {
+            for (var key in basic) {
+                $("#" + key).text(basic[key]);
+            }
+        },
+        setCpuInfo: function(cpu) {
+            for (var key in cpu) {
+                $("#" + key).text(cpu[key]);
+            }
+        },
+        setMemoryInfo: function(memory) {
+            for (var key in memory) {
+                $("#" + key).text(memory[key]);
+            }
+        },
+        setHardwareInfo: function(hardwareList) {
+            var html = [];
+            for(var i = 0, len = hardwareList.length; i < len; i++) {
+                var hardware = hardwareList[i];
+                html.push("<tr><td class='w200' style='text-align: left'>" + hardware.name + "</td>");
+                html.push("<td class=''>" + hardware.type + "</td>");
+                html.push("<td class=''>" + hardware.totalSpace + "</td>");
+                html.push("<td class=''>" + hardware.usabledSpace + "</td>");
+                html.push("<td class=''>" + hardware.freeSpace + "</td></tr>");
+            }
+
+            $("#hardwareTable").find("tbody").html(html.join(""));
+        }
+
+    }
 
 </script>
 </body>

@@ -10,6 +10,7 @@ import com.extlight.common.model.Result;
 import com.extlight.common.utils.IpUtil;
 import com.extlight.common.utils.RsaUtil;
 import com.extlight.common.utils.TokenUtil;
+import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.dto.LoginDTO;
@@ -122,10 +123,10 @@ public class LoginController extends BaseController {
             token.setRememberMe(loginDTO.getRememberMe());
             subject.login(token);
         } catch (UnknownAccountException e) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
 
         } catch (IncorrectCredentialsException e) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_PASSWORD_WRONG);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_PASSWORD_WRONG);
 
         }
 

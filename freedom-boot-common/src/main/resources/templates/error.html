@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Error</title>
+        <!--Open Sans Font [ OPTIONAL ]-->
+        <link href='/assets/css/26707bedc25a4344bb99d7e1215825f4.css' rel='stylesheet' type='text/css'>
+        <!--Bootstrap Stylesheet [ REQUIRED ]-->
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+        <!--Nifty Stylesheet [ REQUIRED ]-->
+        <link href="/assets/css/nifty.min.css" rel="stylesheet">
+        <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+        <link href="/assets/css/nifty-icons.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="container" class="cls-container">
+            <div class="cls-header">
+                <div class="cls-brand">
+                    <a class="box-inline" th:href="@{/}">
+                        <span class="brand-title">Freedom Boot</span></span>
+                    </a>
+                </div>
+            </div>
+            <div class="cls-content">
+                <h5 class="error-code text-info" style="font-size: 60px;">错误</h5>
+                <p class="text-main text-semibold text-lg text-uppercase" th:text="${msg}">系统异常</p>
+                <div class="pad-btm text-muted"></div>
+                <hr class="new-section-sm bord-no">
+            </div>
+        </div>
+    </body>
+</html>
+

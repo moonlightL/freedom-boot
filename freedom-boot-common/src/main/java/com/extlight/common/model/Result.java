@@ -1,6 +1,7 @@
 package com.extlight.common.model;
 
 import com.extlight.common.exception.GlobalExceptionEnum;
+import com.extlight.common.exception.GlobalExceptionMap;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -25,15 +26,15 @@ public class Result implements Serializable {
 
     private Object data;
 
-    private Result(GlobalExceptionEnum exceptionEnum) {
-        this.code = exceptionEnum.getCode();
-        this.msg = exceptionEnum.getMessage();
+    private Result(GlobalExceptionMap exceptionMap) {
+        this.code = exceptionMap.getCode();
+        this.msg = exceptionMap.getMessage();
         this.success = (code == 200);
     }
 
-    private Result(GlobalExceptionEnum exceptionEnum, Object data) {
-        this.code = exceptionEnum.getCode();
-        this.msg = exceptionEnum.getMessage();
+    private Result(GlobalExceptionMap exceptionMap, Object data) {
+        this.code = exceptionMap.getCode();
+        this.msg = exceptionMap.getMessage();
         this.data = data;
         this.success = (code == 200);
     }
@@ -56,8 +57,8 @@ public class Result implements Serializable {
         return fail(GlobalExceptionEnum.ERROR_SERVER);
     }
 
-    public static Result fail(GlobalExceptionEnum exceptionEnum) {
-        return new Result(exceptionEnum);
+    public static Result fail(GlobalExceptionMap exceptionMap) {
+        return new Result(exceptionMap);
     }
 
     public static Result fail(int code, String message) {

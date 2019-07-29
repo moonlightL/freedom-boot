@@ -5,6 +5,7 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
+import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.mapper.SysPermissionMapper;
 import com.extlight.core.model.SysPermission;
@@ -63,7 +64,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
 
             SysPermissionVO parent = super.getById(sysPermission.getPid());
             if (parent == null) {
-                throw new GlobalException(GlobalExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+                throw new GlobalException(CoreExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
             }
 
         } else {

@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_UNAUTHORIZED).toMap();
                 mv = new ModelAndView("jsonView", resultMap);
             } else if (e instanceof LockedAccountException) {
-                Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_USER_STATE_WRONG).toMap();
+                Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG).toMap();
                 mv = new ModelAndView("jsonView", resultMap);
             }
         } else if (url.endsWith(SUFFIX_HTML)) {
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_UNAUTHORIZED).toMap();
                 mv = new ModelAndView("error", resultMap);
             } else if (e instanceof LockedAccountException) {
-                Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_USER_STATE_WRONG).toMap();
+                Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG).toMap();
                 mv = new ModelAndView("error", resultMap);
             }
         }

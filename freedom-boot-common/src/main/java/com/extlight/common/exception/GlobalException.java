@@ -13,10 +13,10 @@ public class GlobalException extends RuntimeException {
 
     private String message;
 
-    public GlobalException(GlobalExceptionEnum exceptionEnum) {
-        super(exceptionEnum.getMessage());
-        this.code = exceptionEnum.getCode();
-        this.message = exceptionEnum.getMessage();
+    public GlobalException(GlobalExceptionMap globalExceptionMap) {
+        super(globalExceptionMap.getMessage());
+        this.code = globalExceptionMap.getCode();
+        this.message = globalExceptionMap.getMessage();
     }
 
     public GlobalException(int code, String message) {

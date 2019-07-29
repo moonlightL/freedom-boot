@@ -5,12 +5,13 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
-import com.extlight.core.web.config.CoreConfig;
+import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.mapper.SysUserMapper;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.dto.SysUserDTO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
+import com.extlight.core.web.config.CoreConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,7 +102,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
 
         SysUserVO target = super.getById(userId);
         if (target == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         // 解绑

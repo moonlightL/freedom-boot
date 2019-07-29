@@ -1,6 +1,7 @@
 package com.extlight.core.web.config.shiro;
 
 import com.extlight.common.exception.GlobalExceptionEnum;
+import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.constant.StateEnum;
 import com.extlight.core.model.SysUser;
@@ -8,7 +9,6 @@ import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
-import com.extlight.core.component.ShiroService;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -54,7 +54,7 @@ public class SystemRealm extends AuthorizingRealm {
 
         // 判断状态
         if (!sysUser.getState().equals(StateEnum.NORMAL.getCode())) {
-            throw new LockedAccountException(GlobalExceptionEnum.ERROR_USER_STATE_WRONG.getMessage());
+            throw new LockedAccountException(GlobalExceptionEnum.ERROR_STATE_WRONG.getMessage());
         }
 
         SysUserVO userVO = sysUser.toVO(SysUserVO.class);

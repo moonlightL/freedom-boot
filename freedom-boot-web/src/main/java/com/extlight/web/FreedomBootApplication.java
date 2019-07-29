@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @Author MoonlightL
- * @ClassName: FreedomApplication
+ * @ClassName: FreedomBootApplication
  * @ProjectName freedom-boot
  * @Description: 启动类
  * @Date 2019/5/30 13:40

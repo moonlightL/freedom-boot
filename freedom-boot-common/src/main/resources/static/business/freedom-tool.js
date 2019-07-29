@@ -313,14 +313,14 @@
                         type: "POST",
                         url: url,
                         data: data,
+                        dataType: "JSON",
                         success: function(resp) {
-                            if (resp.success) {
-                                if (typeof fn == "function") {
-                                    fn(resp);
-                                } else {
-                                    // 默认操作
-                                    $.freedom.modal.msg(resp.msg);
-                                }
+                            console.log(resp)
+                            if (typeof fn == "function") {
+                                fn(resp);
+                            } else {
+                                // 默认操作
+                                $.freedom.modal.msg(resp.msg);
                             }
                         }
                     });
@@ -338,14 +338,13 @@
                         data: formData,
                         processData : false,
                         contentType : false,
+                        dataType: "JSON",
                         success: function(resp) {
-                            if (resp.success) {
-                                if (typeof fn == "function") {
-                                    fn(resp);
-                                } else {
-                                    // 默认操作
-                                    $.freedom.modal.msg(resp.msg);
-                                }
+                            if (typeof fn == "function") {
+                                fn(resp);
+                            } else {
+                                // 默认操作
+                                $.freedom.modal.msg(resp.msg);
                             }
                         }
                     });
@@ -400,9 +399,8 @@ $.ajaxSetup({
     crossDomain: true,
     headers: {token: sessionStorage.getItem("token")},
     complete: function(xhr) {
-        if (xhr.responseJSON && xhr.responseJSON.code != 200) {
+        if (xhr.responseJSON && xhr.responseJSON.code && xhr.responseJSON.code != 200) {
             $.freedom.modal.msg(xhr.responseJSON.msg, 2, function() {
-                // token 失效重新登录
                 if (xhr.responseJSON.code == 1004) {
                     window.parent.location.href = "/";
                 }
