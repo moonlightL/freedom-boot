@@ -26,12 +26,12 @@
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU"/>
 
-    <cache name="shiroSessionCache"
-           maxElementsInMemory="1000"
+    <!-- ehcache 中 session 缓存 -->
+    <cache name="shiro-activeSessionCache"
+           maxEntriesLocalHeap="0"
            eternal="false"
-           timeToIdleSeconds="300"
-           timeToLiveSeconds="300"
-           overflowToDisk="false"
-           memoryStoreEvictionPolicy="LRU"/>
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
+           overflowToDisk="true"/>
 
 </ehcache>

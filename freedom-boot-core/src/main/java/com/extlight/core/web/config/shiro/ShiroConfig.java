@@ -126,8 +126,6 @@ public class ShiroConfig {
         sessionManager.setSessionValidationSchedulerEnabled(true);
         // 设置检测有效 session 间隔时间，设置了改属性就无需设置 SessionValidationScheduler
         sessionManager.setSessionValidationInterval(shiroProperties.getInterval());
-        // 设置定时检测无效 session 的任务调度器
-//        sessionManager.setSessionValidationScheduler(sessionValidationScheduler());
         // 设置 sessionDao
         sessionManager.setSessionDAO(this.sessionDAO());
         // 设置 session 工厂
