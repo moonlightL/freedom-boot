@@ -253,9 +253,9 @@
 
             <!-- 验证码 -->
             <dependency>
-                <groupId>com.github.axet</groupId>
-                <artifactId>kaptcha</artifactId>
-                <version>0.0.9</version>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>EasyCaptcha</artifactId>
+                <version>1.5.0</version>
             </dependency>
 
             <!-- 解析 user-agent 信息 -->
@@ -272,13 +272,6 @@
                 <version>1.7.2</version>
             </dependency>
 
-            <!-- 热部署 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -286,6 +279,10 @@
         <repository>
             <id>alimaven</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -295,13 +292,13 @@
             <id>dev</id>
             <properties>
                 <profiles.active>dev</profiles.active>
-                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</master.url>
+                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
                 <master.username>root</master.username>
-                <master.password>tiger</master.password>
+                <master.password>Tiger123</master.password>
                 <slave.enabled>false</slave.enabled>
-                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</slave.url>
+                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>tiger</slave.password>
+                <slave.password>Tiger123</slave.password>
             </properties>
             <activation>
                 <!-- 设置默认激活这个配置 -->
@@ -313,13 +310,13 @@
             <id>pro</id>
             <properties>
                 <profiles.active>pro</profiles.active>
-                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</master.url>
+                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
                 <master.username>root</master.username>
-                <master.password>tiger</master.password>
+                <master.password>Tiger123</master.password>
                 <slave.enabled>false</slave.enabled>
-                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8</slave.url>
+                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>tiger</slave.password>
+                <slave.password>Tiger123</slave.password>
             </properties>
         </profile>
     </profiles>

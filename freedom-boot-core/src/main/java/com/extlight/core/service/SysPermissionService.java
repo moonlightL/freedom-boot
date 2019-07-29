@@ -18,11 +18,11 @@ import java.util.List;
 public interface SysPermissionService extends BaseService<SysPermission, SysPermissionVO> {
 
     /**
-     * 查询父级权限（type = 1,2）
+     * 查询层次关系的权限列表
      * @return
      * @throws GlobalException
      */
-    List<SysPermissionVO> findParentPermissionList() throws GlobalException;
+    List<SysPermissionVO> findHierarchyPermissionList() throws GlobalException;
 
     /**
      * 通过用户 id 获取权列表

@@ -16,14 +16,14 @@ import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.dto.LoginDTO;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.Producer;
+import com.wf.captcha.Captcha;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +31,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +51,6 @@ public class LoginController extends BaseController {
 
     private static final String INDEX_PATH = "/home/index";
 
-    @Autowired
-    private Producer captchaProducer;
-
     /**
      * 获取验证码
      * @param response
@@ -65,18 +59,21 @@ public class LoginController extends BaseController {
      */
     @GetMapping(value = "/captcha.jpg")
     public void getKaptchaImage(HttpServletResponse response, HttpSession session) throws Exception {
-        response.setDateHeader("Expires", 0);
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
-        response.setContentType("image/jpeg");
-        //生成验证码
-        String capText = this.captchaProducer.createText();
-        session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
-        //向客户端写出
-        BufferedImage bi = this.captchaProducer.createImage(capText);
-        ServletOutputStream out = response.getOutputStream();
-        ImageIO.write(bi, "jpg", out);
+
+        // 设置请求头为输出图片类型
+        CaptchaUtil.setHeader(response);
+
+        // 三个参数分别为宽、高、位数
+        SpecCaptcha specCaptcha = new SpecCaptcha(130, 32, 5);
+
+        // 设置类型，纯数字、纯字母、字母数字混合
+        specCaptcha.setCharType(Captcha.TYPE_NUM_AND_UPPER);
+
+        // 验证码存入session
+        session.setAttribute(SystemContant.CAPTCHA, specCaptcha.text().toLowerCase());
+
+        // 输出图片流
+        specCaptcha.out(response.getOutputStream());
     }
 
     /**
@@ -108,12 +105,12 @@ public class LoginController extends BaseController {
 
         HttpSession session = request.getSession();
 
-        String capText = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String capText = (String) session.getAttribute(SystemContant.CAPTCHA);
         if (!loginDTO.getVerifyCode().equals(capText)) {
             throw new GlobalException(GlobalExceptionEnum.ERROR_VERIFY_CODE_WRONG);
         }
 
-        session.removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+        session.removeAttribute(SystemContant.CAPTCHA);
 
         String decryptPassword = this.decrypt(loginDTO.getPassword(), session);
         UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUsername(), decryptPassword.toCharArray());

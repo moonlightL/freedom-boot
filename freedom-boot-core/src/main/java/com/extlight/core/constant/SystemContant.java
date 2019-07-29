@@ -13,4 +13,9 @@ public class SystemContant {
      * 当前用户
      */
     public static final String CURRENT_USER = "currentUser";
+
+    /**
+     * 验证码
+     */
+    public static final String CAPTCHA = "captcha";
 }

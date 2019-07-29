@@ -71,9 +71,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
             sysPermission.setCode("");
         }
 
-        int result = super.save(sysPermission);
-
-        return result;
+        return super.save(sysPermission);
     }
 
     @Override
@@ -99,29 +97,16 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
     }
 
     @Override
-    public List<SysPermissionVO> findParentPermissionList() throws GlobalException {
-
-        Example example = new Example(SysPermission.class);
-        example.createCriteria().andNotEqualTo("type", 3);
-        example.selectProperties("id","name");
-        example.orderBy("sort").asc();
-
-       List<SysPermissionVO> result = super.listByExample(example, 0, 0, false);
-        return result;
+    public List<SysPermissionVO> findHierarchyPermissionList() throws GlobalException {
+        List<SysPermissionVO> list = this.sysPermissionMapper.selectHierarchyPermissionList();
+        return list;
     }
 
     @Override
     public List<SysPermissionVO> findPermissionListByUserId(Long userId) throws GlobalException {
 
         List<SysPermission> sysPermissionList = this.sysPermissionMapper.selectByUserId(userId);
-        if (sysPermissionList.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<SysPermissionVO> result = new ArrayList<>(sysPermissionList.size());
-        sysPermissionList.stream().forEach(i -> result.add(i.toVO(SysPermissionVO.class)));
-
-        return result;
+        return this.parseData(sysPermissionList);
     }
 
     @Override
@@ -134,7 +119,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
 
         // 当前 roleId 的权限
         List<SysPermission> checkedPermissionList = this.sysPermissionMapper.selectByRoleId(roleId);
-        List<Long> checkRoleIdList = checkedPermissionList.stream().map(i -> Long.valueOf(i.getId())).collect(Collectors.toList());
+        List<Long> checkRoleIdList = checkedPermissionList.stream().map(i -> i.getId()).collect(Collectors.toList());
 
         List<TreeNode> treeNodeList = new ArrayList<>();
         allPermissionList.stream().forEach(i -> {
@@ -150,13 +135,18 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
 
     @Override
     public List<SysPermissionVO> findCommonButtonList(String url) throws GlobalException {
-        List<SysPermission> list = this.sysPermissionMapper.selectCommonButtonList(url);
+        List<SysPermission> commonButtonList = this.sysPermissionMapper.selectCommonButtonList(url);
+        return this.parseData(commonButtonList);
+    }
+
+
+    private List<SysPermissionVO> parseData(List<SysPermission> list) {
         if (list.isEmpty()) {
             return new ArrayList<>();
         }
 
         List<SysPermissionVO> result = new ArrayList<>(list.size());
-        list.stream().forEach(i -> result.add(i.toVO(SysPermissionVO.class)));
+        list.forEach(i -> result.add(i.toVO(SysPermissionVO.class)));
 
         return result;
     }

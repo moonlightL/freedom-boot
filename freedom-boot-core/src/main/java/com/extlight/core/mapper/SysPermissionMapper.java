@@ -2,6 +2,7 @@ package com.extlight.core.mapper;
 
 import com.extlight.common.base.BaseMapper;
 import com.extlight.core.model.SysPermission;
+import com.extlight.core.model.vo.SysPermissionVO;
 
 import java.util.List;
 
@@ -34,4 +35,10 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      */
     List<SysPermission> selectCommonButtonList(String url);
+
+    /**
+     * 获取层级关系的权限列表
+     * @return
+     */
+    List<SysPermissionVO> selectHierarchyPermissionList();
 }

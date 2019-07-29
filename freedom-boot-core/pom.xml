@@ -21,8 +21,8 @@
 
         <!-- 验证码 -->
         <dependency>
-            <groupId>com.github.axet</groupId>
-            <artifactId>kaptcha</artifactId>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>EasyCaptcha</artifactId>
         </dependency>
 
         <!-- Shiro 缓存相关 -->

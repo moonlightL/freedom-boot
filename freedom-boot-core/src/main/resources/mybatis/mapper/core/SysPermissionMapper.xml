@@ -60,5 +60,47 @@
         AND p.common = 1
         AND p.state = 1
     </select>
+
+    <resultMap id="permissionMap" type="com.extlight.core.model.vo.SysPermissionVO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="icon" column="icon"/>
+        <result property="code" column="code"/>
+        <collection property="children" column="id" select="com.extlight.core.mapper.SysPermissionMapper.selectByPid">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="icon" column="icon"/>
+            <result property="code" column="code"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectHierarchyPermissionList" resultMap="permissionMap">
+        SELECT
+            p.id,
+            p.name,
+            p.icon,
+            p.code
+        FROM
+            t_sys_permission p
+        WHERE
+            p.type = 1
+        AND p.state = 1
+        ORDER BY p.sort
+    </select>
+
+
+    <select id="selectByPid" parameterType="java.lang.Long" resultType="com.extlight.core.model.vo.SysPermissionVO">
+        SELECT
+            p.id,
+            p.name,
+            p.icon,
+            p.code
+        FROM
+            t_sys_permission p
+        WHERE
+            p.pid = #{id}
+        AND p.state = 1
+        ORDER BY p.sort
+    </select>
     
 </mapper>

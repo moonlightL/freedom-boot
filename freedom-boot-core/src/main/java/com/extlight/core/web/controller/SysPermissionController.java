@@ -50,9 +50,24 @@ public class SysPermissionController extends BaseController {
     @GetMapping("/saveUI.html")
     @RequiresPermissions("system:permission:save")
     public String saveUI(Map<String,Object> resultMap) throws GlobalException {
-        List<SysPermissionVO> parentList = this.sysPermissionService.findParentPermissionList();
-        resultMap.put("parentList", parentList);
+        List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
+        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
         return render(SAVE_PAGE, resultMap);
+    }
+
+
+    private List<SysPermissionVO> decorateName(List<SysPermissionVO> list, String prefix) {
+
+        List<SysPermissionVO> result = new ArrayList<>();
+        for (SysPermissionVO sysPermissionVO : list) {
+            result.add(sysPermissionVO);
+            for (SysPermissionVO child : sysPermissionVO.getChildren()) {
+                child.setName(" " + prefix + child.getName());
+                result.add(child);
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -73,8 +88,8 @@ public class SysPermissionController extends BaseController {
         resultMap.put("vo", vo);
         resultMap.put("readOnly", false);
 
-        List<SysPermissionVO> parentList = this.sysPermissionService.findParentPermissionList();
-        resultMap.put("parentList", parentList);
+        List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
+        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
         return render(UPDATE_PAGE, resultMap);
     }
 
@@ -108,8 +123,8 @@ public class SysPermissionController extends BaseController {
         resultMap.put("vo", vo);
         resultMap.put("readOnly", true);
 
-        List<SysPermissionVO> parentList = this.sysPermissionService.findParentPermissionList();
-        resultMap.put("parentList", parentList);
+        List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
+        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
 
         return render(DETAIL_PAGE, resultMap);
     }
