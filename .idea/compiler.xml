@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="freedom-boot-common" />
+        <module name="freedom-boot-core" />
+        <module name="freedom-boot-extensions-generator" />
+        <module name="freedom-boot-extensions-monitor" />
+        <module name="freedom-boot-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="freedom-boot" target="1.8" />
+      <module name="freedom-boot-common" target="1.8" />
+      <module name="freedom-boot-core" target="1.8" />
+      <module name="freedom-boot-extensions" target="1.8" />
+      <module name="freedom-boot-extensions-generator" target="1.8" />
+      <module name="freedom-boot-extensions-monitor" target="1.8" />
+      <module name="freedom-boot-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

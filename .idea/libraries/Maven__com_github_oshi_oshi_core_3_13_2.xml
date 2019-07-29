@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.oshi:oshi-core:3.13.2">
+    <CLASSES>
+      <root url="jar://G:/Work/MvnRepo/com/github/oshi/oshi-core/3.13.2/oshi-core-3.13.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://G:/Work/MvnRepo/com/github/oshi/oshi-core/3.13.2/oshi-core-3.13.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://G:/Work/MvnRepo/com/github/oshi/oshi-core/3.13.2/oshi-core-3.13.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

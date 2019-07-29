@@ -42,7 +42,7 @@ import java.util.Map;
 
 /**
  * @author MoonlightL
- * @Title: LoginController
+ * @ClassName: LoginController
  * @ProjectName freedom-boot
  * @Description: 登录控制器
  * @date 2019/5/31 13:41

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 /**
  * @Author: MoonlightL
  * @ClassName: MonitorServiceImpl
- * @ProjectName: freedom-springboot
+ * @ProjectName: freedom-boot
  * @Description: 监控器 ServiceImpl
  * @DateTime: 2019-07-21 19:44
  */

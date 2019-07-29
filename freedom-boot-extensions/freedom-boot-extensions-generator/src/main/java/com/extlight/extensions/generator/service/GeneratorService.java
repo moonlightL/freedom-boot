@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @Author MoonlightL
  * @Title: GenTableService
- * @ProjectName freedom-springboot
+ * @ProjectName freedom-boot
  * @Description:
  * @Date 2019/7/8 12:39
  */

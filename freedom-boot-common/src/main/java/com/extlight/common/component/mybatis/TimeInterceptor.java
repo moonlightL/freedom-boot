@@ -13,8 +13,8 @@ import java.util.Properties;
 
 /**
  * @Author MoonlightL
- * @Title: TimeInterceptor
- * @ProjectName freedom-springboot
+ * @ClassName: TimeInterceptor
+ * @ProjectName freedom-boot
  * @Description: mybatis 时间拦截器
  * @Date 2019/6/27 11:59
  */

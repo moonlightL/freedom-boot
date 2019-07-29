@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroSessionFactory
+ * @ClassName: ShiroSessionFactory
  * @ProjectName freedom-boot
  * @Description: 自定义 SessionFactory
  * @Date 2019/7/17 14:59

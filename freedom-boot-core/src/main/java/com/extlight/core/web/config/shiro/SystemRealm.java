@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Author MoonlightL
- * @Title: SystemRealm
+ * @ClassName: SystemRealm
  * @ProjectName freedom-boot
  * @Description: 自定义 Realm
  * @Date 2019/7/4 20:26

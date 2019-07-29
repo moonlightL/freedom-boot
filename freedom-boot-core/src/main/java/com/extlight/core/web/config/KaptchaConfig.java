@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * @Author MoonlightL
  * @Title: KaptchaConfig
- * @ProjectName freedom-springboot
+ * @ProjectName freedom-boot
  * @Description: 验证码配置
  * @Date 2019/7/11 14:49
  */

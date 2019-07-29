@@ -6,7 +6,7 @@ import com.extlight.extensions.monitor.model.Server;
 /**
  * @Author: MoonlightL
  * @ClassName: MonitorService
- * @ProjectName: freedom-springboot
+ * @ProjectName: freedom-boot
  * @Description: 监控器 Service
  * @DateTime: 2019-07-21 19:43
  */

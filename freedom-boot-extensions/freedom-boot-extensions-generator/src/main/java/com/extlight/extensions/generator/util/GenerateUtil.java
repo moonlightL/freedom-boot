@@ -25,46 +25,46 @@ import java.util.zip.ZipOutputStream;
 /**
  * @Author MoonlightL
  * @Title: GenerateUtil
- * @ProjectName freedom-springboot
+ * @ProjectName freedom-boot
  * @Description: 代码生成器工具
  * @Date 2019/7/8 15:26
  */
 public class GenerateUtil {
 
-    private static final Map<String, String> DATATYPE_MAP;
+    private static final Map<String, String> DATA_TYPE_MAP;
 
     static {
-        DATATYPE_MAP = new HashMap<>();
-        DATATYPE_MAP.put("bit", "Boolean");
-        DATATYPE_MAP.put("tinyint", "Integer");
-        DATATYPE_MAP.put("smallint", "Integer");
-        DATATYPE_MAP.put("mediumint", "Integer");
-        DATATYPE_MAP.put("int", "Integer");
-        DATATYPE_MAP.put("integer", "Integer");
-        DATATYPE_MAP.put("bigint", "Long");
-        DATATYPE_MAP.put("float", "Float");
-        DATATYPE_MAP.put("double", "Double");
-        DATATYPE_MAP.put("decimal", "BigDecimal");
-        DATATYPE_MAP.put("char", "String");
-        DATATYPE_MAP.put("varchar", "String");
-        DATATYPE_MAP.put("tinytext", "String");
-        DATATYPE_MAP.put("text", "String");
-        DATATYPE_MAP.put("mediumtext", "String");
-        DATATYPE_MAP.put("longtext", "String");
-        DATATYPE_MAP.put("date", "LocalDateTime");
-        DATATYPE_MAP.put("datetime", "LocalDateTime");
-        DATATYPE_MAP.put("timestamp", "LocalDateTime");
+        DATA_TYPE_MAP = new HashMap<>();
+        DATA_TYPE_MAP.put("bit", "Boolean");
+        DATA_TYPE_MAP.put("tinyint", "Integer");
+        DATA_TYPE_MAP.put("smallint", "Integer");
+        DATA_TYPE_MAP.put("mediumint", "Integer");
+        DATA_TYPE_MAP.put("int", "Integer");
+        DATA_TYPE_MAP.put("integer", "Integer");
+        DATA_TYPE_MAP.put("bigint", "Long");
+        DATA_TYPE_MAP.put("float", "Float");
+        DATA_TYPE_MAP.put("double", "Double");
+        DATA_TYPE_MAP.put("decimal", "BigDecimal");
+        DATA_TYPE_MAP.put("char", "String");
+        DATA_TYPE_MAP.put("varchar", "String");
+        DATA_TYPE_MAP.put("tinytext", "String");
+        DATA_TYPE_MAP.put("text", "String");
+        DATA_TYPE_MAP.put("mediumtext", "String");
+        DATA_TYPE_MAP.put("longtext", "String");
+        DATA_TYPE_MAP.put("date", "LocalDateTime");
+        DATA_TYPE_MAP.put("datetime", "LocalDateTime");
+        DATA_TYPE_MAP.put("timestamp", "LocalDateTime");
     }
 
     /**
-     * 列名转换成Java属性名
+     * 列名转换成 Java 属性名
      */
     public static String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "" );
     }
 
     /**
-     * 表名转换成Java类名
+     * 表名转换成 Java 类名
      */
     public static String tableToJava(String tableName, String tablePrefix) {
         if (StringUtils.isNotBlank(tablePrefix)) {
@@ -82,48 +82,48 @@ public class GenerateUtil {
             packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
         }
 
-        if (template.contains("DO.java.vm" )) {
+        if (template.contains("DO.java.vm")) {
             return packagePath + "model" + File.separator + className + ".java";
         }
 
-        if (template.contains("DTO.java.vm" )) {
+        if (template.contains("DTO.java.vm")) {
             return packagePath + "model" + File.separator + "dto" + File.separator + className + "DTO.java";
         }
 
-        if (template.contains("vo.java.vm" )) {
+        if (template.contains("vo.java.vm")) {
             return packagePath + "model" + File.separator + "vo" + File.separator + className + "vo.java";
         }
 
-        if (template.contains("Mapper.java.vm" )) {
+        if (template.contains("Mapper.java.vm")) {
             return packagePath + "mapper" + File.separator + className + "Mapper.java";
         }
 
-        if (template.contains("Service.java.vm" )) {
+        if (template.contains("Service.java.vm")) {
             return packagePath + "service" + File.separator + className + "Service.java";
         }
 
-        if (template.contains("ServiceImpl.java.vm" )) {
+        if (template.contains("ServiceImpl.java.vm")) {
             return packagePath + "service" + File.separator + "impl" + File.separator + className + "ServiceImpl.java";
         }
 
-        if (template.contains("Controller.java.vm" )) {
+        if (template.contains("Controller.java.vm")) {
             return packagePath + "web" + File.separator + "controller" + File.separator + className + "Controller.java";
         }
 
-        if (template.contains("Mapper.xml.vm" )) {
+        if (template.contains("Mapper.xml.vm")) {
             return "main" + File.separator + "resources" + File.separator + "mybatis" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Mapper.xml";
         }
 
-        if (template.contains("listUI.html.vm" )) {
+        if (template.contains("listUI.html.vm")) {
             return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "listUI.html";
         }
 
-        if (template.contains("addUI.html.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "addUI.html";
+        if (template.contains("saveUI.html.vm")) {
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "saveUI.html";
         }
 
-        if (template.contains("editUI.html.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "editUI.html";
+        if (template.contains("updateUI.html.vm")) {
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "updateUI.html";
         }
 
         return null;
@@ -151,7 +151,7 @@ public class GenerateUtil {
             genColumnVO.setAttrName(StringUtils.uncapitalize(attrName));
 
             //列的数据类型，转换成Java类型
-            String attrType = DATATYPE_MAP.get(genColumnVO.getDataType().toLowerCase());
+            String attrType = DATA_TYPE_MAP.get(genColumnVO.getDataType().toLowerCase());
             genColumnVO.setAttrType(attrType);
             if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
@@ -173,7 +173,7 @@ public class GenerateUtil {
 
         //设置velocity资源加载器
         Properties prop = new Properties();
-        prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader" );
+        prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
 
         //封装模板数据
@@ -199,13 +199,13 @@ public class GenerateUtil {
         for (String template : templates) {
             //渲染模板
             StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, "UTF-8" );
+            Template tpl = Velocity.getTemplate(template, "UTF-8");
             tpl.merge(context, sw);
 
             try {
                 //添加到zip
                 zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName())));
-                IOUtils.write(sw.toString(), zip, "UTF-8" );
+                IOUtils.write(sw.toString(), zip, "UTF-8");
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (IOException e) {
@@ -227,8 +227,8 @@ public class GenerateUtil {
         result.add("templates/velocity/ServiceImpl.java.vm");
         result.add("templates/velocity/VO.java.vm");
         result.add("templates/velocity/listUI.html.vm");
-        result.add("templates/velocity/addUI.html.vm");
-        result.add("templates/velocity/editUI.html.vm");
+        result.add("templates/velocity/saveUI.html.vm");
+        result.add("templates/velocity/updateUI.html.vm");
 
         return result;
     }

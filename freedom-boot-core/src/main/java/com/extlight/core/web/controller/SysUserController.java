@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author MoonlightL
- * @Title: SysUserController
+ * @ClassName: SysUserController
  * @ProjectName freedom-boot
  * @Description: 系统用户控制器
  * @date 2019/6/4 17:20

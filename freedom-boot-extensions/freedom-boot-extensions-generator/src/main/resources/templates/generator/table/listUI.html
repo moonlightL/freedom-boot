@@ -52,12 +52,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">模块名称</label>
                                     <div class="col-sm-8">
-                                        <!--<input type="text" placeholder="模块名称" id="moduleName" name="moduleName" class="form-control"-->
-                                           <!--data-bv-notempty="true"-->
-                                           <!--data-bv-notempty-message="模块名称不能为空">-->
-                                        <select class="control-label">
-                                            <option th:each="module,userStat:${moduleList}" th:value="${module}" th:text="${module}"></option>
-                                        </select>
+                                        <input type="text" placeholder="模块名称" id="moduleName" name="moduleName" class="form-control"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="模块名称不能为空">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -127,8 +124,8 @@
          *  init 方法中可传入的参数:
          *    id: "listTable",              // table id
          *    baseUrl: "",                  // 基础路径
-         *    addUIUrl: "addUI.html",       // 新增页面地址
-         *    editUIUrl: "editUI.html",     // 编辑页面地址
+         *    addUIUrl: "saveUI.html",       // 新增页面地址
+         *    editUIUrl: "updateUI.html",     // 编辑页面地址
          *    deleteUrl: "delete.json",     // 删除地址
          *    listUrl: "list.json",         // 列表地址
          *    detailUIUrl: "detailUI.html", // 详情地址

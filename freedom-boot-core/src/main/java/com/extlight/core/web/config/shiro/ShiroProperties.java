@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroProperties
+ * @ClassName: ShiroProperties
  * @ProjectName freedom-boot
  * @Description: Shiro 自定义属性
  * @Date 2019/7/17 19:41

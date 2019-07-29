@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionController
+ * @ClassName: SysPermissionController
  * @ProjectName freedom-boot
  * @Description: 系统权限控制器
  * @Date 2019/7/1 17:30

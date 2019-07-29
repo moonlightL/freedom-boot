@@ -7,7 +7,7 @@ import org.apache.shiro.session.mgt.SimpleSession;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroSession
+ * @ClassName: ShiroSession
  * @ProjectName freedom-boot
  * @Description: 自定义 Shiro Session
  * @Date 2019/7/17 14:58

@@ -8,7 +8,7 @@ import lombok.ToString;
 /**
  * @Author: MoonlightL
  * @ClassName: OnlineDTO
- * @ProjectName: freedom-springboot
+ * @ProjectName: freedom-boot
  * @Description:
  * @DateTime: 2019-07-21 19:50
  */

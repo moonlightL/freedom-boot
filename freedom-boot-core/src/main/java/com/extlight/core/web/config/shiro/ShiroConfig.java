@@ -34,7 +34,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroConfig
+ * @ClassName: ShiroConfig
  * @ProjectName freedom-boot
  * @Description: Shiro 配置
  * @Date 2019/7/4 20:27

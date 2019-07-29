@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * @author MoonlightL
- * @Title: Result
+ * @ClassName: Result
  * @ProjectName freedom-boot
  * @Description: 响应对象
  * @date 2019/5/30 19:39

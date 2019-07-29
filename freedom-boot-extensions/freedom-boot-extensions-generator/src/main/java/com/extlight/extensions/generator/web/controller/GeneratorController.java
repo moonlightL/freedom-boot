@@ -6,12 +6,12 @@ import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import com.extlight.extensions.generator.model.dto.GenTableDTO;
 import com.extlight.extensions.generator.model.dto.GeneratorParam;
 import com.extlight.extensions.generator.model.vo.GenTableVO;
 import com.extlight.extensions.generator.service.GeneratorService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @Author MoonlightL
@@ -52,10 +50,6 @@ public class GeneratorController extends BaseController {
         List<String> tableNameList = this.genTableService.findTableNameList();
         resultMap.put("tableNameList", tableNameList);
         resultMap.put("action", "/generator/table/generate.html");
-
-        ModuleEnum[] values = ModuleEnum.values();
-        List<String> moduleList = Arrays.stream(values).map(i -> i.toString().toLowerCase()).collect(Collectors.toList());
-        resultMap.put("moduleList", moduleList);
 
         return render(LIST_PAGE, resultMap);
     }

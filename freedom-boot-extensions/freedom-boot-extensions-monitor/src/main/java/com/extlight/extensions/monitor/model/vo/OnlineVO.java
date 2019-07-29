@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * @Author: MoonlightL
  * @ClassName: OnlineVO
- * @ProjectName: freedom-springboot
+ * @ProjectName: freedom-boot
  * @Description:
  * @DateTime: 2019-07-21 19:52
  */

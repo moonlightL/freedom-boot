@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 
 /**
  * @author MoonlightL
- * @Title: IpUtil
+ * @ClassName: IpUtil
  * @ProjectName freedom-boot
  * @Description:
  * @date 2019/5/31 11:23

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: JsonUtil
+ * @ClassName: JsonUtil
  * @ProjectName freedom-boot
  * @Description: JSON 工具类
  * @Date 2019/6/28 15:12

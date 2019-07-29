@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroSessionListener
+ * @ClassName: ShiroSessionListener
  * @ProjectName freedom-boot
  * @Description: Shiro Session 监听器
  * @Date 2019/7/17 13:55

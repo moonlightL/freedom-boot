@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author MoonlightL
- * @Title: BaseServiceImpl
+ * @ClassName: BaseServiceImpl
  * @ProjectName freedom-boot
  * @Description:
  * @date 2019/5/31 11:12
