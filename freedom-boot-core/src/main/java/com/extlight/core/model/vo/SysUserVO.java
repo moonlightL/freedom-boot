@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: SysUserVO
+ * @ClassName: SysUserVO
  * @ProjectName freedom-boot
  * @Description: 系统用户响应对象
  * @Date 2019/6/27 13:47

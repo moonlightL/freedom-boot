@@ -5,7 +5,7 @@ import com.extlight.core.model.SysLog;
 
 /**
  * @Author MoonlightL
- * @Title: SysLogMapper
+ * @ClassName: SysLogMapper
  * @ProjectName freedom-boot
  * @Description: 系统系统 Mapper
  * @Date 2019-07-09 13:53:07

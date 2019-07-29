@@ -7,7 +7,7 @@ import ${packageName}.${moduleName}.model.vo.${className}VO;
 
 /**
  * @Author ${author}
- * @Title: ${className}Service
+ * @ClassName: ${className}Service
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment} Service
  * @Date ${dateTime}

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @Author MoonlightL
- * @Title: BaseResponse
+ * @ClassName: BaseResponse
  * @ProjectName freedom-boot
  * @Description: 公共响应封装
  * @Date 2019/7/1 10:05

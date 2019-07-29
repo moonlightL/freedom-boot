@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 /**
  * @Author MoonlightL
- * @Title: SystemSpringMvcConfig
+ * @ClassName: SystemSpringMvcConfig
  * @ProjectName freedom-boot
  * @Description: 系统模块专属 springmvc 配置
  * @Date 2019/7/11 11:12

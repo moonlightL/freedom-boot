@@ -14,11 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: DataSourceConfig
+ * @Author MoonlightL
+ * @ClassName: DataSourceConfig
  * @ProjectName freedom-boot
  * @Description: 数据源配置
- * @date 2019/5/30 20:37
+ * @Date 2019/5/30 20:37
  */
 @Configuration
 public class DataSourceConfig {

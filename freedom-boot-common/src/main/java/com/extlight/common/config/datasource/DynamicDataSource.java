@@ -6,11 +6,11 @@ import javax.sql.DataSource;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: DynamicDataSource
+ * @Author MoonlightL
+ * @ClassName: DynamicDataSource
  * @ProjectName freedom-boot
  * @Description: 动态选择数据源
- * @date 2019/5/30 20:36
+ * @Date 2019/5/30 20:36
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
 

@@ -1,11 +1,11 @@
 package com.extlight.common.config.datasource;
 
 /**
- * @author MoonlightL
- * @Title: DataSourceType
+ * @Author MoonlightL
+ * @ClassName: DataSourceType
  * @ProjectName freedom-boot
  * @Description: 数据源类型
- * @date 2019/5/30 20:31
+ * @Date 2019/5/30 20:31
  */
 public enum DataSourceType {
     /**

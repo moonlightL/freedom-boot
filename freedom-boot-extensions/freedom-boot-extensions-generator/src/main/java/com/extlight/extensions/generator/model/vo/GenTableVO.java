@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: Table
+ * @ClassName: Table
  * @ProjectName freedom-boot
  * @Description: 生成器 Table 响应对象
  * @Date 2019/7/8 12:25

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @Author MoonlightL
- * @Title: TreeNode
+ * @ClassName: TreeNode
  * @ProjectName freedom-boot
  * @Description: ztree 封装类
  * @Date 2019/7/5 16:09

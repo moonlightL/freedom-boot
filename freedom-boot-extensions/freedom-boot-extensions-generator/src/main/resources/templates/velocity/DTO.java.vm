@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 /**
  * @Author ${author}
- * @Title: ${className}DTO
+ * @ClassName: ${className}DTO
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment}请求对象
  * @Date ${dateTime}

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Author ${author}
- * @Title: ${className}Controller
+ * @ClassName: ${className}Controller
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment}控制器
  * @Date ${dateTime}

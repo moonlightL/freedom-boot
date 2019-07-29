@@ -11,11 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: FreedomApplication
  * @ProjectName freedom-boot
  * @Description: 启动类
- * @date 2019/5/30 13:40
+ * @Date 2019/5/30 13:40
  */
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.extlight.*"})

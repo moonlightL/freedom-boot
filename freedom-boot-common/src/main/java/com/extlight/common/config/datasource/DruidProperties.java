@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 /**
- * @author MoonlightL
- * @Title: DruidProperties
+ * @Author MoonlightL
+ * @ClassName: DruidProperties
  * @ProjectName freedom-boot
  * @Description: druid 数据源专属配置
- * @date 2019/5/30 20:28
+ * @Date 2019/5/30 20:28
  */
 @Component
 @Data

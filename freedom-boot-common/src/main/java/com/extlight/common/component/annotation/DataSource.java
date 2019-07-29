@@ -8,11 +8,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author MoonlightL
- * @Title: DataSource
+ * @Author MoonlightL
+ * @ClassName: DataSource
  * @ProjectName freedom-boot
  * @Description:
- * @date 2019/5/30 20:33
+ * @Date 2019/5/30 20:33
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

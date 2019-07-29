@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: BaseController
+ * @Author MoonlightL
+ * @ClassName: BaseController
  * @ProjectName freedom-boot
  * @Description: 控制器基类
- * @date 2019/5/31 13:51
+ * @Date 2019/5/31 13:51
  */
 @Slf4j
 public abstract class BaseController {

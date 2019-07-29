@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 /**
  * @Author MoonlightL
- * @Title: Table
+ * @ClassName: GenTable
  * @ProjectName freedom-boot
  * @Description:
  * @Date 2019/7/8 12:25

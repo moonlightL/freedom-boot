@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionServiceImpl
+ * @ClassName: SysPermissionServiceImpl
  * @ProjectName freedom-boot
  * @Description:
  * @Date 2019/7/1 17:23

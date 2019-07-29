@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: BaseServiceImpl
  * @ProjectName freedom-boot
  * @Description:
- * @date 2019/5/31 11:12
+ * @Date 2019/5/31 11:12
  */
 public abstract class BaseServiceImpl<T extends BaseResponse, V> implements BaseService<T, V> {
 

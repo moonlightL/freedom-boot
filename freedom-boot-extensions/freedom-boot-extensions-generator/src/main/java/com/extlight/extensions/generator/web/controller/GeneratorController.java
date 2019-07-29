@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: GeneratorController
+ * @ClassName: GeneratorController
  * @ProjectName freedom-boot
  * @Description: 生成器控制器
  * @Date 2019/7/8 12:40

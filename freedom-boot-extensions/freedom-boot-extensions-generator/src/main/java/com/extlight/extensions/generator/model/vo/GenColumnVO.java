@@ -7,7 +7,7 @@ import lombok.ToString;
 
 /**
  * @Author MoonlightL
- * @Title: GenColumn
+ * @ClassName: GenColumnVO
  * @ProjectName freedom-boot
  * @Description:
  * @Date 2019/7/8 12:29

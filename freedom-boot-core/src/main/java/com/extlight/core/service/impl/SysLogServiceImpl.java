@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: SysLogServiceImpl
+ * @ClassName: SysLogServiceImpl
  * @ProjectName freedom-boot
  * @Description: 系统日志 ServiceImpl
  * @Date 2019-07-09 13:53:07

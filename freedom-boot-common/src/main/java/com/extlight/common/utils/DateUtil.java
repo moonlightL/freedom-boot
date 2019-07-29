@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @Author MoonlightL
- * @Title: DateUtil
+ * @ClassName: DateUtil
  * @ProjectName freedom-boot
  * @Description: 日期工具类
  * @Date 2019/7/8 20:04

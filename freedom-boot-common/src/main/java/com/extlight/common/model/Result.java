@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: Result
  * @ProjectName freedom-boot
  * @Description: 响应对象
- * @date 2019/5/30 19:39
+ * @Date 2019/5/30 19:39
  */
 @Getter
 public class Result implements Serializable {

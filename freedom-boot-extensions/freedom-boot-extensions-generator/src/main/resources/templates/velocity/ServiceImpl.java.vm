@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @Author ${author}
- * @Title: ${className}ServiceImpl
+ * @ClassName: ${className}ServiceImpl
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment} ServiceImpl
  * @Date ${dateTime}

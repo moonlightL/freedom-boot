@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionVO
+ * @ClassName: SysPermissionVO
  * @ProjectName freedom-boot
  * @Description: 系统权限响应对象
  * @Date 2019/7/1 17:23

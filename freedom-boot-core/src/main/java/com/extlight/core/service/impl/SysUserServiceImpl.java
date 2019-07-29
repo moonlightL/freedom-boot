@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Author MoonlightL
- * @Title: SysUserServiceImpl
+ * @ClassName: SysUserServiceImpl
  * @ProjectName freedom-boot
  * @Description: 系统用户 ServiceImpl
  * @Date 2019/5/31 11:15

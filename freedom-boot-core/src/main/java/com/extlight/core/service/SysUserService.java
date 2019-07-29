@@ -6,11 +6,11 @@ import com.extlight.core.model.SysUser;
 import com.extlight.core.model.vo.SysUserVO;
 
 /**
- * @author MoonlightL
- * @Title: SysUserService
+ * @Author MoonlightL
+ * @ClassName: SysUserService
  * @ProjectName freedom-boot
  * @Description: 系统用户 Service
- * @date 2019/5/31 11:15
+ * @Date 2019/5/31 11:15
  */
 public interface SysUserService extends BaseService<SysUser, SysUserVO> {
 

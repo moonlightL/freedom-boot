@@ -11,11 +11,11 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * @author MoonlightL
- * @Title: SysUser
+ * @Author MoonlightL
+ * @ClassName: SysUser
  * @ProjectName freedom-boot
  * @Description: 系统用户
- * @date 2019/5/31 10:33
+ * @Date 2019/5/31 10:33
  */
 @Getter
 @Setter

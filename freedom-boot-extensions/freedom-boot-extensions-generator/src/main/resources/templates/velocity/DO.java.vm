@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 /**
  * @Author ${author}
- * @Title: ${className}
+ * @ClassName: ${className}
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment}
  * @Date ${dateTime}

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionService
+ * @ClassName: SysPermissionService
  * @ProjectName freedom-boot
  * @Description: 系统权限 Service
  * @Date 2019/7/1 17:22

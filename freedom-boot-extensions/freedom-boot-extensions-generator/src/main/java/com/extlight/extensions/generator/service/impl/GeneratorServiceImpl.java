@@ -25,7 +25,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * @Author MoonlightL
- * @Title: GeneratorService
+ * @ClassName: GeneratorService
  * @ProjectName freedom-boot
  * @Description:
  * @Date 2019/7/8 12:47

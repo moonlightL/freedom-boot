@@ -14,11 +14,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: IpUtil
  * @ProjectName freedom-boot
  * @Description:
- * @date 2019/5/31 11:23
+ * @Date 2019/5/31 11:23
  */
 @Slf4j
 public class IpUtil {

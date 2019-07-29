@@ -41,11 +41,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: LoginController
  * @ProjectName freedom-boot
  * @Description: 登录控制器
- * @date 2019/5/31 13:41
+ * @Date 2019/5/31 13:41
  */
 @Controller
 @RequestMapping("/system/login")

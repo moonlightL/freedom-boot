@@ -8,7 +8,7 @@ import javax.validation.constraints.Max;
 
 /**
  * @Author MoonlightL
- * @Title: BaseRequest
+ * @ClassName: BaseRequest
  * @ProjectName freedom-boot
  * @Description: 公共请求参数封装
  * @Date 2019/6/27 13:45

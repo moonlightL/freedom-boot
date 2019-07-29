@@ -5,7 +5,7 @@ import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroSessionDao
+ * @ClassName: ShiroSessionDao
  * @ProjectName freedom-boot
  * @Description: 自定义 SessionDao
  * @Date 2019/7/17 14:41

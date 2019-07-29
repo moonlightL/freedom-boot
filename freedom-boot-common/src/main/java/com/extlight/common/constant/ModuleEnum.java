@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @Author MoonlightL
- * @Title: ModuleEnum
+ * @ClassName: ModuleEnum
  * @ProjectName freedom-boot
  * @Description: 模块枚举
  * @Date 2019/7/9 15:08

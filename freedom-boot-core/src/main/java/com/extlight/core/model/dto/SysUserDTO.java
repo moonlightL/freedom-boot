@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @Author MoonlightL
- * @Title: SysUserDTO
+ * @ClassName: SysUserDTO
  * @ProjectName freedom-boot
  * @Description: 系统用户请求对象
  * @Date 2019/6/27 13:47

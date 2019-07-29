@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlgihtL
- * @Title: TokenUtil
+ * @ClassName: TokenUtil
  * @ProjectName freedom-boot
  * @Description: JWT 工具
  * @Date 2019/7/5 17:15

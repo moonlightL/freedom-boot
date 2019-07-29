@@ -33,11 +33,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author MoonlightL
+ * @Author MoonlightL
  * @ClassName: SysUserController
  * @ProjectName freedom-boot
  * @Description: 系统用户控制器
- * @date 2019/6/4 17:20
+ * @Date 2019/6/4 17:20
  */
 @Controller
 @RequestMapping("/system/user")

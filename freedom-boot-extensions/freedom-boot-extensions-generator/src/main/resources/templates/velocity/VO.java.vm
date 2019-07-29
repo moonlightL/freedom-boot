@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 /**
  * @Author ${author}
- * @Title: ${className}vo
+ * @ClassName: ${className}VO
  * @ProjectName ${ProjectName}
  * @Description: ${tableComment}响应对象
  * @Date ${dateTime}

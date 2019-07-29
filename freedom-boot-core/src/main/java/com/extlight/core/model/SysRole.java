@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * @Author MoonlightL
- * @Title: SysRole
+ * @ClassName: SysRole
  * @ProjectName freedom-boot
  * @Description: 系统角色
  * @Date 2019/7/1 15:41

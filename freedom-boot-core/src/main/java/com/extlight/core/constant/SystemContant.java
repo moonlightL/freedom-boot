@@ -2,7 +2,7 @@ package com.extlight.core.constant;
 
 /**
  * @Author MoonlightL
- * @Title: SystemContant
+ * @ClassName: SystemContant
  * @ProjectName freedom-boot
  * @Description: 系统模块常量
  * @Date 2019/7/17 11:33

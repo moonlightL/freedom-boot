@@ -7,11 +7,11 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 
 /**
- * @author MoonlightL
- * @Title: BaseService
+ * @Author MoonlightL
+ * @ClassName: BaseService
  * @ProjectName freedom-boot
  * @Description:
- * @date 2019/5/31 11:06
+ * @Date 2019/5/31 11:06
  */
 public interface BaseService<T extends BaseResponse, V> {
 

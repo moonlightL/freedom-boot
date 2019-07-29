@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: ServerController
+ * @Author MoonlightL
+ * @ClassName: ServerController
  * @ProjectName freedom-boot
  * @Description: 服务器控制器
- * @date 2019/5/31 16:17
+ * @Date 2019/5/31 16:17
  */
 @Controller
 @RequestMapping("/monitor/server")

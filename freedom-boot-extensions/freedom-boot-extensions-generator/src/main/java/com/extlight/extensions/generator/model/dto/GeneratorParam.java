@@ -6,7 +6,7 @@ import lombok.ToString;
 
 /**
  * @Author MoonlightL
- * @Title: GeneratorDTO
+ * @ClassName: GeneratorDTO
  * @ProjectName freedom-boot
  * @Description: 生成器请求对象
  * @Date 2019/7/8 20:22

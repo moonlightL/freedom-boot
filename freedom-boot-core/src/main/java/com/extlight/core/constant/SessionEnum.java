@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @Author MoonlightL
- * @Title: SessionEnum
+ * @ClassName: SessionEnum
  * @ProjectName freedom-boot
  * @Description: online 枚举
  * @Date 2019/7/17 15:19

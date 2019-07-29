@@ -25,11 +25,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: HttpClientUtil
+ * @Author MoonlightL
+ * @ClassName: HttpClientUtil
  * @ProjectName freedom-boot
  * @Description: Http 请求工具类
- * @date 2019/5/31 11:28
+ * @Date 2019/5/31 11:28
  */
 public class HttpClientUtil {
 

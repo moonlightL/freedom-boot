@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * @Author MoonlightL
- * @Title: SysLogDTO
+ * @ClassName: SysLogDTO
  * @ProjectName freedom-boot
  * @Description: 系统日志请求对象
  * @Date 2019-07-09 13:53:07

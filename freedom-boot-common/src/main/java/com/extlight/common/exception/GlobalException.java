@@ -1,11 +1,11 @@
 package com.extlight.common.exception;
 
 /**
- * @author MoonlightL
- * @Title: GlobalException
+ * @Author MoonlightL
+ * @ClassName: GlobalException
  * @ProjectName freedom-boot
  * @Description: 全局异常
- * @date 2019/5/30 19:38
+ * @Date 2019/5/30 19:38
  */
 public class GlobalException extends RuntimeException {
 

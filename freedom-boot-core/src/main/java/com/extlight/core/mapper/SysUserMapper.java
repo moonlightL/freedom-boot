@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: SysUserMapper
+ * @Author MoonlightL
+ * @ClassName: SysUserMapper
  * @ProjectName freedom-boot
  * @Description: 系统用户 Mapper
- * @date 2019/5/31 10:38
+ * @Date 2019/5/31 10:38
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 

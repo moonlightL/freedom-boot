@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: GenTableMapper
+ * @ClassName: GenTableMapper
  * @ProjectName freedom-boot
  * @Description: 生成器表数据 Mapper
  * @Date 2019/7/8 12:33

@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author MoonlightL
- * @Title: SpringmvcConfig
+ * @Author MoonlightL
+ * @ClassName: SpringmvcConfig
  * @ProjectName freedom-boot
  * @Description: 公共的 Spring mvc 配置
- * @date 2019/6/18 17:32
+ * @Date 2019/6/18 17:32
  */
 public class SpringMvcConfig implements WebMvcConfigurer {
 

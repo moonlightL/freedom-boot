@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 /**
  * @Author MoonlightL
- * @Title: ActionLog
+ * @ClassName: ActionLog
  * @ProjectName freedom-boot
  * @Description: 操作日志注解
  * @Date 2019/6/28 18:24

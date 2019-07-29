@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * @Author MoonlightL
- * @Title: GenerateUtil
+ * @ClassName: GenerateUtil
  * @ProjectName freedom-boot
  * @Description: 代码生成器工具
  * @Date 2019/7/8 15:26

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionMapper
+ * @ClassName: SysPermissionMapper
  * @ProjectName freedom-boot
  * @Description: 系统权限 Mapper
  * @Date 2019/7/1 17:21

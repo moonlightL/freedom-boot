@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @Author MoonlightL
- * @Title: ShiroService
+ * @ClassName: ShiroService
  * @ProjectName freedom-boot
  * @Description: ShiroService
  * @Date 2019/7/15 19:34

@@ -6,11 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author MoonlightL
- * @Title: UpdateTime
+ * @Author MoonlightL
+ * @ClassName: UpdateTime
  * @ProjectName freedom-boot
  * @Description: 修改时间注解
- * @date 2019/6/27 13:40
+ * @Date 2019/6/27 13:40
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})

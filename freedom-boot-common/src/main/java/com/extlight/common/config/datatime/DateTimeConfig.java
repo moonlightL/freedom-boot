@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * @Author MoonlightL
- * @Title: DateTimeConfig
+ * @ClassName: DateTimeConfig
  * @ProjectName freedom-boot
  * @Description: 时间格式转换配置
  * @Date 2019/7/1 10:43

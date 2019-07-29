@@ -1,11 +1,11 @@
 package com.extlight.common.config.datasource;
 
 /**
- * @author MoonlightL
- * @Title: DynamicDataSourceContextHolder
+ * @Author MoonlightL
+ * @ClassName: DynamicDataSourceContextHolder
  * @ProjectName freedom-boot
  * @Description: 数据源类型上下文
- * @date 2019/5/30 20:31
+ * @Date 2019/5/30 20:31
  */
 public class DynamicDataSourceContextHolder {
 

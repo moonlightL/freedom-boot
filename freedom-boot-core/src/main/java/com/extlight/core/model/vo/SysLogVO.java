@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * @Author MoonlightL
- * @Title: SysLogVO
+ * @ClassName: SysLogVO
  * @ProjectName freedom-boot
  * @Description: 系统日志响应对象
  * @Date 2019-07-09 13:53:07

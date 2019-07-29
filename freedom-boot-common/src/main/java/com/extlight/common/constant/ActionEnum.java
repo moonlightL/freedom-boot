@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * @Author MoonlightL
- * @Title: SysLogEnum
+ * @ClassName: SysLogEnum
  * @ProjectName freedom-boot
  * @Description: 日志类型
  * @Date 2019/7/9 14:27

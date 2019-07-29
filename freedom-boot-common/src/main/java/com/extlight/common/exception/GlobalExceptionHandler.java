@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author MoonlightL
- * @Title: GlobalExceptionHandler
+ * @Author MoonlightL
+ * @ClassName: GlobalExceptionHandler
  * @ProjectName freedom-boot
  * @Description: 全局异常处理
- * @date 2019/5/30 19:39
+ * @Date 2019/5/30 19:39
  */
 @ControllerAdvice
 @Slf4j

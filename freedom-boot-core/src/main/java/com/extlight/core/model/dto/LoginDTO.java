@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 
 /**
  * @Author MoonlightL
- * @Title: LoginDTO
+ * @ClassName: LoginDTO
  * @ProjectName freedom-boot
  * @Description: 登录接口封装对象
  * @Date 2019/7/5 11:29

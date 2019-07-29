@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: ActionLogAspect
+ * @ClassName: ActionLogAspect
  * @ProjectName freedom-boot
  * @Description: 操作日志切面
  * @Date 2019/6/28 18:25

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  * @Author MoonlightL
- * @Title: LogEvent
+ * @ClassName: LogEvent
  * @ProjectName freedom-boot
  * @Description: 日志事件
  * @Date 2019/7/9 14:39

@@ -3,11 +3,11 @@ package com.extlight.common.exception;
 import lombok.Getter;
 
 /**
- * @author MoonlightL
- * @Title: GlobalExceptionEnum
+ * @Author MoonlightL
+ * @ClassName: GlobalExceptionEnum
  * @ProjectName freedom-boot
  * @Description: 全局异常枚举
- * @date 2019/5/31 13:46
+ * @Date 2019/5/31 13:46
  */
 @Getter
 public enum GlobalExceptionEnum {

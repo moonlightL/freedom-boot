@@ -24,7 +24,7 @@ import java.util.Properties;
 
 /**
  * @Author MoonlightL
- * @Title: SysPermissionServiceImpl
+ * @ClassName: SysPermissionServiceImpl
  * @ProjectName freedom-boot
  * @Description: 服务器参数信息
  * @Date 2019/6/1 17:23
