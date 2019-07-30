@@ -1,5 +1,6 @@
 package com.extlight.core.model.vo;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,6 +20,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
+@EqualsAndHashCode(of = {"id", "name"})
 public class SysPermissionVO implements Serializable {
 
     /**
@@ -86,21 +88,4 @@ public class SysPermissionVO implements Serializable {
      */
     private List<SysPermissionVO> children = new ArrayList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SysPermissionVO that = (SysPermissionVO) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
 }

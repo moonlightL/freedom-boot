@@ -9,7 +9,15 @@ package com.extlight.common.exception;
  */
 public interface GlobalExceptionMap {
 
+    /**
+     * 返回 code
+     * @return
+     */
     int getCode();
 
+    /**
+     * 返回消息
+     * @return
+     */
     String getMessage();
 }

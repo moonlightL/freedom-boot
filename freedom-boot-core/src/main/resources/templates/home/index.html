@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Freedom Admin</title>
+    <title>Dashboard | Freedom Boot</title>
     <!-- Font-Awesome -->
     <link th:href="@{/plugins/fonts/font-awesome/css/font-awesome.min.css}" rel='stylesheet' type='text/css'>
     <!--STYLESHEET-->
@@ -19,8 +19,6 @@
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
     <link th:href="@{/assets/css/nifty-icons.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/nifty-login.min.css}" rel="stylesheet">
-    <!-- Layer  Stylesheet-->
-    <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}">
 </head>
 
 <body>
@@ -36,7 +34,7 @@
                 <a href="index.html" class="navbar-brand">
                     <img th:src="@{/assets/picture/logo.png}" alt="Nifty Logo" class="brand-icon">
                     <div class="brand-title">
-                        <span class="brand-text">Freedom</span>
+                        <span class="brand-text">Freedom Boot</span>
                     </div>
                 </a>
             </div>
@@ -745,7 +743,7 @@
 
                             <!-- menu start -->
                             <ul id="mainnav-menu" class="list-group">
-                                <li class="list-header">权限系统</li>
+<!--                                <li class="list-header">权限系统</li>-->
                                 <li class="active-link">
                                     <a href="javascript:;" data-url="/home/dashboard.html">
                                         <i class="fa fa-home"></i>
@@ -759,7 +757,7 @@
                                         <i th:class="${menu.icon}"></i>
                                         <span class="menu-title">
 												<strong th:text="${menu.name}">目录</strong>
-											</span>
+										</span>
                                         <i class="arrow"></i>
                                     </a>
                                     <ul class="collapse" th:each="child: ${menu.children}">
@@ -768,20 +766,6 @@
                                         </li>
                                     </ul>
                                 </li>
-
-                                <!--<li class="list-divider"></li>-->
-
-                                <!--<li class="list-header">XX 系统</li>-->
-                                <!--<li>-->
-                                    <!--<a href="#">-->
-                                        <!--<i class="freedom-psi-boot-2"></i>-->
-                                        <!--<span class="menu-title">UI Elements</span>-->
-                                        <!--<i class="arrow"></i>-->
-                                    <!--</a>-->
-                                    <!--<ul class="collapse">-->
-                                        <!--<li><a href="javascript:;;" data-url="">Buttons</a></li>-->
-                                    <!--</ul>-->
-                                <!--</li>-->
 
                             </ul>
                             <!-- menu end -->
@@ -841,10 +825,15 @@
 <script type="text/javascript" th:src="@{/plugins/waves/waves.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/BootstrapMenu/BootstrapMenu.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/jquery-tab/jquery-tab.js}"></script>
-<!-- Layer -->
-<script type="text/javascript" th:src="@{/plugins/layer/layer.js}"></script>
 <script type="text/javascript">
     $(function() {
+
+        var $mainnav = $("#mainnav-menu");
+        $("[data-url]").on("click", function () {
+            $mainnav.find("li").removeClass("active-link");
+            $(this).parents("li").addClass("active-link");
+        });
+
         $("#tab-container").tab({
             homeUrl: "/home/dashboard.html",
             homeName: "主页",

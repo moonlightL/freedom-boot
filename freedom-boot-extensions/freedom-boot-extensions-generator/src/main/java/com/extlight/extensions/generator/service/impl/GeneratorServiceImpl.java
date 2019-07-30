@@ -27,7 +27,7 @@ import java.util.zip.ZipOutputStream;
  * @Author MoonlightL
  * @ClassName: GeneratorService
  * @ProjectName freedom-boot
- * @Description:
+ * @Description: 代码生成器 ServiceImpl
  * @Date 2019/7/8 12:47
  */
 @Service
@@ -84,18 +84,23 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> 
 
     @Override
     public byte[] generateCode(String[] tableNameArr, GeneratorParam generatorParam) throws GlobalException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ZipOutputStream zip = new ZipOutputStream(outputStream);
+        ByteArrayOutputStream outputStream = null;
+        ZipOutputStream zip = null;
+        try {
+            outputStream = new ByteArrayOutputStream();
+            zip = new ZipOutputStream(outputStream);
 
-        for(String tableName : tableNameArr){
-            //查询表信息
-            GenTable table = this.queryTable(tableName);
-            //查询列信息
-            List<GenColumn> columnList = this.queryColumns(tableName);
-            //生成代码
-            GenerateUtil.generateCode(generatorParam, table, columnList, zip);
+            for (String tableName : tableNameArr){
+                //查询表信息
+                GenTable table = this.queryTable(tableName);
+                //查询列信息
+                List<GenColumn> columnList = this.queryColumns(tableName);
+                //生成代码
+                GenerateUtil.generateCode(generatorParam, table, columnList, zip);
+            }
+        } finally {
+            IOUtils.closeQuietly(zip);
         }
-        IOUtils.closeQuietly(zip);
         return outputStream.toByteArray();
     }
 

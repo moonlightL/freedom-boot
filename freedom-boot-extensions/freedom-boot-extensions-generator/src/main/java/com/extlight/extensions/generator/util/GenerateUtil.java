@@ -8,8 +8,8 @@ import com.extlight.extensions.generator.model.dto.GeneratorParam;
 import com.extlight.extensions.generator.model.vo.GenColumnVO;
 import com.extlight.extensions.generator.model.vo.GenTableVO;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.text.WordUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -56,6 +56,24 @@ public class GenerateUtil {
         DATA_TYPE_MAP.put("timestamp", "LocalDateTime");
     }
 
+
+    private static final List<String> TEMPLATE_LIST;
+
+    static {
+        TEMPLATE_LIST = new ArrayList<>();
+        TEMPLATE_LIST.add("templates/velocity/Controller.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/DO.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/DTO.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/VO.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/Mapper.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/Mapper.xml.vm");
+        TEMPLATE_LIST.add("templates/velocity/Service.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/ServiceImpl.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/listUI.html.vm");
+        TEMPLATE_LIST.add("templates/velocity/saveUI.html.vm");
+        TEMPLATE_LIST.add("templates/velocity/updateUI.html.vm");
+    }
+
     /**
      * 列名转换成 Java 属性名
      */
@@ -90,7 +108,7 @@ public class GenerateUtil {
             return packagePath + "model" + File.separator + "dto" + File.separator + className + "DTO.java";
         }
 
-        if (template.contains("vo.java.vm")) {
+        if (template.contains("VO.java.vm")) {
             return packagePath + "model" + File.separator + "vo" + File.separator + className + "vo.java";
         }
 
@@ -195,7 +213,7 @@ public class GenerateUtil {
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表
-        List<String> templates = getTemplateList();
+        List<String> templates = TEMPLATE_LIST;
         for (String template : templates) {
             //渲染模板
             StringWriter sw = new StringWriter();
@@ -215,21 +233,4 @@ public class GenerateUtil {
 
     }
 
-    public static List<String> getTemplateList() {
-
-        List<String> result = new ArrayList<>();
-        result.add("templates/velocity/Controller.java.vm");
-        result.add("templates/velocity/DO.java.vm");
-        result.add("templates/velocity/DTO.java.vm");
-        result.add("templates/velocity/Mapper.java.vm");
-        result.add("templates/velocity/Mapper.xml.vm");
-        result.add("templates/velocity/Service.java.vm");
-        result.add("templates/velocity/ServiceImpl.java.vm");
-        result.add("templates/velocity/VO.java.vm");
-        result.add("templates/velocity/listUI.html.vm");
-        result.add("templates/velocity/saveUI.html.vm");
-        result.add("templates/velocity/updateUI.html.vm");
-
-        return result;
-    }
 }

@@ -28,5 +28,5 @@ public class LoginDTO extends BaseRequest {
     @NotEmpty(message="验证码不能为空")
     private String verifyCode;
 
-    private Boolean rememberMe = false;
+    private Boolean rememberMe;
 }

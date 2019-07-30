@@ -68,6 +68,8 @@ public class IpUtil {
                 case DbSearcher.MEMORY_ALGORITYM:
                     method = searcher.getClass().getMethod("memorySearch", String.class);
                     break;
+                default:
+                    break;
             }
 
             DataBlock dataBlock;

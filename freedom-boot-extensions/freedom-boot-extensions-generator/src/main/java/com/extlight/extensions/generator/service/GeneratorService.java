@@ -13,7 +13,7 @@ import java.util.List;
  * @Author MoonlightL
  * @ClassName: GenTableService
  * @ProjectName freedom-boot
- * @Description:
+ * @Description: 代码生成器 Service
  * @Date 2019/7/8 12:39
  */
 public interface GeneratorService extends BaseService<GenTable, GenTableVO> {

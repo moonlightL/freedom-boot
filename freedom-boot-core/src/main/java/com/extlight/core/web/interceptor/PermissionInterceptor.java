@@ -98,6 +98,6 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
     }
 
     private boolean isAjax(HttpServletRequest request) {
-        return !StringUtils.isEmpty(request.getHeader("x-requested-with")) && request.getHeader("x-requested-with").equals("XMLHttpRequest");
+        return !StringUtils.isEmpty(request.getHeader("x-requested-with")) && "XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"));
     }
 }
