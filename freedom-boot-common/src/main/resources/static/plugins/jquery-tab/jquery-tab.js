@@ -5,7 +5,8 @@
   var defaultSetting = {
     homeUrl: "",
     homeName: "主页",
-    bottom: 135
+    bottom: 135,
+    tabCallback: null
   }
 
   $.fn.tab = function(options) {
@@ -43,6 +44,9 @@
         // 切换 tab
         $(".tabs-item").removeClass("active");
         $(this).addClass("active");
+        if (typeof defaultSetting.tabCallback == "function") {
+            defaultSetting.tabCallback(this);
+        }
 
         // 切换 iframe
         $(".iframe").removeClass("active");
@@ -89,7 +93,6 @@
         var tabName = $(obj).text();
         var url = $(obj).data("url");
         var index = url.replace(/\./g, '_').replace(/\//g, '_').replace(/:/g, '_').replace(/\?/g, '_').replace(/,/g, '_').replace(/=/g, '_').replace(/&/g, '_');
-
         // 如果标签已存在，重新激活
         if ($("#tab_" + index).length > 0) {
           $("#tab_" + index).trigger("click");

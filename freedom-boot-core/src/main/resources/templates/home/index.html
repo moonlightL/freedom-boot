@@ -818,7 +818,7 @@
 <!--NiftyJS [ RECOMMENDED ]-->
 <script th:src="@{/assets/js/nifty.min.js}"></script>
 
-<!--Demo script [ DEMONSTRATION ]-->
+<!-- script [ DEMONSTRATION ]-->
 <script th:src="@{/assets/js/nifty-freedom.min.js}"></script>
 
 <!-- jquery tab -->
@@ -837,7 +837,14 @@
         $("#tab-container").tab({
             homeUrl: "/home/dashboard.html",
             homeName: "主页",
-            bottom: 175
+            bottom: 175,
+            tabCallback: function (tab) {
+                var urlArr = $(tab).attr("id").substring(5).split("_");
+                var suff = urlArr.pop();
+                var url = "/" + urlArr.join("/").concat(".", suff);
+                $mainnav.find("li").removeClass("active-link");
+                $("a[data-url][data-url='"+url+"']").parents("li").addClass("active-link");
+            }
         });
 
         $("#logout-btn").on("click", function() {
