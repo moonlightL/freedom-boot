@@ -51,6 +51,7 @@ public abstract class BaseController {
     protected static final String DETAIL_PAGE = "updateUI";
 
     private static final Map<String, String> ACTION_MAP;
+
     static {
         ACTION_MAP = new HashMap<>();
         ACTION_MAP.put(LIST_PAGE, "list.json");

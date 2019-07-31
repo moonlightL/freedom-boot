@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  * @Date 2019/6/4 17:20
  */
 @Controller
-@RequestMapping("/system/user")
+@RequestMapping("/core/user")
 public class SysUserController extends BaseController {
 
     @Autowired
@@ -61,7 +61,7 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/saveUI.html")
-    @RequiresPermissions("system:user:save")
+    @RequiresPermissions("core:user:save")
     public String saveUI(Map<String,Object> resultMap) throws GlobalException {
         return render(SAVE_PAGE, resultMap);
     }
@@ -74,7 +74,7 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/updateUI/{id}.html")
-    @RequiresPermissions("system:user:update")
+    @RequiresPermissions("core:user:update")
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUserVO vo = this.sysUserService.getById(id);
         if (vo == null) {
@@ -93,9 +93,9 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/listUI.html")
-    @RequiresPermissions("system:user:listUI")
+    @RequiresPermissions("core:user:listUI")
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
-        resultMap.put("assignRoleUrl", "/system/user/assignRoleUI/{userId}.html");
+        resultMap.put("assignRoleUrl", "/core/user/assignRoleUI/{userId}.html");
         return render(LIST_PAGE, resultMap);
     }
 
@@ -107,7 +107,7 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("system:user:query")
+    @RequiresPermissions("core:user:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUserVO vo = this.sysUserService.getById(id);
         if (vo == null) {
@@ -122,7 +122,7 @@ public class SysUserController extends BaseController {
     //#########################################【AJAX 请求】##################################################
 
     @PostMapping("/save.json")
-    @RequiresPermissions("system:user:save")
+    @RequiresPermissions("core:user:save")
     @ResponseBody
     @ActionLog(value="新增用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysUserDTO sysUserDTO) throws GlobalException {
@@ -131,7 +131,7 @@ public class SysUserController extends BaseController {
     }
 
     @PostMapping("/remove.json")
-    @RequiresPermissions("system:user:remove")
+    @RequiresPermissions("core:user:remove")
     @ResponseBody
     @ActionLog(value="删除用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
@@ -151,7 +151,7 @@ public class SysUserController extends BaseController {
 
 
     @PostMapping("/update.json")
-    @RequiresPermissions("system:user:update")
+    @RequiresPermissions("core:user:update")
     @ResponseBody
     @ActionLog(value="编辑用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysUserDTO sysUserDTO) throws GlobalException {
@@ -166,7 +166,7 @@ public class SysUserController extends BaseController {
 
 
     @GetMapping("/list.json")
-    @RequiresPermissions("system:user:listUI")
+    @RequiresPermissions("core:user:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysUserDTO params) throws GlobalException {
         PageInfo<SysUserVO> pageInfo = this.sysUserService.page(params);
@@ -203,7 +203,7 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/assignRoleUI/{userId}.html")
-    @RequiresPermissions("system:user:assign:role")
+    @RequiresPermissions("core:user:assign:role")
     public String assignRoleUI(@PathVariable Long userId, Map<String,Object> resultMap) throws GlobalException {
 
         SysUserVO target = this.sysUserService.getById(userId);
@@ -227,7 +227,7 @@ public class SysUserController extends BaseController {
             resultMap.put("roleList", allRoleList);
         }
 
-        resultMap.put("action", "/system/user/assignRole.json");
+        resultMap.put("action", "/core/user/assignRole.json");
         return render("assignRoleUI", resultMap);
     }
 
@@ -239,7 +239,7 @@ public class SysUserController extends BaseController {
      * @throws GlobalException
      */
     @PostMapping("/assignRole.json")
-    @RequiresPermissions("system:user:assign:role")
+    @RequiresPermissions("core:user:assign:role")
     @ResponseBody
     @ActionLog(value="分配角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.OTHER)
     public Result assignRole(Long userId, String roleIdStr) throws GlobalException {

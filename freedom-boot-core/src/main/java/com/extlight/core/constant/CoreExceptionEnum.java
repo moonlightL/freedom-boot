@@ -6,7 +6,7 @@ import com.extlight.common.exception.GlobalExceptionMap;
  * @Author MoonlightL
  * @Title: CoreExceptionEnum
  * @ProjectName freedom-boot
- * @Description:
+ * @Description: 系统管理异常枚举
  * @DateTime 2019/7/29 15:51
  */
 public enum CoreExceptionEnum implements GlobalExceptionMap {

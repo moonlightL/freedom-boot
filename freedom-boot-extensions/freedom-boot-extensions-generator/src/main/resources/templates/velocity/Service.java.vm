@@ -8,9 +8,9 @@ import ${packageName}.${moduleName}.model.vo.${className}VO;
 /**
  * @Author ${author}
  * @ClassName: ${className}Service
- * @ProjectName ${ProjectName}
+ * @ProjectName: ${projectName}
  * @Description: ${tableComment} Service
- * @Date ${dateTime}
+ * @DateTime: ${dateTime}
  */
 public interface ${className}Service extends BaseService<${className}, ${className}VO> {
 

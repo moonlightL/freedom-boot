@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 /**
  * @Author ${author}
  * @ClassName: ${className}VO
- * @ProjectName ${ProjectName}
+ * @ProjectName: ${projectName}
  * @Description: ${tableComment}响应对象
- * @Date ${dateTime}
+ * @DateTime: ${dateTime}
  */
 @Getter
 @Setter

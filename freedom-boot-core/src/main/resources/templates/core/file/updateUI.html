@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:include="common :: header"></head>
+    <!--Font Awesome [ OPTIONAL ]-->
+    <link th:href="@{/assets/css/magic-check.min.css}" rel="stylesheet">
+</head>
+
+<body>
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" th:object="${vo}" method="post">
+                    <input type="hidden" name="id" th:field="*{id}">
+                    <div class="panel-body">
+                        <p class="text-main text-bold">基本资料</p>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">主键</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="id" th:field="*{id}" placeholder="主键"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">文件名称</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="name" th:field="*{name}"
+                                       placeholder="文件名称" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">文件路径</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="url" th:field="*{url}" placeholder="文件路径"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">缩略图路径</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="thumbnailUrl" th:field="*{thumbnailUrl}"
+                                       placeholder="缩略图路径" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">管理类型 1：默认 2：七牛 3：oss</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="code" th:field="*{code}"
+                                       placeholder="管理类型 1：默认 2：七牛 3：oss" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">内容类型</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="contentType" th:field="*{contentType}"
+                                       placeholder="内容类型" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">操作者 id</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="operatorId" th:field="*{operatorId}"
+                                       placeholder="操作者 id" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">创建时间</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="createTime" th:field="*{createTime}"
+                                       placeholder="创建时间" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">修改时间</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="updateTime" th:field="*{updateTime}"
+                                       placeholder="修改时间" data-bv-notempty="true"
+                                       data-bv-notempty-message="不能为空"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" th:if="${!readOnly}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END SETTINGS -->
+<div th:include="common :: script"></div>
+<!--Form validation [ SAMPLE ]-->
+<!--<script th:src="@{/assets/js/form-validation.js}"></script>-->
+<script th:inline="javascript">
+    $(function () {
+        var readOnly = [[${readOnly}]];
+        if (readOnly) {
+            $("input,select,textarea").attr("disabled", "disabled");
+        } else {
+            $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+        }
+    });
+</script>
+</body>
+</html>

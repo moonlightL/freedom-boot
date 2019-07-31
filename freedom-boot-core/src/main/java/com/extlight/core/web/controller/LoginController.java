@@ -46,7 +46,7 @@ import java.util.Map;
  * @Date 2019/5/31 13:41
  */
 @Controller
-@RequestMapping("/system/login")
+@RequestMapping("/core/login")
 public class LoginController extends BaseController {
 
     private static final String INDEX_PATH = "/home/index";

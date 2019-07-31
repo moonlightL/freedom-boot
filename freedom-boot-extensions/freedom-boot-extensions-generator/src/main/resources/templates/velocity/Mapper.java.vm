@@ -6,9 +6,9 @@ import ${packageName}.${moduleName}.model.${className};
 /**
  * @Author ${author}
  * @ClassName: ${className}Mapper
- * @ProjectName ${ProjectName}
+ * @ProjectName: ${projectName}
  * @Description: ${tableComment} Mapper
- * @Date ${dateTime}
+ * @DateTime: ${dateTime}
  */
 public interface ${className}Mapper extends BaseMapper<${className}> {
 	

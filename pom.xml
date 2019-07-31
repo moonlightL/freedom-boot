@@ -292,13 +292,13 @@
             <id>dev</id>
             <properties>
                 <profiles.active>dev</profiles.active>
-                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
+                <master.url>jdbc:mysql://127.0.0.1:3306/freedom-boot?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
                 <master.username>root</master.username>
-                <master.password>Tiger123</master.password>
+                <master.password>tiger</master.password>
                 <slave.enabled>false</slave.enabled>
-                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
+                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom-boot?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>Tiger123</slave.password>
+                <slave.password>tiger</slave.password>
             </properties>
             <activation>
                 <!-- 设置默认激活这个配置 -->
@@ -310,13 +310,13 @@
             <id>pro</id>
             <properties>
                 <profiles.active>pro</profiles.active>
-                <master.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
+                <master.url>jdbc:mysql://127.0.0.1:3306/freedom-boot?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</master.url>
                 <master.username>root</master.username>
-                <master.password>Tiger123</master.password>
+                <master.password>tiger</master.password>
                 <slave.enabled>false</slave.enabled>
-                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
+                <slave.url>jdbc:mysql://127.0.0.1:3306/freedom-boot?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;rewriteBatchedStatements=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8&amp;allowPublicKeyRetrieval=true</slave.url>
                 <slave.username>root</slave.username>
-                <slave.password>Tiger123</slave.password>
+                <slave.password>tiger</slave.password>
             </properties>
         </profile>
     </profiles>

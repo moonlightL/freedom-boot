@@ -65,6 +65,7 @@ public class GenerateUtil {
         TEMPLATE_LIST.add("templates/velocity/DO.java.vm");
         TEMPLATE_LIST.add("templates/velocity/DTO.java.vm");
         TEMPLATE_LIST.add("templates/velocity/VO.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/ExceptionEnum.java.vm");
         TEMPLATE_LIST.add("templates/velocity/Mapper.java.vm");
         TEMPLATE_LIST.add("templates/velocity/Mapper.xml.vm");
         TEMPLATE_LIST.add("templates/velocity/Service.java.vm");
@@ -109,7 +110,7 @@ public class GenerateUtil {
         }
 
         if (template.contains("VO.java.vm")) {
-            return packagePath + "model" + File.separator + "vo" + File.separator + className + "vo.java";
+            return packagePath + "model" + File.separator + "vo" + File.separator + className + "VO.java";
         }
 
         if (template.contains("Mapper.java.vm")) {
@@ -126,6 +127,10 @@ public class GenerateUtil {
 
         if (template.contains("Controller.java.vm")) {
             return packagePath + "web" + File.separator + "controller" + File.separator + className + "Controller.java";
+        }
+
+        if (template.contains("ExceptionEnum.java.vm")) {
+            return packagePath + "constant" + File.separator + className + "ExceptionEnum.java";
         }
 
         if (template.contains("Mapper.xml.vm")) {

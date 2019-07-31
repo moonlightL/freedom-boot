@@ -156,7 +156,7 @@
                             <!-- User dropdown menu -->
                             <ul class="head-list">
                                 <li>
-                                    <a href="javascript:;;" data-url="/system/user/profile.html">
+                                    <a href="javascript:;;" data-url="/core/user/profile.html">
                                         <i class="freedom-pli-male icon-lg icon-fw"></i> 个人资料
                                     </a>
                                 </li>
@@ -725,7 +725,7 @@
                                     </a>
                                 </div>
                                 <div id="profile-nav" class="collapse list-group bg-trans">
-                                    <a href="javascript:;;" data-url="/system/user/profile" class="list-group-item">
+                                    <a href="javascript:;;" data-url="/core/user/profile" class="list-group-item">
                                         <i class="freedom-pli-male icon-lg icon-fw"></i> 个人资料
                                     </a>
                                     <a href="#" class="list-group-item">
@@ -851,7 +851,7 @@
             layer.confirm("确定要注销吗?", function(index){
                 $.ajax({
                     type: "POST",
-                    url: "/system/login/logout.json",
+                    url: "/core/login/logout.json",
                     headers: {token: sessionStorage.getItem("token")},
                     dataType: "json",
                     success: function(resp) {

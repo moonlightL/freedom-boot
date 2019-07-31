@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author MoonlightL
- * @ClassName: SystemConfig
+ * @ClassName: CoreConfig
  * @ProjectName freedom-boot
  * @Description: 系统配置封装类
  * @Date 2019/6/27 14:10

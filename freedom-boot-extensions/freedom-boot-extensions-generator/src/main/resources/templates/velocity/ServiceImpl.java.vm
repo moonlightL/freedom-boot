@@ -1,22 +1,23 @@
 package ${packageName}.${moduleName}.service.impl;
 
 import ${packageName}.common.base.BaseMapper;
+import ${packageName}.common.base.BaseRequest;
 import ${packageName}.common.base.BaseServiceImpl;
-import ${packageName}.common.exception.GlobalException;
-import ${packageName}.common.exception.GlobalExceptionEnum;
 import ${packageName}.${moduleName}.mapper.${className}Mapper;
 import ${packageName}.${moduleName}.model.${className};
+import ${packageName}.${moduleName}.model.dto.${className}DTO;
 import ${packageName}.${moduleName}.model.vo.${className}VO;
 import ${packageName}.${moduleName}.service.${className}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * @Author ${author}
  * @ClassName: ${className}ServiceImpl
- * @ProjectName ${ProjectName}
+ * @ProjectName: ${projectName}
  * @Description: ${tableComment} ServiceImpl
- * @Date ${dateTime}
+ * @DateTime: ${dateTime}
  */
 @Service
 public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${className}VO> implements ${className}Service {

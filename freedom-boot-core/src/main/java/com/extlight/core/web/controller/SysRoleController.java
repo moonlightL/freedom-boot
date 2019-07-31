@@ -35,7 +35,7 @@ import java.util.Map;
  * @Date 2019/7/1 15:49
  */
 @Controller
-@RequestMapping("/system/role")
+@RequestMapping("/core/role")
 public class SysRoleController extends BaseController {
 
     @Autowired
@@ -53,7 +53,7 @@ public class SysRoleController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/saveUI.html")
-    @RequiresPermissions("system:role:save")
+    @RequiresPermissions("core:role:save")
     public String saveUI(Map<String,Object> resultMap) throws GlobalException {
         return render(SAVE_PAGE, resultMap);
     }
@@ -66,7 +66,7 @@ public class SysRoleController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/updateUI/{id}.html")
-    @RequiresPermissions("system:role:update")
+    @RequiresPermissions("core:role:update")
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
@@ -85,9 +85,9 @@ public class SysRoleController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/listUI.html")
-    @RequiresPermissions("system:role:listUI")
+    @RequiresPermissions("core:role:listUI")
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
-        resultMap.put("assignPermissionUrl", "/system/role/assignPermissionUI/{roleId}.html");
+        resultMap.put("assignPermissionUrl", "/core/role/assignPermissionUI/{roleId}.html");
         return render(LIST_PAGE, resultMap);
     }
 
@@ -99,7 +99,7 @@ public class SysRoleController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("system:role:query")
+    @RequiresPermissions("core:role:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
@@ -114,7 +114,7 @@ public class SysRoleController extends BaseController {
     //#########################################【AJAX 请求】##################################################
 
     @PostMapping("/save.json")
-    @RequiresPermissions("system:role:save")
+    @RequiresPermissions("core:role:save")
     @ResponseBody
     @ActionLog(value="新增角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysRoleDTO sysRoleDTO) throws GlobalException {
@@ -123,7 +123,7 @@ public class SysRoleController extends BaseController {
     }
 
     @PostMapping("/remove.json")
-    @RequiresPermissions("system:role:remove")
+    @RequiresPermissions("core:role:remove")
     @ResponseBody
     @ActionLog(value="删除角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
@@ -141,7 +141,7 @@ public class SysRoleController extends BaseController {
     }
 
     @PostMapping("/update.json")
-    @RequiresPermissions("system:role:update")
+    @RequiresPermissions("core:role:update")
     @ResponseBody
     @ActionLog(value="编辑角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysRoleDTO sysRoleDTO) throws GlobalException {
@@ -155,7 +155,7 @@ public class SysRoleController extends BaseController {
     }
 
     @GetMapping("/list.json")
-    @RequiresPermissions("system:role:listUI")
+    @RequiresPermissions("core:role:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysRoleDTO params) throws GlobalException {
         PageInfo<SysRoleVO> pageInfo = this.sysRoleService.page(params);
@@ -172,7 +172,7 @@ public class SysRoleController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/assignPermissionUI/{roleId}.html")
-    @RequiresPermissions("system:role:assign:permission")
+    @RequiresPermissions("core:role:assign:permission")
     public String assignPermissionUI(@PathVariable Long roleId, Map<String,Object> resultMap) throws GlobalException {
 
         SysRoleVO target = this.sysRoleService.getById(roleId);
@@ -181,7 +181,7 @@ public class SysRoleController extends BaseController {
         }
 
         resultMap.put("target", target);
-        resultMap.put("action", "/system/role/assignPermission.json");
+        resultMap.put("action", "/core/role/assignPermission.json");
 
         List<TreeNode> permissionList = this.sysPermissionService.findPermissionNodesByRoleId(roleId);
         resultMap.put("zTreeNodes", JsonUtil.toStr(permissionList, false));
@@ -195,7 +195,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @PostMapping("/assignPermission.json")
-    @RequiresPermissions("system:role:assign:permission")
+    @RequiresPermissions("core:role:assign:permission")
     @ResponseBody
     @ActionLog(value="分配权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.OTHER)
     public Result assignPermission(Long roleId, String permissionIdStr) {

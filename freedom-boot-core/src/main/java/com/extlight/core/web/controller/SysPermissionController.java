@@ -33,7 +33,7 @@ import java.util.Map;
  * @Date 2019/7/1 17:30
  */
 @Controller
-@RequestMapping("/system/permission")
+@RequestMapping("/core/permission")
 public class SysPermissionController extends BaseController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class SysPermissionController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/saveUI.html")
-    @RequiresPermissions("system:permission:save")
+    @RequiresPermissions("core:permission:save")
     public String saveUI(Map<String,Object> resultMap) throws GlobalException {
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
         resultMap.put("parentList", this.decorateName(parentList, "┣─"));
@@ -78,7 +78,7 @@ public class SysPermissionController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/updateUI/{id}.html")
-    @RequiresPermissions("system:permission:update")
+    @RequiresPermissions("core:permission:update")
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermissionVO vo = this.sysPermissionService.getById(id);
         if (vo == null) {
@@ -100,7 +100,7 @@ public class SysPermissionController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/listUI.html")
-    @RequiresPermissions("system:permission:listUI")
+    @RequiresPermissions("core:permission:listUI")
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
         return render(LIST_PAGE, resultMap);
     }
@@ -113,7 +113,7 @@ public class SysPermissionController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("system:permission:query")
+    @RequiresPermissions("core:permission:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermissionVO vo = this.sysPermissionService.getById(id);
         if (vo == null) {
@@ -132,7 +132,7 @@ public class SysPermissionController extends BaseController {
     //#########################################【AJAX 请求】##################################################
 
     @PostMapping("/save.json")
-    @RequiresPermissions("system:permission:save")
+    @RequiresPermissions("core:permission:save")
     @ResponseBody
     @ActionLog(value="新增权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
@@ -141,7 +141,7 @@ public class SysPermissionController extends BaseController {
     }
 
     @PostMapping("/remove.json")
-    @RequiresPermissions("system:permission:remove")
+    @RequiresPermissions("core:permission:remove")
     @ResponseBody
     @ActionLog(value="删除权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
@@ -159,7 +159,7 @@ public class SysPermissionController extends BaseController {
     }
 
     @PostMapping("/update.json")
-    @RequiresPermissions("system:permission:update")
+    @RequiresPermissions("core:permission:update")
     @ResponseBody
     @ActionLog(value="编辑权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
@@ -173,7 +173,7 @@ public class SysPermissionController extends BaseController {
     }
 
     @GetMapping("/list.json")
-    @RequiresPermissions("system:permission:listUI")
+    @RequiresPermissions("core:permission:listUI")
     @ResponseBody
     public Result list() throws GlobalException {
         List<SysPermissionVO> list = this.sysPermissionService.list();

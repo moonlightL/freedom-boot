@@ -1,0 +1,37 @@
+package ${packageName}.${moduleName}.constant;
+
+import com.extlight.common.exception.GlobalExceptionMap;
+
+/**
+ * @Author ${author}
+ * @ClassName: ${className}ExceptionEnum
+ * @ProjectName: ${projectName}
+ * @Description: 异常枚举
+ * @DateTime: ${dateTime}
+ */
+public enum ${className}ExceptionEnum implements GlobalExceptionMap {
+
+    ERROR_RESOURCE_NOT_EXIST(1001, "资源不存在"),
+
+	;
+
+    private int code;
+
+    private String message;
+
+	${className}ExceptionEnum(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+}

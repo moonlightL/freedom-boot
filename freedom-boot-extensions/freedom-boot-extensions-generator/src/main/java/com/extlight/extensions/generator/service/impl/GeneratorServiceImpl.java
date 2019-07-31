@@ -14,6 +14,7 @@ import com.extlight.extensions.generator.service.GeneratorService;
 import com.extlight.extensions.generator.util.GenerateUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
@@ -34,6 +35,9 @@ import java.util.zip.ZipOutputStream;
 public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> implements GeneratorService {
 
     private static final String IGNORE_TABLE = "flyway_schema_history";
+
+    @Value("${spring.application.name}")
+    private String projectName;
 
     @Autowired
     private GenTableMapper genTableMapper;
@@ -86,6 +90,11 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> 
     public byte[] generateCode(String[] tableNameArr, GeneratorParam generatorParam) throws GlobalException {
         ByteArrayOutputStream outputStream = null;
         ZipOutputStream zip = null;
+
+        if (StringUtils.isEmpty(generatorParam.getProjectName())) {
+            generatorParam.setProjectName(this.projectName);
+        }
+
         try {
             outputStream = new ByteArrayOutputStream();
             zip = new ZipOutputStream(outputStream);

@@ -1,0 +1,18 @@
+package com.extlight.core.service;
+
+import com.extlight.common.base.BaseService;
+import com.extlight.common.exception.GlobalException;
+import com.extlight.core.model.SysFile;
+import com.extlight.core.model.vo.SysFileVO;
+
+/**
+ * @Author MoonlightL
+ * @ClassName: SysFileService
+ * @ProjectName: freedom-boot
+ * @Description: 文件 Service
+ * @DateTime: 2019-07-31 17:42:54
+ */
+public interface SysFileService extends BaseService<SysFile, SysFileVO> {
+
+}
+

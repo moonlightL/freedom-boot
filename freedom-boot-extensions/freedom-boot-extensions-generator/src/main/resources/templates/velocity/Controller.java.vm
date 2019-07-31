@@ -1,4 +1,4 @@
-package ${packageName}.${moduleName}.controller;
+package ${packageName}.${moduleName}.web.controller;
 
 import ${packageName}.common.base.BaseController;
 import ${packageName}.common.base.BaseRequest;
@@ -6,8 +6,8 @@ import ${packageName}.common.component.annotation.ActionLog;
 import ${packageName}.common.constant.ActionEnum;
 import ${packageName}.common.constant.ModuleEnum;
 import ${packageName}.common.exception.GlobalException;
-import ${packageName}.common.exception.GlobalExceptionEnum;
-import ${packageName}.common.vo.Result;
+import ${packageName}.common.model.Result;
+import ${packageName}.${moduleName}.constant.${className}Enum;
 import ${packageName}.${moduleName}.model.${className};
 import ${packageName}.${moduleName}.model.dto.${className}DTO;
 import ${packageName}.${moduleName}.model.vo.${className}VO;
@@ -23,15 +23,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 /**
  * @Author ${author}
  * @ClassName: ${className}Controller
- * @ProjectName ${ProjectName}
+ * @ProjectName: ${projectName}
  * @Description: ${tableComment}控制器
- * @Date ${dateTime}
+ * @DateTime: ${dateTime}
  */
 @Controller
 @RequestMapping("/${moduleName}/${variableName}")
@@ -39,8 +38,6 @@ public class ${className}Controller extends BaseController {
 
     @Autowired
     private ${className}Service ${variableName}Service;
-
-    //#########################################【页面请求】##################################################
 
     /**
      * 新增页面
@@ -66,7 +63,7 @@ public class ${className}Controller extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
             ${className}VO vo = this.${variableName}Service.getById(id);
         if (vo == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -98,7 +95,7 @@ public class ${className}Controller extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
             ${className}VO vo = this.${variableName}Service.getById(id);
         if (vo == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -113,7 +110,7 @@ public class ${className}Controller extends BaseController {
     @ResponseBody
     @ActionLog(value="新增", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) ${className}DTO ${variableName}Dto) throws GlobalException {
-        ${className} ${variableName} = ${variableName}Dto.toBo(${className}.class);
+        ${className} ${variableName} = ${variableName}Dto.toDo(${className}.class);
         return this.${variableName}Service.save(${variableName}) > 0 ? Result.success() : Result.fail();
     }
 
@@ -142,10 +139,10 @@ public class ${className}Controller extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) ${className}DTO ${variableName}DTO) throws GlobalException {
         ${className}VO dbData = this.${variableName}Service.getById(${variableName}DTO.getId());
         if (dbData == null) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        ${className} ${variableName} = ${variableName}DTO.toBo(${className}.class);
+        ${className} ${variableName} = ${variableName}DTO.toDo(${className}.class);
         return this.${variableName}Service.update(${variableName}) > 0 ? Result.success() : Result.fail();
     }
 

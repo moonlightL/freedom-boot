@@ -29,7 +29,7 @@ import java.util.Map;
  * @Date 2019-07-09 13:53:07
  */
 @Controller
-@RequestMapping("/system/log")
+@RequestMapping("/core/log")
 public class SysLogController extends BaseController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class SysLogController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/listUI.html")
-    @RequiresPermissions("system:log:listUI")
+    @RequiresPermissions("core:log:listUI")
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
         return render(LIST_PAGE, resultMap);
     }
@@ -57,7 +57,7 @@ public class SysLogController extends BaseController {
      * @throws GlobalException
      */
     @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("system:log:query")
+    @RequiresPermissions("core:log:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysLogVO vo = this.sysLogService.getById(id);
         if (vo == null) {
@@ -72,7 +72,7 @@ public class SysLogController extends BaseController {
     //#########################################【AJAX 请求】##################################################
 
     @GetMapping("/list.json")
-    @RequiresPermissions("system:log:listUI")
+    @RequiresPermissions("core:log:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysLogDTO params) throws GlobalException {
         PageInfo<SysLogVO> pageInfo = this.sysLogService.page(params);

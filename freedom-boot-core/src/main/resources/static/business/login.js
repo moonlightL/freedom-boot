@@ -22,7 +22,7 @@ $(function() {
 var loginManager = {
     getPublicKey: function() {
         $.ajax({
-            url: "/system/login/publicKey.json",
+            url: "/core/login/publicKey.json",
             type: "POST",
             dataType: "json",
             success: function(resp) {
@@ -37,7 +37,7 @@ var loginManager = {
     },
     login: function(encryptPwd) {
         $.ajax({
-            url: "/system/login/login.json",
+            url: "/core/login/login.json",
             type: "POST",
             data: {username: $("#username").val(), password: encryptPwd, verifyCode: $("#verifyCode").val(), rememberMe: $("#rememberMe").prop("checked")},
             dataType: "json",

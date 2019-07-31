@@ -68,9 +68,9 @@ public class ShiroConfig {
      * Realm
      * @return
      */
-    @Bean(name = "systemRealm")
-    public SystemRealm systemRealm() {
-        SystemRealm realm = new SystemRealm();
+    @Bean(name = "coreRealm")
+    public CoreRealm systemRealm() {
+        CoreRealm realm = new CoreRealm();
         // 设置加密器
         realm.setCredentialsMatcher(this.hashedCredentialsMatcher());
         // 设置授权数据缓存
@@ -249,8 +249,8 @@ public class ShiroConfig {
 
         // 配置过滤器
         Map<String,String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/system/login/**","anon");
-        filterMap.put("/system/captcha**","anon");
+        filterMap.put("/core/login/**","anon");
+        filterMap.put("/core/captcha**","anon");
         filterMap.put("/error","anon");
         filterMap.put("/assets/**","anon");
         filterMap.put("/business/**","anon");

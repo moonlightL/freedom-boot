@@ -31,6 +31,6 @@ public class CoreSpringMvcConfig extends SpringMvcConfig {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/assets/**","/business/**","/plugins/**")
-                .excludePathPatterns("/","/system/login/**", "/error");
+                .excludePathPatterns("/","/core/login/**", "/error");
     }
 }

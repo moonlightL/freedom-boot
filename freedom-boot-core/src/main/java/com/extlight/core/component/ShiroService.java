@@ -6,7 +6,7 @@ import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
 import com.extlight.core.service.SysRoleService;
 import com.extlight.core.web.config.shiro.ShiroSession;
-import com.extlight.core.web.config.shiro.SystemRealm;
+import com.extlight.core.web.config.shiro.CoreRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
@@ -110,7 +110,7 @@ public class ShiroService {
      */
     public void clearAuthorization(){
         RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
-        SystemRealm realm = (SystemRealm) rsm.getRealms().iterator().next();
+        CoreRealm realm = (CoreRealm) rsm.getRealms().iterator().next();
         realm.clearAuth();
     }
 
