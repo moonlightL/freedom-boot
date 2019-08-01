@@ -2,9 +2,6 @@ package com.extlight.core.component.file;
 
 import com.extlight.common.exception.GlobalException;
 
-import java.io.File;
-import java.io.InputStream;
-
 /**
  * @Author MoonlightL
  * @Title: FileService
@@ -16,26 +13,24 @@ public interface FileService {
 
     /**
      * 上传文件
-     * @param file
+     * @param fileName
+     * @param data
      * @return
      * @throws GlobalException
      */
-    boolean upload(File file) throws GlobalException;
-
-    /**
-     * 上传文件
-     * @param inputStream
-     * @return
-     * @throws GlobalException
-     */
-    boolean upload(InputStream inputStream) throws GlobalException;
+    String upload(String fileName, byte[] data) throws GlobalException;
 
     /**
      * 下载文件
      * @param url
+     * @return
      * @throws GlobalException
      */
-    void download(String url) throws GlobalException;
+    byte[] download(String url) throws GlobalException;
 
+    /**
+     * 文件管理方式，参考：ModeEnum 枚举
+     * @return
+     */
     int getCode();
 }

@@ -1,8 +1,18 @@
+spring:
+    servlet:
+        multipart:
+            # 单个文件的最大值
+            max-file-size: 10MB
+            # 上传文件总的最大值
+            max-request-size: 10MB
+
+
 ###################################自定义配置##########################################
 core:
     default:
         password: 123456
         avatar: /assets/picture/default-avatar.png
+        file-dir: D:/
     shiro:
         # session 过期时长，单位：毫秒
         session-timeout: 1800000

@@ -32,7 +32,7 @@ public class FileServiceFactory implements ApplicationContextAware {
      * @param code
      * @return
      */
-    public static FileService getInstance(Integer code) {
+    public FileService getInstance(Integer code) {
         return fileServiceMap.get(code);
     }
 }

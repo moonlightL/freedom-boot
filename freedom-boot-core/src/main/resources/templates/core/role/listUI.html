@@ -93,15 +93,15 @@
     function actionFormatter(value, row) {
         var btnArr = [];
         var permissions = [[${permissions}]];
-        if (permissions.indexOf("system:role:query") > -1) {
+        if (permissions.indexOf("core:role:query") > -1) {
             btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
         }
 
-        if (permissions.indexOf("system:role:assign:permission") > -1) {
+        if (permissions.indexOf("core:role:assign:permission") > -1) {
             btnArr.push('<a class="btn btn-info btn-xs" href="javascript:;;" onclick="assignPermissionUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 设置权限</a> ');
         }
 
-        if (permissions.indexOf("system:role:delete") > -1) {
+        if (permissions.indexOf("core:role:remove") > -1) {
             btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
         }
 

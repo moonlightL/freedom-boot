@@ -7,7 +7,7 @@ import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
-import com.extlight.core.constant.CoreExceptionEnum;
+import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.dto.SysUserDTO;
 import com.extlight.core.model.vo.SysLogVO;
@@ -78,7 +78,7 @@ public class SysUserController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUserVO vo = this.sysUserService.getById(id);
         if (vo == null) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -111,7 +111,7 @@ public class SysUserController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUserVO vo = this.sysUserService.getById(id);
         if (vo == null) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -157,7 +157,7 @@ public class SysUserController extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) SysUserDTO sysUserDTO) throws GlobalException {
         SysUserVO dbData = this.sysUserService.getById(sysUserDTO.getId());
         if (dbData == null) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         SysUser sysUser = sysUserDTO.toDo(SysUser.class);
@@ -278,7 +278,7 @@ public class SysUserController extends BaseController {
         SysUser sysUser = this.sysUserService.findUserByUsername(sysUserVO.getUsername());
 
         if (!sysUser.getPassword().equals(DigestUtils.md5DigestAsHex(oldPassword.getBytes()))) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_OLD_PASSWORD_WRONG);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_OLD_PASSWORD_WRONG);
         }
 
         sysUser.setPassword(DigestUtils.md5DigestAsHex(newPassword.getBytes()));

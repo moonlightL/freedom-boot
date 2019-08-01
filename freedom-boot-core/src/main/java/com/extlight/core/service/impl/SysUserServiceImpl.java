@@ -5,7 +5,7 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
-import com.extlight.core.constant.CoreExceptionEnum;
+import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.mapper.SysUserMapper;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.dto.SysUserDTO;
@@ -102,7 +102,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
 
         SysUserVO target = super.getById(userId);
         if (target == null) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         // 解绑

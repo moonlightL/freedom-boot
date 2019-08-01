@@ -27,4 +27,9 @@ public class CoreConfig {
      * 默认头像
      */
     private String avatar;
+
+    /**
+     * 默认文件上传目录
+     */
+    private String fileDir;
 }

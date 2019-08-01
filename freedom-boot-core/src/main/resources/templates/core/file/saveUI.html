@@ -5,6 +5,8 @@
     <head th:include="common :: header"></head>
     <!--Font Awesome [ OPTIONAL ]-->
     <link th:href="@{/assets/css/magic-check.min.css}" rel="stylesheet">
+    <!-- Bootstrap-fileinput -->
+    <link th:href="@{/plugins/bootstrap-fileinput/css/fileinput.min.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -13,92 +15,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel">
-                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" method="post">
-                    <div class="panel-body">
-                        <p class="text-main text-bold">基本资料</p>
-                        <hr>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">主键</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="id" placeholder="主键"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件名称</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="文件名称"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件路径</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="url" placeholder="文件路径"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">缩略图路径</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="thumbnailUrl" placeholder="缩略图路径"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">管理类型 1：默认 2：七牛 3：oss</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="code" placeholder="管理类型 1：默认 2：七牛 3：oss"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">内容类型</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="contentType" placeholder="内容类型"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">操作者 id</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="operatorId" placeholder="操作者 id"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">创建时间</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="createTime" placeholder="创建时间"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">修改时间</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="updateTime" placeholder="修改时间"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="不能为空"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button class="btn btn-primary" type="submit">提交</button>
-                                <button class="btn btn-default" type="reset">重置</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                <input id="upload" type="file" name="files" multiple />
             </div>
         </div>
     </div>
@@ -107,12 +24,48 @@
 </div>
 <!-- END SETTINGS -->
 <div th:include="common :: script"></div>
-<!--Form validation [ SAMPLE ]-->
-<!--<script th:src="@{/assets/js/form-validation.js}"></script>-->
+<!-- Bootstrap-fileinput -->
+<script th:src="@{/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+<script th:src="@{/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
 <script>
     $(function () {
-        // 表单通过内嵌属性校验数据，具体 http://bootstrapvalidator.votintsev.ru/getting-started/
-        $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+        $("#upload").fileinput({
+            language: 'zh', //设置语言
+            dropZoneTitle: '可以将图片拖放到这里 …支持多文件上传',
+            uploadUrl: "/core/file/save.json", //上传的地址
+            allowedFileExtensions: ['jpg','png', 'txt'],//接收的文件后缀
+            uploadAsync: true, //默认异步上传
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            showCancel:true,   //是否显示文件上传取消按钮。默认为true。只有在AJAX上传过程中，才会启用和显示
+            showCaption: true,//是否显示文件标题，默认为true
+            browseClass: "btn btn-primary", //文件选择器/浏览按钮的CSS类。默认为btn btn-primary
+            dropZoneEnabled: true,//是否显示拖拽区域
+            minImageWidth: 50, //图片的最小宽度
+            minImageHeight: 50,//图片的最小高度
+            maxImageWidth: 1000,//图片的最大宽度
+            maxImageHeight: 1000,//图片的最大高度
+            maxFileSize: 1024,//单位为kb，如果为0表示不限制文件大小
+            minFileCount: 1, //每次上传允许的最少文件数。如果设置为0，则表示文件数是可选的。默认为0
+            maxFileCount: 0, //每次上传允许的最大文件数。如果设置为0，则表示允许的文件数是无限制的。默认为0
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",//当检测到用于预览的不可读文件类型时，将在每个预览文件缩略图中显示的图标。默认为<i class="glyphicon glyphicon-file"></i>
+            layoutTemplates:{
+                actionUpload:'',//去除上传预览缩略图中的上传图片
+                actionZoom:'',   //去除上传预览缩略图中的查看详情预览的缩略图标
+                actionDownload:'', //去除上传预览缩略图中的下载图标
+                actionDelete:'', //去除上传预览的缩略图中的删除图标
+            },//对象用于渲染布局的每个部分的模板配置。您可以设置以下模板来控制窗口小部件布局.eg:去除上传图标
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",//字符串，当文件数超过设置的最大计数时显示的消息 maxFileCount。默认为：选择上传的文件数（{n}）超出了允许的最大限制{m}。请重试您的上传！
+        }).on('filebatchpreupload', function(event, data) { //该方法将在上传之前触发
+            var id = $('#id option:selected').val();
+            if(id == 0){
+                return {
+                    message: "请选择", // 验证错误信息在上传前要显示。如果设置了这个设置，插件会在调用时自动中止上传，并将其显示为错误消息。您可以使用此属性来读取文件并执行自己的自定义验证
+                    data:{} // any other data to send that can be referred in `filecustomerror`
+                };
+            }
+        });
     });
 </script>
 </body>

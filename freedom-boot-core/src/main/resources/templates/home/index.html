@@ -19,6 +19,8 @@
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
     <link th:href="@{/assets/css/nifty-icons.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/nifty-login.min.css}" rel="stylesheet">
+    <!-- Layer  Stylesheet-->
+    <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}">
 </head>
 
 <body>
@@ -820,7 +822,8 @@
 
 <!-- script [ DEMONSTRATION ]-->
 <script th:src="@{/assets/js/nifty-freedom.min.js}"></script>
-
+<!-- Layer -->
+<script type="text/javascript" th:src="@{/plugins/layer/layer.js}"></script>
 <!-- jquery tab -->
 <script type="text/javascript" th:src="@{/plugins/waves/waves.min.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/BootstrapMenu/BootstrapMenu.min.js}"></script>
@@ -852,7 +855,6 @@
                 $.ajax({
                     type: "POST",
                     url: "/core/login/logout.json",
-                    headers: {token: sessionStorage.getItem("token")},
                     dataType: "json",
                     success: function(resp) {
                         if (resp.success) {

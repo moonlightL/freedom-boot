@@ -16,8 +16,9 @@ public enum ActionEnum {
     SAVE(1, "新增"),
     REMOVE(2, "删除"),
     UPDATE(3, "修改"),
-    OTHER(4, "其他"),
-    LOGIN(5, "登录"),
+    LOGIN(4, "登录"),
+    DOWNLOAD(5 ,"下载"),
+    OTHER(99, "其他")
     ;
 
     private int code;

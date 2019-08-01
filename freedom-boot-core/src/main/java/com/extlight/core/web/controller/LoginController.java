@@ -9,12 +9,9 @@ import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.IpUtil;
 import com.extlight.common.utils.RsaUtil;
-import com.extlight.common.utils.TokenUtil;
-import com.extlight.core.constant.CoreExceptionEnum;
-import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.dto.LoginDTO;
-import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.wf.captcha.Captcha;
 import com.wf.captcha.SpecCaptcha;
@@ -35,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -120,10 +116,10 @@ public class LoginController extends BaseController {
             token.setRememberMe(loginDTO.getRememberMe());
             subject.login(token);
         } catch (UnknownAccountException e) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_NOT_EXIST);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
 
         } catch (IncorrectCredentialsException e) {
-            throw new GlobalException(CoreExceptionEnum.ERROR_USER_PASSWORD_WRONG);
+            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_PASSWORD_WRONG);
 
         }
 
@@ -131,10 +127,10 @@ public class LoginController extends BaseController {
         sysUserVO.setLocation(IpUtil.getCity(super.getClientIp(request)));
 
         subject.getSession().setAttribute(SystemContant.CURRENT_USER, sysUserVO);
+        // 此处设置供日志记录
         request.setAttribute("userId", sysUserVO.getId());
 
         Map<String,Object> resultMap = new HashMap<>(2);
-        resultMap.put("token", this.getToken(sysUserVO));
         resultMap.put("path", INDEX_PATH);
         return Result.success(resultMap);
     }
@@ -151,23 +147,6 @@ public class LoginController extends BaseController {
         subject.logout();
         return Result.success();
     }
-
-    private String getToken(SysUserVO sysUserVO) {
-        Map<String, Object> claims = null;
-        List<SysPermissionVO> permissionList = sysUserVO.getPermissionList();
-        if (permissionList != null && !permissionList.isEmpty()) {
-            claims = new HashMap<>(10);
-            StringBuilder sb = new StringBuilder();
-            permissionList.stream().forEach(i -> {
-                if (!i.getType().equals(PermissionEnum.MODULE)) {
-                    sb.append(i.getCode()).append(";");
-                }
-            });
-            claims.put("permissions", sb.toString());
-        }
-        return TokenUtil.createToken(sysUserVO.getId(), sysUserVO.getUsername(), claims);
-    }
-
 
     private String decrypt(String password, HttpSession session) {
         String privateKey = (String) session.getAttribute("privateKey");

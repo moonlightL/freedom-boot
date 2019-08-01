@@ -4,23 +4,23 @@ import com.extlight.common.exception.GlobalExceptionMap;
 
 /**
  * @Author MoonlightL
- * @ClassName: SysFileExceptionEnum
+ * @Title: SysPermissionExceptionEnum
  * @ProjectName: freedom-boot
- * @Description: 异常枚举
- * @DateTime: 2019-07-31 17:42:54
+ * @Description: 权限异常枚举
+ * @DateTime: 2019/7/31 20:11
  */
-public enum SysFileExceptionEnum implements GlobalExceptionMap {
+public enum SysPermissionExceptionEnum implements GlobalExceptionMap {
 
-    ERROR_FILE_NOT_EXIST(5001, "资源不存在"),
-    ERROR_UPLOAD_FILE_IS_EMPTY(5002, "上传文件为空"),
+    /*  菜单相关： 3000~3999   */
+    ERROR_PERMISSION_NOT_EXIST(3001, "权限不存在"),
 
-	;
+    ;
 
     private int code;
 
     private String message;
 
-	SysFileExceptionEnum(int code, String message) {
+    SysPermissionExceptionEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -34,5 +34,4 @@ public enum SysFileExceptionEnum implements GlobalExceptionMap {
     public String getMessage() {
         return message;
     }
-
 }

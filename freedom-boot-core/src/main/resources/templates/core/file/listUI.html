@@ -37,7 +37,6 @@
                                 <tr>
                                     <th data-align="center" data-checkbox="true"></th>
                                     <th data-align="center" data-field="id" data-sortable="true">ID</th>
-                                    <th data-align="center" data-field="id">主键</th>
                                     <th data-align="center" data-field="name">文件名称</th>
                                     <th data-align="center" data-field="url">文件路径</th>
                                     <th data-align="center" data-field="thumbnailUrl">缩略图路径</th>
@@ -93,12 +92,13 @@
     function actionFormatter(value, row) {
         var btnArr = [];
         var permissions = [[${permissions}]];
-        if (permissions.indexOf("query") > -1) {
-            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
+        if (permissions.indexOf("remove") > -1) {
+            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a> ');
         }
 
-        if (permissions.indexOf("remove") > -1) {
-            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
+        if (permissions.indexOf("download") > -1) {
+            var url = [[${downloadUrl}]];
+            btnArr.push('<a class="btn btn-mint btn-xs" href="javascript:;;" onclick="$.freedom.action.download(\'' + url.replace(/{id}/, row.id) + '\')"><i class="fa fa-download"></i> 下载</a>');
         }
 
         return btnArr.join('');

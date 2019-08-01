@@ -155,7 +155,7 @@
         $form.bootstrapValidator().on('success.form.bv', function(e) {
             e.preventDefault();
             var url = $form.attr("action") + "?" + $form.serialize();
-            $.freedom.modal.window("代码下载", url, 600, 400);
+            $.freedom.action.download(url);
         });
     });
 

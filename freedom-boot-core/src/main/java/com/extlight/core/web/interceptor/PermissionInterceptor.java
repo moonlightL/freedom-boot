@@ -3,8 +3,8 @@ package com.extlight.core.web.interceptor;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.JsonUtil;
-import com.extlight.core.constant.CoreExceptionEnum;
 import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
@@ -16,7 +16,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -45,7 +44,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         Object obj = request.getSession().getAttribute(SystemContant.CURRENT_USER);
         if (obj == null) {
             if (this.isAjax(request)) {
-                this.print(response, JsonUtil.toStr(Result.fail(CoreExceptionEnum.ERROR_LOGIN_EXPIRE), false));
+                this.print(response, JsonUtil.toStr(Result.fail(SysUserExceptionEnum.ERROR_LOGIN_EXPIRE), false));
             } else {
                 response.sendRedirect("/");
             }
@@ -62,6 +61,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
 
+        request.setAttribute("userId", sysUserVO.getId());
+
         return true;
     }
 
@@ -71,23 +72,27 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
        if (handler instanceof HandlerMethod) {
            HandlerMethod handlerMethod = (HandlerMethod) handler;
            // 针对 listUI 页面返回所需的数据
-           if (handlerMethod.hasMethodAnnotation(GetMapping.class) && !handlerMethod.hasMethodAnnotation(ResponseBody.class)) {
-               Subject subject = SecurityUtils.getSubject();
-               SysUserVO sysUserVO = (SysUserVO) subject.getPrincipal();
-               List<SysPermissionVO> permissionList = sysUserVO.getPermissionList();
-               if (permissionList != null && !permissionList.isEmpty()) {
-                   StringBuilder sb = new StringBuilder();
-                   permissionList.stream().forEach(i -> {
-                       if (!i.getType().equals(PermissionEnum.MODULE)) {
-                           sb.append(i.getCode()).append(";");
-                       }
-                   });
-                   modelAndView.addObject("permissions", sb.toString());
-               }
+           if (handlerMethod.hasMethodAnnotation(GetMapping.class)) {
+               GetMapping getMapping = handlerMethod.getMethodAnnotation(GetMapping.class);
+               if (getMapping.value()[0].contains("listUI.html")) {
+                   Subject subject = SecurityUtils.getSubject();
+                   SysUserVO sysUserVO = (SysUserVO) subject.getPrincipal();
+                   List<SysPermissionVO> permissionList = sysUserVO.getPermissionList();
+                   if (permissionList != null && !permissionList.isEmpty()) {
+                       StringBuilder sb = new StringBuilder();
+                       permissionList.stream().forEach(i -> {
+                           if (!i.getType().equals(PermissionEnum.MODULE)) {
+                               sb.append(i.getCode()).append(";");
+                           }
+                       });
 
-               // 获取通用按钮
-               List<SysPermissionVO> buttonList = this.sysPermissionService.findCommonButtonList(request.getRequestURI());
-               modelAndView.addObject("buttonList", buttonList);
+                       modelAndView.addObject("permissions", sb.toString());
+                   }
+
+                   // 获取通用按钮
+                   List<SysPermissionVO> buttonList = this.sysPermissionService.findCommonButtonList(request.getRequestURI());
+                   modelAndView.addObject("buttonList", buttonList);
+               }
            }
        }
     }

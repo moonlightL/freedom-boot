@@ -2,12 +2,10 @@ package com.extlight.common.component.aspect;
 
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.annotation.ActionLog;
-import com.extlight.common.constant.GlobalConstant;
 import com.extlight.common.event.SysLogEvent;
 import com.extlight.common.utils.IpUtil;
 import com.extlight.common.utils.JsonUtil;
-import com.extlight.common.utils.TokenUtil;
-import io.jsonwebtoken.Claims;
+import com.extlight.common.utils.StringUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,10 +14,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -107,27 +105,34 @@ public class ActionLogAspect {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        } else if (arg instanceof HttpServletRequest) {
+            HttpServletRequest request = (HttpServletRequest) arg;
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            parameterMap.entrySet().forEach(i -> map.put(i.getKey(), StringUtil.join(i.getValue(), ",")));
+
+        } else if (arg instanceof MultipartFile[]) {
+            MultipartFile[] files = (MultipartFile[]) arg;
+            int index = 1;
+            for (MultipartFile file : files) {
+                map.put("fileName_" + (index++), file.getOriginalFilename());
+            }
+
+        } else if (arg instanceof MultipartFile) {
+            MultipartFile file = (MultipartFile) arg;
+            map.put("fileName", file.getOriginalFilename());
+
         } else {
             for (int i = 0; i < parameterNames.length; i++) {
-                map.put(parameterNames[i], args[i]);
+                if (args[i] instanceof String) {
+                    map.put(parameterNames[i], args[i]);
+                }
             }
         }
         return JsonUtil.toStr(map, true);
     }
 
     private Long getUserId(HttpServletRequest request) {
-
-        String token = request.getHeader(GlobalConstant.TOKEN);
-        if (StringUtils.isEmpty(token)) {
-            // 登录的情况
-            return Long.valueOf(request.getAttribute("userId").toString());
-        }
-
-        Claims claims = TokenUtil.getClaims(token);
-        if (claims == null) {
-            return 0L;
-        }
-
-        return Long.valueOf(claims.getId());
+        return Long.valueOf(Long.valueOf(request.getAttribute("userId").toString()));
     }
 }

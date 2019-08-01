@@ -14,5 +14,22 @@ import com.extlight.core.model.vo.SysFileVO;
  */
 public interface SysFileService extends BaseService<SysFile, SysFileVO> {
 
+    /**
+     * 保存文件
+     * @param fileName
+     * @param contentType
+     * @param data
+     * @return
+     * @throws GlobalException
+     */
+    String uploadFile(String fileName, String contentType, byte[] data) throws GlobalException;
+
+    /**
+     * 下载文件
+     * @param id
+     * @return
+     * @throws GlobalException
+     */
+    byte[] downloadFile(Long id) throws GlobalException;
 }
 

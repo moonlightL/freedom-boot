@@ -47,7 +47,6 @@ var loginManager = {
                     $("#verify-code-img").trigger("click");
                     return;
                 }
-                sessionStorage.setItem("token", resp.data.token);
                 window.location.href = resp.data.path;
             }
         });

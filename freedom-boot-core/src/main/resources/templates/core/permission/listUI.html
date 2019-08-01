@@ -89,11 +89,11 @@
     function actionFormatter(value, row) {
         var btnArr = [];
         var permissions = [[${permissions}]];
-        if (permissions.indexOf("system:permission:query") > -1) {
+        if (permissions.indexOf("core:permission:query") > -1) {
             btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
         }
 
-        if (permissions.indexOf("system:permission:delete") > -1) {
+        if (permissions.indexOf("core:permission:remove") > -1) {
             btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
         }
 

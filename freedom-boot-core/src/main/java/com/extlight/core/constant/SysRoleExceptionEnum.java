@@ -4,23 +4,24 @@ import com.extlight.common.exception.GlobalExceptionMap;
 
 /**
  * @Author MoonlightL
- * @ClassName: SysFileExceptionEnum
+ * @Title: SysRoleExceptionEnum
  * @ProjectName: freedom-boot
- * @Description: 异常枚举
- * @DateTime: 2019-07-31 17:42:54
+ * @Description: 角色异常枚举
+ * @DateTime: 2019/7/31 20:10
  */
-public enum SysFileExceptionEnum implements GlobalExceptionMap {
+public enum SysRoleExceptionEnum implements GlobalExceptionMap {
 
-    ERROR_FILE_NOT_EXIST(5001, "资源不存在"),
-    ERROR_UPLOAD_FILE_IS_EMPTY(5002, "上传文件为空"),
+    /*  角色相关： 2000~2999   */
+    ERROR_ROLE_NOT_EXIST(2001, "角色不存在"),
+    ERROR_ROLE_DATA_IS_EMPTY(2002, "角色ID为空"),
 
-	;
+    ;
 
     private int code;
 
     private String message;
 
-	SysFileExceptionEnum(int code, String message) {
+    SysRoleExceptionEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -34,5 +35,4 @@ public enum SysFileExceptionEnum implements GlobalExceptionMap {
     public String getMessage() {
         return message;
     }
-
 }

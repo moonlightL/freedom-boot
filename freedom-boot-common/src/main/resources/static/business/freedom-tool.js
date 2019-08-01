@@ -280,6 +280,10 @@
                         $queryBtn.trigger("click");
                     });
                 },
+                download: function(url) {
+                    var index = $.freedom.modal.window("下载", url, 600, 400);
+                    $.freedom.modal.close(index);
+                },
                 /**
                  *  注意：此函数对内使用，外部不要直接使用
                  * @param url
@@ -371,7 +375,7 @@
                         height = 'auto';
                     }
 
-                    layer.open({
+                    var index = layer.open({
                         title: title,
                         content: url,
                         type: 2,
@@ -382,6 +386,11 @@
                         shadeClose: true,
                         btn:[]
                     });
+
+                    return index;
+                },
+                close: function(index) {
+                    layer.close(index)
                 },
                 closeAll: function () {
                     layer.closeAll();
@@ -397,7 +406,6 @@ $.ajaxSetup({
     cache: false,
     xhrFields: { withCredentials: true },
     crossDomain: true,
-    headers: {token: sessionStorage.getItem("token")},
     complete: function(xhr) {
         if (xhr.responseJSON && xhr.responseJSON.code && xhr.responseJSON.code != 200) {
             $.freedom.modal.msg(xhr.responseJSON.msg, 2, function() {

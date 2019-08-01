@@ -5,8 +5,8 @@ import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
 import com.extlight.core.service.SysRoleService;
-import com.extlight.core.web.config.shiro.ShiroSession;
 import com.extlight.core.web.config.shiro.CoreRealm;
+import com.extlight.core.web.config.shiro.ShiroSession;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
@@ -67,8 +67,21 @@ public class ShiroService {
         }
     }
 
+    /**
+     * 获取当前主体
+     * @return
+     */
     public Subject getSubject() {
         return SecurityUtils.getSubject();
+    }
+
+    /**
+     * 获取当前用户 id
+     * @return
+     */
+    public Long getUserId() {
+        SysUserVO sysUserVO = (SysUserVO) SecurityUtils.getSubject().getPrincipal();
+        return sysUserVO.getId();
     }
 
 
