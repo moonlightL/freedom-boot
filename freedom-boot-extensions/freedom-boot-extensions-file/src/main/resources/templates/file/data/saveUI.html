@@ -27,12 +27,13 @@
 <!-- Bootstrap-fileinput -->
 <script th:src="@{/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
 <script th:src="@{/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
-<script>
+<script type="text/javascript" th:inline="javascript">
     $(function () {
+        var uploadUrl = [[${action}]];
         $("#upload").fileinput({
             language: 'zh', //设置语言
             dropZoneTitle: '可以将图片拖放到这里 …支持多文件上传',
-            uploadUrl: "/core/file/save.json", //上传的地址
+            uploadUrl: uploadUrl, //上传的地址
             allowedFileExtensions: ['jpg','png', 'txt'],//接收的文件后缀
             uploadAsync: true, //默认异步上传
             showUpload: true, //是否显示上传按钮

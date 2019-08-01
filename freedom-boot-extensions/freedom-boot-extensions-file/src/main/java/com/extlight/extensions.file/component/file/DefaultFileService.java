@@ -1,10 +1,8 @@
 package com.extlight.extensions.file.component.file;
 
 import com.extlight.common.exception.GlobalException;
-import com.extlight.core.web.config.CoreConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -22,14 +20,12 @@ import java.io.IOException;
 @Slf4j
 public class DefaultFileService implements FileService {
 
-    @Autowired
-    private CoreConfig coreConfig;
 
     @Override
     public String upload(String fileName, byte[] data) throws GlobalException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(data);
-        File dest = new File(this.coreConfig.getFileDir(), fileName);
+        File dest = new File("/Users/moonlight/Tmp", fileName);
 
         try {
             FileUtils.copyToFile(bis, dest);
