@@ -1,4 +1,4 @@
-package com.extlight.core.component.file;
+package com.extlight.extensions.file.component.file;
 
 import com.extlight.common.exception.GlobalException;
 import com.extlight.core.web.config.CoreConfig;

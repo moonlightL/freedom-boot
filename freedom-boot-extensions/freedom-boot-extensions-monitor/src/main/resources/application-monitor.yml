@@ -4,7 +4,7 @@ spring:
         druid:
             web-stat-filter:
                 enabled: true
-                exclusions: *.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
+                exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
             stat-view-servlet:
                 enabled: true
                 url-pattern: /druid/*

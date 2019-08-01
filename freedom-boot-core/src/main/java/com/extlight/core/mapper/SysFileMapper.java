@@ -1,7 +1,6 @@
 package com.extlight.core.mapper;
 
 import com.extlight.common.base.BaseMapper;
-import com.extlight.core.model.SysFile;
 
 /**
  * @Author MoonlightL

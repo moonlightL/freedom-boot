@@ -1,4 +1,4 @@
-package com.extlight.core.component.file;
+package com.extlight.extensions.file.component.file;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

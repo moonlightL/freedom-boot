@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="common :: header"></head>
+</head>
+
+<body>
+<!--Page content-->
+<div id="page-content" class=" animated fadeIn">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="pad-btm form-inline">
+                        <div class="row">
+                            <div class="col-sm-12 table-toolbar-left" id="toolbar">
+                                <span th:each="button: ${buttonList}">
+                                    <button th:if="${#strings.containsIgnoreCase(button.code,'save')}" class="btn btn-primary freedom-add" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.code,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.code,'remove')}" class="btn btn-danger freedom-delete" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.code,'query')}" class="btn btn-success freedom-query" data-target="#query-modal" data-toggle="modal" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="listTable"
+                               data-toolbar="#toolbar"
+                               data-detail-view="true"
+                               data-minimum-count-columns="2"
+                               data-classes="table table-hover table-borderless"
+                               data-sort-order="desc">
+                            <thead>
+                                <tr>
+                                    <th data-align="center" data-checkbox="true"></th>
+                                    <th data-align="center" data-field="id" data-sortable="true">ID</th>
+                                                                        <th data-align="center" data-field="id">主键</th>
+                                                                        <th data-align="center" data-field="configName">配置名称</th>
+                                                                        <th data-align="center" data-field="configValue">配置值</th>
+                                                                        <th data-align="center" data-field="configType">类型 1：默认 2：七牛 3：oss</th>
+                                                                        <th data-align="center" data-field="createTime">创建时间</th>
+                                                                        <th data-align="center" data-field="updateTime">修改时间</th>
+                                                                        <th data-align="center" data-formatter="actionFormatter">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 搜索框 -->
+    <div class="modal fade" id="query-modal" role="dialog" tabindex="-1" aria-labelledby="default-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" id="queryForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                        <h4 class="modal-title">查询</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--查询 input-->
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" for="name">名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" placeholder="名称" id="name" name="name" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" type="button">重置</button>
+                        <button class="btn btn-primary" type="submit">查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--End page content-->
+<div th:include="common :: script"></div>
+<script type="text/javascript" th:inline="javascript" >
+
+    function actionFormatter(value, row) {
+        var btnArr = [];
+        var permissions = [[${permissions}]];
+        if (permissions.indexOf("query") > -1) {
+            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
+        }
+
+        if (permissions.indexOf("remove") > -1) {
+            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
+        }
+
+        return btnArr.join('');
+    }
+
+    $(function() {
+        /**
+         *  init 方法中可传入的参数:
+         *    id: "listTable",              // table id
+         *    baseUrl: "",                  // 基础路径
+         *    addUIUrl: "saveUI.html",       // 新增页面地址
+         *    editUIUrl: "updateUI.html",     // 编辑页面地址
+         *    deleteUrl: "remove.json",     // 删除地址
+         *    listUrl: "list.json",         // 列表地址
+         *    detailUIUrl: "detailUI.html", // 详情地址
+         *    queryFormId: "queryForm",     // 搜索框表单 id
+         *    columns：[],                  // bootstrap-table cell 参数，页面默认使用内嵌方式设置数据
+         *    pagination：true              // 是否分页
+         */
+        var prefix = [[${prefix}]];
+        $.freedom.table.init({
+            baseUrl: prefix
+        });
+
+    });
+
+</script>
+</body>
+</html>

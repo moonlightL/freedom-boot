@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `t_sys_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统日志';
 ;
 
-CREATE TABLE `t_sys_file` (
+CREATE TABLE `t_file_data` (
 	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
 	`name` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '文件名称',
 	`url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件路径',
@@ -186,5 +186,16 @@ CREATE TABLE `t_sys_file` (
 	INDEX `idx_name` (`name`),
 	INDEX `idx_create_time` (`create_time`)
 )
-ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件';
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件数据';
 ;
+
+CREATE TABLE `t_file_config` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `config_name` varchar(50) NOT NULL DEFAULT '' COMMENT '配置名称',
+  `config_value` varchar(100) NOT NULL DEFAULT '' COMMENT '配置值',
+  `config_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类型 1：默认 2：七牛 3：oss',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_config_name` (`config_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件配置';
