@@ -5,6 +5,8 @@ import com.extlight.common.exception.GlobalException;
 import com.extlight.core.model.SysFile;
 import com.extlight.core.model.vo.SysFileVO;
 
+import java.util.List;
+
 /**
  * @Author MoonlightL
  * @ClassName: SysFileService
@@ -31,5 +33,21 @@ public interface SysFileService extends BaseService<SysFile, SysFileVO> {
      * @throws GlobalException
      */
     byte[] downloadFile(Long id) throws GlobalException;
+
+	/**
+	 * 删除文件
+	 * @param id
+	 * @return
+	 * @throws GlobalException
+	 */
+	boolean removeFile(Long id) throws GlobalException;
+
+	/**
+	 * 批量删除文件
+	 * @param idList
+	 * @return
+	 * @throws GlobalException
+	 */
+	boolean removeFileBatch(List<Long> idList) throws GlobalException;
 }
 

@@ -116,16 +116,16 @@ public class SysFileController extends BaseController {
     @ActionLog(value="删除", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
-        int num;
+        boolean flag;
         if (idArr.length == 1) {
-            num = this.sysFileService.remove(Long.valueOf(idArr[0]));
+            flag = this.sysFileService.removeFile(Long.valueOf(idArr[0]));
         } else {
             String[] idStrArr = idStr.split(",");
             List<Long> idList = new ArrayList<>(idStr.length());
             Arrays.stream(idStrArr).forEach(i -> idList.add(Long.valueOf(i)));
-            num = this.sysFileService.removeBatch(idList);
+            flag = this.sysFileService.removeFileBatch(idList);
         }
-        return num > 0 ? Result.success() : Result.fail();
+        return flag ? Result.success() : Result.fail();
     }
 
     @GetMapping("/list.json")

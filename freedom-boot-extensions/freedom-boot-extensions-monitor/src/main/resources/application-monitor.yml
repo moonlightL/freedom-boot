@@ -2,8 +2,12 @@
 spring:
     datasource:
         druid:
+            web-stat-filter:
+                enabled: true
+                exclusions: *.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
             stat-view-servlet:
                 enabled: true
-                 url-pattern: /druid/*
+                url-pattern: /druid/*
+                reset-enable: false
 #                 login-password: druid123
 #                 login-username: druid

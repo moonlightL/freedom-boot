@@ -29,8 +29,17 @@ public interface FileService {
     byte[] download(String url) throws GlobalException;
 
     /**
+     * 删除文件
+     * @param url
+     * @return
+     * @throws GlobalException
+     */
+    boolean remove(String url) throws GlobalException;
+
+    /**
      * 文件管理方式，参考：ModeEnum 枚举
      * @return
      */
     int getCode();
+
 }

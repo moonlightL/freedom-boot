@@ -8,6 +8,7 @@ import com.extlight.core.component.ShiroService;
 import com.extlight.core.component.file.FileService;
 import com.extlight.core.component.file.FileServiceFactory;
 import com.extlight.core.component.file.ModeEnum;
+import com.extlight.core.constant.SysFileExceptionEnum;
 import com.extlight.core.mapper.SysFileMapper;
 import com.extlight.core.model.SysFile;
 import com.extlight.core.model.dto.SysFileDTO;
@@ -17,6 +18,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author MoonlightL
@@ -86,6 +90,36 @@ public class SysFileServiceImpl extends BaseServiceImpl<SysFile, SysFileVO> impl
         FileService fileService = this.getFileService();
 
         return fileService.download(sysFileVO.getUrl());
+    }
+
+    @Override
+    public boolean removeFile(Long id) throws GlobalException {
+
+        SysFileVO sysFileVO = super.getById(id);
+        if (sysFileVO == null) {
+            throw new GlobalException(SysFileExceptionEnum.ERROR_FILE_DELETED);
+        }
+
+        FileService fileService = this.getFileService();
+        boolean removeFlag = fileService.remove(sysFileVO.getUrl());
+
+        boolean result = removeFlag;
+        if (removeFlag) {
+            result = (super.remove(id) > 0);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean removeFileBatch(List<Long> idList) throws GlobalException {
+
+        List<Boolean> tmp = new ArrayList<>(idList.size());
+        for (Long id : idList) {
+            tmp.add(this.removeFile(id));
+        }
+
+        return tmp.stream().filter(i -> i == false).count() == 0;
     }
 
     private FileService getFileService() {

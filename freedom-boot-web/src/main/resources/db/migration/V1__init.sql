@@ -58,7 +58,8 @@ INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pi
 	(20, '代码管理', 'fa fa-code', '', 1, '', 0, 1, 2, 1),
 	(21, '数据表管理', 'fa fa-user', '/generator/table/listUI.html', 2, 'generator:table:listUI', 20, 1, 1, 1),
 	(22, '系统监控', 'fa fa-eye', '', 1, '', 0, 1, 3, 1),
-	(23, '系统信息', 'fa fa-server', '/monitor/server/listUI.html', 2, 'monitor:server:listUI', 22, 1, 1, 1);
+	(23, '系统信息', 'fa fa-server', '/monitor/server/listUI.html', 2, 'monitor:server:listUI', 22, 1, 1, 1),
+	(24, 'SQL监控', 'fa fa-sql', '/druid/index.html', 2, 'monitor:druid:index', 22, 1, 1, 1);
 /*!40000 ALTER TABLE `t_sys_permission` ENABLE KEYS */;
 
 -- 导出  表 freedom-boot.t_sys_role 结构

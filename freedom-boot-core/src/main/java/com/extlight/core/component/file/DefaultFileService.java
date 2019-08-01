@@ -35,8 +35,8 @@ public class DefaultFileService implements FileService {
             FileUtils.copyToFile(bis, dest);
             return dest.getAbsolutePath();
         } catch (IOException e) {
-            e.printStackTrace();
             log.error("========文件fileName: {} 文件上传失败=============", fileName);
+            e.printStackTrace();
         }
 
         return null;
@@ -49,11 +49,30 @@ public class DefaultFileService implements FileService {
         try {
             data = FileUtils.readFileToByteArray(new File(url));
         } catch (IOException e) {
-            e.printStackTrace();
             log.error("========文件url: {} 文件下载失败=============", url);
+            e.printStackTrace();
         }
 
         return data;
+    }
+
+    @Override
+    public boolean remove(String url) throws GlobalException {
+
+        File file = new File(url);
+        if (!file.exists()) {
+            return true;
+        }
+
+        try {
+            FileUtils.forceDelete(file);
+            return true;
+        } catch (IOException e) {
+            log.error("========文件url: {} 文件删除失败=============", url);
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
