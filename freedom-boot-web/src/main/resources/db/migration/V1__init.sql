@@ -60,7 +60,7 @@ INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pi
 	(22, '系统监控', 'fa fa-eye', '', 1, '', 0, 1, 3, 1),
 	(23, '系统信息', 'fa fa-server', '/monitor/server/listUI.html', 2, 'monitor:server:listUI', 22, 1, 1, 1),
 	(24, 'SQL监控', 'fa fa-sql', '/druid/index.html', 2, 'monitor:druid:index', 22, 1, 1, 1),
-	(25, '文件管理', 'fa fa-file', '', 1, '', 0, 1, 4, 1, '2019-08-02 01:15:36', '2019-08-02 01:15:36'),
+	(25, '文件管理', 'fa fa-file', '', 1, '', 0, 1, 4, 1),
     (26, '文件上传', 'fa fa-upload', '/file/data/listUI.html', 2, 'file:data:listUI', 25, 1, 1, 1),
     (27, '上传', 'fa fa-cloud-upload', '', 3, 'file:data:save', 26, 1, 1, 1),
     (28, '删除', 'fa fa-trash', '', 3, 'file:data:remove', 26, 1, 2, 1),

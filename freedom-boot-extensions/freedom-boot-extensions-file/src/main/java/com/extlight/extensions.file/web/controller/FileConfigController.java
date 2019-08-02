@@ -33,7 +33,7 @@ import java.util.Map;
  * @DateTime: 2019-08-02 00:04:21
  */
 @Controller
-@RequestMapping("/extensions.file/fileConfig")
+@RequestMapping("/file/config")
 public class FileConfigController extends BaseController {
 
     @Autowired
@@ -41,27 +41,29 @@ public class FileConfigController extends BaseController {
 
     /**
      * 新增页面
+     *
      * @param resultMap
      * @return
      * @throws GlobalException
      */
     @GetMapping("/saveUI.html")
-    @RequiresPermissions("extensions.file:fileConfig:save")
-    public String saveUI(Map<String,Object> resultMap) throws GlobalException {
+    @RequiresPermissions("file:config:save")
+    public String saveUI(Map<String, Object> resultMap) throws GlobalException {
         return render(SAVE_PAGE, resultMap);
     }
 
     /**
      * 修改页面
+     *
      * @param id
      * @param resultMap
      * @return
      * @throws GlobalException
      */
     @GetMapping("/updateUI/{id}.html")
-    @RequiresPermissions("extensions.file:fileConfig:update")
-    public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            FileConfigVO vo = this.fileConfigService.getById(id);
+    @RequiresPermissions("file:config:update")
+    public String updateUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
+        FileConfigVO vo = this.fileConfigService.getById(id);
         if (vo == null) {
             throw new GlobalException(FileConfigExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
@@ -73,27 +75,29 @@ public class FileConfigController extends BaseController {
 
     /**
      * 列表页面
+     *
      * @param resultMap
      * @return
      * @throws GlobalException
      */
     @GetMapping("/listUI.html")
-    @RequiresPermissions("extensions.file:fileConfig:listUI")
-    public String listUI(Map<String,Object> resultMap) throws GlobalException {
+    @RequiresPermissions("file:config:listUI")
+    public String listUI(Map<String, Object> resultMap) throws GlobalException {
         return render(LIST_PAGE, resultMap);
     }
 
     /**
      * 详情页面
+     *
      * @param id
      * @param resultMap
      * @return
      * @throws GlobalException
      */
     @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("extensions.file:fileConfig:query")
-    public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            FileConfigVO vo = this.fileConfigService.getById(id);
+    @RequiresPermissions("file:config:query")
+    public String detailUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
+        FileConfigVO vo = this.fileConfigService.getById(id);
         if (vo == null) {
             throw new GlobalException(FileConfigExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
@@ -103,20 +107,21 @@ public class FileConfigController extends BaseController {
         return render(DETAIL_PAGE, resultMap);
     }
 
-    //
+    //#########################################【AJAX 请求】##################################################
+
     @PostMapping("/save.json")
-    @RequiresPermissions("extensions.file:fileConfig:save")
+    @RequiresPermissions("file:config:save")
     @ResponseBody
-    @ActionLog(value="新增", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value = "新增", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) FileConfigDTO fileConfigDto) throws GlobalException {
         FileConfig fileConfig = fileConfigDto.toDo(FileConfig.class);
         return this.fileConfigService.save(fileConfig) > 0 ? Result.success() : Result.fail();
     }
 
     @PostMapping("/remove.json")
-    @RequiresPermissions("extensions.file:fileConfig:remove")
+    @RequiresPermissions("file:config:remove")
     @ResponseBody
-    @ActionLog(value="删除", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value = "删除", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         int num;
@@ -132,9 +137,9 @@ public class FileConfigController extends BaseController {
     }
 
     @PostMapping("/update.json")
-    @RequiresPermissions("extensions.file:fileConfig:update")
+    @RequiresPermissions("file:config:update")
     @ResponseBody
-    @ActionLog(value="编辑", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value = "编辑", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) FileConfigDTO fileConfigDTO) throws GlobalException {
         FileConfigVO dbData = this.fileConfigService.getById(fileConfigDTO.getId());
         if (dbData == null) {
@@ -146,7 +151,7 @@ public class FileConfigController extends BaseController {
     }
 
     @GetMapping("/list.json")
-    @RequiresPermissions("extensions.file:fileConfig:listUI")
+    @RequiresPermissions("file:config:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) FileConfigDTO params) throws GlobalException {
         PageInfo<FileConfigVO> pageInfo = this.fileConfigService.page(params);

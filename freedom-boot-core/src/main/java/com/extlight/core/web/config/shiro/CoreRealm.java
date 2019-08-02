@@ -4,6 +4,7 @@ import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.constant.StateEnum;
+import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysRoleVO;
@@ -74,19 +75,24 @@ public class CoreRealm extends AuthorizingRealm {
         // 绑定权限
         this.shiroService.bindAuthorization(userVO);
 
-        List<SysRoleVO> roleList = userVO.getRoleList();
-        List<SysPermissionVO> permissionList = userVO.getPermissionList();
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        // 授权-角色
-        info.addRoles(roleList.stream().map(i -> i.getCode()).collect(Collectors.toList()));
-
-        // 授权-权限
-        info.addStringPermissions(
-                permissionList.stream().filter(i -> !i.getType().equals(PermissionEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getCode()))
-                        .map(i -> i.getCode()).collect(Collectors.toList())
-        );
+        if (SystemContant.SUPER_ADMIN.equals(userVO.getUsername()) && userVO.getSuperAdmin()) {
+            // 授权-角色
+            info.addRole(SystemContant.SUPER_ADMIN);
+            // 授权-权限
+            info.addStringPermission("*:*:*");
+        } else {
+            List<SysRoleVO> roleList = userVO.getRoleList();
+            List<SysPermissionVO> permissionList = userVO.getPermissionList();
+            // 授权-角色
+            info.addRoles(roleList.stream().map(i -> i.getCode()).collect(Collectors.toList()));
+            // 授权-权限
+            info.addStringPermissions(
+                    permissionList.stream().filter(i -> !i.getType().equals(PermissionEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getCode()))
+                            .map(i -> i.getCode()).collect(Collectors.toList())
+            );
+        }
 
         return info;
     }

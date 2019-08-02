@@ -18,4 +18,9 @@ public class SystemContant {
      * 验证码
      */
     public static final String CAPTCHA = "captcha";
+
+    /**
+     * 超级管理员
+     */
+    public static final String SUPER_ADMIN = "admin";
 }

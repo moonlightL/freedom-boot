@@ -1,5 +1,6 @@
 package com.extlight.core.component;
 
+import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.SysUserVO;
@@ -28,8 +29,6 @@ import java.util.List;
  */
 @Component
 public class ShiroService {
-
-    private static final String SUPER_ADMIN = "admin";
 
     @Autowired
     private SysRoleService sysRoleService;
@@ -97,7 +96,7 @@ public class ShiroService {
 
     private void setRoles(SysUserVO sysUserVO) {
         List<SysRoleVO> roleList;
-        if (SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
+        if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
             roleList = this.sysRoleService.list();
         } else {
             roleList = this.sysRoleService.findRoleListByUserId(sysUserVO.getId());
@@ -109,7 +108,7 @@ public class ShiroService {
 
     private void setPermissions(SysUserVO sysUserVO) {
         List<SysPermissionVO> permissionList;
-        if (SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
+        if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
             permissionList = this.sysPermissionService.list();
         } else {
             permissionList = this.sysPermissionService.findPermissionListByUserId(sysUserVO.getId());
