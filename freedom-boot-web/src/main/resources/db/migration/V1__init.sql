@@ -183,6 +183,7 @@ CREATE TABLE `t_file_data` (
 	`name` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '文件名称',
 	`url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件路径',
 	`thumbnail_url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
+	`file_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件 key(七牛云返回)',
 	`code` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '管理类型 1：默认 2：七牛 3：oss',
 	`content_type` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '内容类型',
 	`operator_id` BIGINT(20) NOT NULL DEFAULT '0' COMMENT '操作者 id',
@@ -216,4 +217,4 @@ INSERT INTO `t_file_config`(`id`, `config_name`, `config_value`, `config_type`) 
 (7, 'oss_endpoint', '', 3),
 (8, 'oss_accessKey', '', 3),
 (9, 'oss_secretKey', '', 3),
-(10, 'oss_object', '', 3);
+(10, 'oss_bucket', '', 3);

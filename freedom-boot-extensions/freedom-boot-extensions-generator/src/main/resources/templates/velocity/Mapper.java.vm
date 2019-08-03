@@ -1,6 +1,6 @@
 package ${packageName}.${moduleName}.mapper;
 
-import ${packageName}.common.base.BaseMapper;
+import com.extlight.common.base.BaseMapper;
 import ${packageName}.${moduleName}.model.${className};
 
 /**

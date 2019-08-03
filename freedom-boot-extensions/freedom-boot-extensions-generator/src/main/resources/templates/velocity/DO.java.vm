@@ -1,6 +1,6 @@
 package ${packageName}.${moduleName}.model;
 
-import ${packageName}.common.base.BaseResponse;
+import com.extlight.common.base.BaseResponse;
 import lombok.*;
 import lombok.experimental.Accessors;
 

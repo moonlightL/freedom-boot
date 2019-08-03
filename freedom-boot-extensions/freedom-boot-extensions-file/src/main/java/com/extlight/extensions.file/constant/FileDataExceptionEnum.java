@@ -12,7 +12,8 @@ import com.extlight.common.exception.GlobalExceptionMap;
 public enum FileDataExceptionEnum implements GlobalExceptionMap {
 
     ERROR_RESOURCE_NOT_EXIST(5001, "资源不存在"),
-    ERROR_FILE_DELETED(5002, "该文件已被删除"),
+    ERROR_FILE_DATA_IS_EMPTY(5002, "文件资源读取失败"),
+    ERROR_FILE_DELETED(5003, "该文件已被删除"),
 
 	;
 

@@ -1,5 +1,6 @@
 package com.extlight.extensions.file.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,11 +35,13 @@ public class FileDataVO implements Serializable {
 	/**
 	 * 文件路径
 	 */
+	@JsonIgnore
 	private String url;
 
 	/**
 	 * 缩略图路径
 	 */
+	@JsonIgnore
 	private String thumbnailUrl;
 
 	/**

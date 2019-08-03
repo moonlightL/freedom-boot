@@ -39,5 +39,5 @@ public class FileConstant {
 
 	public static final String OSS_SECRET_KEY = "oss_secret_key";
 
-	public static final String OSS_OBJECT = "oss_object";
+	public static final String OSS_BUCKET = "oss_bucket";
 }

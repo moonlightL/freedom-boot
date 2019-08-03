@@ -1,6 +1,6 @@
 package ${packageName}.${moduleName}.model.dto;
 
-import ${packageName}.common.base.BaseRequest;
+import com.extlight.common.base.BaseRequest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

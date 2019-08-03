@@ -40,9 +40,9 @@
                         <hr>
                         <p class="text-main text-bold">七牛云配置</p>
                         <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">域名</label>
+                            <label class="col-lg-3 col-sm-2 control-label">Domain</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" id="qn_domain" name="qn_domain" class="form-control" placeholder="域名"th:value="${fileConfigMap['qn_domain']}">
+                                <input type="text" id="qn_domain" name="qn_domain" class="form-control" placeholder="Domain" th:value="${fileConfigMap['qn_domain']}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -68,27 +68,25 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">Endpoint</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" id="oss_endpoint" name="oss_endpoint" class="form-control" placeholder="Endpoint">
+                                <input type="text" id="oss_endpoint" name="oss_endpoint" class="form-control" placeholder="Endpoint" th:value="${fileConfigMap['oss_endpoint']}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">AccessKey</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" id="oss_accessKey" name="oss_access_key" class="form-control"
-                                       placeholder="AccessKey">
+                                <input type="text" id="oss_accessKey" name="oss_access_key" class="form-control" placeholder="AccessKey" th:value="${fileConfigMap['oss_access_key']}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">SecretKey</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" id="oss_secretKey" name="oss_secret_key" class="form-control"
-                                       placeholder="SecretKey">
+                                <input type="text" id="oss_secretKey" name="oss_secret_key" class="form-control" placeholder="SecretKey" th:value="${fileConfigMap['oss_secret_key']}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">ObjectName</label>
+                            <label class="col-lg-3 col-sm-2 control-label">Bucket</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" id="oss_object" name="oss_object" class="form-control" placeholder="ObjectName">
+                                <input type="text" id="oss_bucket" name="oss_bucket" class="form-control" placeholder="Bucket" th:value="${fileConfigMap['oss_bucket']}">
                             </div>
                         </div>
                     </div>

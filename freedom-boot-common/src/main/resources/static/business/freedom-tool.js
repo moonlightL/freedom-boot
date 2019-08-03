@@ -282,7 +282,9 @@
                 },
                 download: function(url) {
                     var index = $.freedom.modal.window("下载", url, 600, 400);
-                    $.freedom.modal.close(index);
+                    setTimeout(function() {
+                        $.freedom.modal.close(index);
+                    },1500)
                 },
                 /**
                  *  注意：此函数对内使用，外部不要直接使用
