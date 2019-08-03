@@ -67,6 +67,10 @@
                 };
             }
         });
+
+        $('#upload').on('filebatchuploadcomplete',function (event,files,extra) {
+            window.parent.$.freedom.table.refreshData();
+        });
     });
 </script>
 </body>
