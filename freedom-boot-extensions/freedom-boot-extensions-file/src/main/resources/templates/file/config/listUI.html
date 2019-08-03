@@ -18,13 +18,13 @@
                             <div class="col-lg-7 col-sm-9">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="manage_mode" value="1" th:checked="${fileConfigMap['manage_mode']} == '1' ? 'checked' : ''"/> 默认（本地）
-                                    </label>
+                                        <input type="radio" name="manage_mode" value="1" th:attr="checked=${fileConfigMap['manage_mode'] == '1'}"/> 默认（本地）
+                                    </label>&nbsp;
                                     <label>
-                                        <input type="radio" name="manage_mode" value="2" th:checked="${fileConfigMap['manage_mode']} == '2' ? 'checked' : ''"/> 七牛云
-                                    </label>
+                                        <input type="radio" name="manage_mode" value="2" th:attr="checked=${fileConfigMap['manage_mode'] == '2'}"/> 七牛云
+                                    </label>&nbsp;
                                     <label>
-                                        <input type="radio" name="manage_mode" value="3" th:checked="${fileConfigMap['manage_mode']} == '3' ? 'checked' : ''"/> OSS
+                                        <input type="radio" name="manage_mode" value="3" th:attr="checked=${fileConfigMap['manage_mode'] == '3'}"/> OSS
                                     </label>
                                 </div>
                             </div>
