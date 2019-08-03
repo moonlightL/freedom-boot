@@ -29,47 +29,52 @@ public class FileData extends BaseResponse {
 	/**
 	 * 主键
 	 */
-		@Id
-		private Long id;
+	@Id
+	private Long id;
 
 	/**
 	 * 文件名称
 	 */
-		private String name;
+	private String name;
 
 	/**
 	 * 文件路径
 	 */
-		private String url;
+	private String url;
 
 	/**
 	 * 缩略图路径
 	 */
-		private String thumbnailUrl;
+	private String thumbnailUrl;
+
+	/**
+	 * 文件 key (第三方返回)
+	 */
+	private String fileKey;
 
 	/**
 	 * 管理类型 1：默认 2：七牛 3：oss
 	 */
-		private Integer code;
+	private Integer code;
 
 	/**
 	 * 内容类型
 	 */
-		private String contentType;
+	private String contentType;
 
 	/**
 	 * 操作者 id
 	 */
-		private Long operatorId;
+	private Long operatorId;
 
 	/**
 	 * 创建时间
 	 */
-		private LocalDateTime createTime;
+	private LocalDateTime createTime;
 
 	/**
 	 * 修改时间
 	 */
-		private LocalDateTime updateTime;
+	private LocalDateTime updateTime;
 
 }

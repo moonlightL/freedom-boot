@@ -16,13 +16,6 @@ import java.util.List;
 public interface FileDataService extends BaseService<FileData, FileDataVO> {
 
 	/**
-	 * 下载文件
-	 * @param id
-	 * @return
-	 */
-	byte[] downloadFile(Long id);
-
-	/**
 	 * 上传文件
 	 * @param originalFilename
 	 * @param contentType
@@ -32,11 +25,18 @@ public interface FileDataService extends BaseService<FileData, FileDataVO> {
 	String uploadFile(String originalFilename, String contentType, byte[] data);
 
 	/**
-	 * 删除文件
-	 * @param valueOf
+	 * 下载文件
+	 * @param id
 	 * @return
 	 */
-	boolean removeFile(Long valueOf);
+	byte[] downloadFile(Long id);
+
+	/**
+	 * 删除文件
+	 * @param id
+	 * @return
+	 */
+	boolean removeFile(Long id);
 
 	/**
 	 * 删除文件

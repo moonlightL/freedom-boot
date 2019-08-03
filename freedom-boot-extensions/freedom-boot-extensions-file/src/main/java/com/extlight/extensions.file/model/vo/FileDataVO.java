@@ -42,6 +42,12 @@ public class FileDataVO implements Serializable {
 	private String thumbnailUrl;
 
 	/**
+	 * 文件 key (第三方返回)
+	 */
+	private String fileKey;
+
+
+	/**
 	 * 管理类型 1：默认 2：七牛 3：oss
 	 */
 	private Integer code;

@@ -75,7 +75,7 @@ public class FileDataController extends BaseController {
      */
     @GetMapping("/download/{id}.html")
     @RequiresPermissions("file:data:download")
-    @ActionLog(value = "文件下载", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.DOWNLOAD)
+    @ActionLog(value = "文件下载", moduleName = ModuleEnum.FILE, actionType = ActionEnum.DOWNLOAD)
     public void download(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         FileDataVO vo = this.fileDataService.getById(id);
         if (vo == null) {
@@ -91,7 +91,7 @@ public class FileDataController extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("file:data:save")
     @ResponseBody
-    @ActionLog(value="文件上传", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value="文件上传", moduleName = ModuleEnum.FILE, actionType = ActionEnum.SAVE)
     public Result save(MultipartFile[] files) throws GlobalException {
         if (files.length == 0) {
             throw new GlobalException(FileDataExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
@@ -116,7 +116,7 @@ public class FileDataController extends BaseController {
     @PostMapping("/remove.json")
     @RequiresPermissions("file:data:remove")
     @ResponseBody
-    @ActionLog(value="删除", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除", moduleName = ModuleEnum.FILE, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         boolean flag;

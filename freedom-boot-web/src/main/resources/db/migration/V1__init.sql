@@ -65,7 +65,8 @@ INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pi
     (27, '上传', 'fa fa-cloud-upload', '', 3, 'file:data:save', 26, 1, 1, 1),
     (28, '删除', 'fa fa-trash', '', 3, 'file:data:remove', 26, 1, 2, 1),
     (29, '查询', 'fa fa-search', '', 3, 'file:data:query', 26, 1, 3, 1),
-    (30, '下载', 'fa fa-cloud-download', '', 3, 'file:data:download', 26, 1, 4, 1);
+    (30, '下载', 'fa fa-cloud-download', '', 3, 'file:data:download', 26, 1, 4, 1),
+    (31, '文件配置', 'fa fa-config', '/file/config/listUI.html', 2, 'file:config:listUI', 25, 1, 1, 1);
 /*!40000 ALTER TABLE `t_sys_permission` ENABLE KEYS */;
 
 -- 导出  表 freedom-boot.t_sys_role 结构
@@ -205,3 +206,14 @@ CREATE TABLE `t_file_config` (
   PRIMARY KEY (`id`),
   KEY `idx_config_name` (`config_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件配置';
+
+INSERT INTO `t_file_config`(`id`, `config_name`, `config_value`, `config_type`) VALUES (1, 'manage_mode', '1', 0),
+(2, 'upload_dir', '', 1),
+(3, 'qn_domain', '', 2),
+(4, 'qn_accessKey', '', 2),
+(5, 'qn_secretKey', '', 2),
+(6, 'qn_bucket', '', 2),
+(7, 'oss_endpoint', '', 3),
+(8, 'oss_accessKey', '', 3),
+(9, 'oss_secretKey', '', 3),
+(10, 'oss_object', '', 3);

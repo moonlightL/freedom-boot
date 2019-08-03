@@ -12,4 +12,20 @@
     <artifactId>freedom-boot-extensions-file</artifactId>
 
 
+    <dependencies>
+        <!-- 七牛云 -->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[7.2.0, 7.2.99]</version>
+        </dependency>
+
+        <!-- OSS -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -3,6 +3,7 @@ package com.extlight.extensions.file.service.impl;
 import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
+import com.extlight.common.exception.GlobalException;
 import com.extlight.extensions.file.mapper.FileConfigMapper;
 import com.extlight.extensions.file.model.FileConfig;
 import com.extlight.extensions.file.model.dto.FileConfigDTO;
@@ -11,6 +12,8 @@ import com.extlight.extensions.file.service.FileConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.*;
 
 /**
  * @Author MoonlightL
@@ -42,5 +45,37 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
 
         return example;
     }
+
+    @Override
+    public Map<String, String> getFileConfigMap() throws GlobalException {
+
+        List<FileConfigVO> list = super.list();
+        Map<String, String> result = new HashMap<>(list.size());
+        list.stream().forEach(i -> result.put(i.getConfigName(), i.getConfigValue()));
+
+        return result;
+    }
+
+    @Override
+    public boolean save(Map<String, String> paramMap) throws GlobalException {
+
+        if (paramMap.isEmpty()) {
+            return true;
+        }
+
+        List<FileConfig> fjleConfigList = new ArrayList<>(paramMap.size());
+
+        paramMap.entrySet().forEach(i -> {
+            FileConfig fileConfig = new FileConfig();
+            fileConfig.setConfigName(i.getKey())
+                      .setConfigValue(i.getValue());
+            fjleConfigList.add(fileConfig);
+        });
+
+        this.fileConfigMapper.updateByConfigName(fjleConfigList);
+
+        return true;
+    }
+
 
 }

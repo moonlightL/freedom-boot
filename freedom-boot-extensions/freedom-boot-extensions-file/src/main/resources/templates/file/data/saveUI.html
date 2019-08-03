@@ -34,7 +34,7 @@
             language: 'zh', //设置语言
             dropZoneTitle: '可以将图片拖放到这里 …支持多文件上传',
             uploadUrl: uploadUrl, //上传的地址
-            allowedFileExtensions: ['jpg','png', 'txt'],//接收的文件后缀
+            allowedFileExtensions: ['jpg','jpeg','png', 'txt'],//接收的文件后缀
             uploadAsync: true, //默认异步上传
             showUpload: true, //是否显示上传按钮
             showRemove: true, //显示移除按钮
@@ -43,10 +43,10 @@
             showCaption: true,//是否显示文件标题，默认为true
             browseClass: "btn btn-primary", //文件选择器/浏览按钮的CSS类。默认为btn btn-primary
             dropZoneEnabled: true,//是否显示拖拽区域
-            minImageWidth: 50, //图片的最小宽度
-            minImageHeight: 50,//图片的最小高度
-            maxImageWidth: 1000,//图片的最大宽度
-            maxImageHeight: 1000,//图片的最大高度
+            minImageWidth: 32, //图片的最小宽度
+            minImageHeight: 32,//图片的最小高度
+            maxImageWidth: 1920,//图片的最大宽度
+            maxImageHeight: 1080,//图片的最大高度
             maxFileSize: 1024,//单位为kb，如果为0表示不限制文件大小
             minFileCount: 1, //每次上传允许的最少文件数。如果设置为0，则表示文件数是可选的。默认为0
             maxFileCount: 0, //每次上传允许的最大文件数。如果设置为0，则表示允许的文件数是无限制的。默认为0

@@ -95,14 +95,7 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
     @Override
     public List<V> list(BaseRequest params) throws GlobalException {
         Example example = this.getExample(params);
-        List<T> list = this.getBaseMapper().selectByExample(example);
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<V> result = new ArrayList<>();
-        list.forEach(i -> result.add(i.toVO(voClass)));
-        return result;
+        return this.getList(example);
     }
 
     @Override
@@ -135,6 +128,17 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
             PageHelper.startPage(pageNum,pageSize, count);
         }
 
+        return this.getList(example);
+    }
+
+    @Override
+    public int count(BaseRequest params) throws GlobalException {
+        Example example = this.getExample(params);
+        return this.getBaseMapper().selectCountByExample(example);
+    }
+
+
+    private List<V> getList(Example example) {
         List<T> list = this.getBaseMapper().selectByExample(example);
         if (list.isEmpty()) {
             return new ArrayList<>();
@@ -143,11 +147,5 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
         List<V> result = new ArrayList<>();
         list.forEach(i -> result.add(i.toVO(voClass)));
         return result;
-    }
-
-    @Override
-    public int count(BaseRequest params) throws GlobalException {
-        Example example = this.getExample(params);
-        return this.getBaseMapper().selectCountByExample(example);
     }
 }

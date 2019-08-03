@@ -5,22 +5,24 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.ThreadUtil;
+import com.extlight.extensions.file.component.file.FileResponse;
 import com.extlight.extensions.file.component.file.FileService;
 import com.extlight.extensions.file.component.file.FileServiceFactory;
-import com.extlight.extensions.file.component.file.ModeEnum;
+import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.mapper.FileDataMapper;
 import com.extlight.extensions.file.model.FileData;
 import com.extlight.extensions.file.model.dto.FileDataDTO;
 import com.extlight.extensions.file.model.vo.FileDataVO;
+import com.extlight.extensions.file.service.FileConfigService;
 import com.extlight.extensions.file.service.FileDataService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author MoonlightL
@@ -34,6 +36,9 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
 
     @Autowired
     private FileDataMapper fileDataMapper;
+
+    @Autowired
+    private FileConfigService fileConfigService;
 
     @Autowired
     private FileServiceFactory fileServiceFactory;
@@ -50,10 +55,35 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         if (params != null) {
             Example.Criteria criteria = example.createCriteria();
             FileDataDTO fileDataDTO = (FileDataDTO) params;
-            // TODO 填充查询条件
+            // 填充查询条件
+            // 只能查看当前用户上传的文件
+            criteria.andEqualTo("operatorId", ThreadUtil.get());
         }
 
         return example;
+    }
+
+    @Override
+    public String uploadFile(String fileName, String contentType, byte[] data) {
+        FileService fileService = this.getFileService();
+        FileResponse fileResponse = fileService.upload(fileName, data);
+
+        if (!fileResponse.isSuccess()) {
+            return null;
+        }
+
+        FileData fileData = new FileData();
+        fileData.setName(fileName)
+                .setContentType(contentType)
+                .setUrl(fileResponse.getUrl())
+                .setThumbnailUrl(fileData.getUrl())
+                .setFileKey(fileResponse.getKey())
+                .setOperatorId(ThreadUtil.get())
+                .setCode(fileService.getCode());
+
+        super.save(fileData);
+
+        return fileData.getUrl();
     }
 
     @Override
@@ -63,29 +93,13 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
 
         FileService fileService = this.getFileService();
 
-        return fileService.download(fileDataVO.getUrl());
-    }
+        FileResponse fileResponse = fileService.download(fileDataVO);
 
-    @Override
-    public String uploadFile(String fileName, String contentType, byte[] data) {
-        FileService fileService = this.getFileService();
-        String url = fileService.upload(fileName, data);
-
-        if (StringUtils.isBlank(url)) {
+        if (!fileResponse.isSuccess()) {
             return null;
         }
 
-        FileData fileData = new FileData();
-        fileData.setName(fileName)
-                .setContentType(contentType)
-                .setUrl(url)
-                .setThumbnailUrl(fileData.getUrl())
-                .setOperatorId(ThreadUtil.get())
-                .setCode(fileService.getCode());
-
-        super.save(fileData);
-
-        return fileData.getUrl();
+        return fileResponse.getData();
     }
 
     @Override
@@ -96,10 +110,10 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         }
 
         FileService fileService = this.getFileService();
-        boolean removeFlag = fileService.remove(fileDataVO.getUrl());
+        FileResponse fileResponse = fileService.remove(fileDataVO);
 
-        boolean result = removeFlag;
-        if (removeFlag) {
+        boolean result = fileResponse.isSuccess();
+        if (result) {
             result = (super.remove(id) > 0);
         }
 
@@ -116,10 +130,14 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         return tmp.stream().filter(i -> i == false).count() == 0;
     }
 
+    /**
+     * 获取 FileService 实现
+     * @return
+     */
     private FileService getFileService() {
-        // TODO 测试
-        int code = ModeEnum.DEFAULT.getCode();
-        // 下载文件
+
+        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+        int code = Integer.valueOf(fileConfigMap.get(FileConstant.MANAGE_MODE));
         FileService fileService = this.fileServiceFactory.getInstance(code);
 
         return fileService;

@@ -1,6 +1,7 @@
 package com.extlight.extensions.file.component.file;
 
 import com.extlight.common.exception.GlobalException;
+import com.extlight.extensions.file.model.vo.FileDataVO;
 
 /**
  * @Author MoonlightL
@@ -18,23 +19,23 @@ public interface FileService {
      * @return
      * @throws GlobalException
      */
-    String upload(String fileName, byte[] data) throws GlobalException;
+    FileResponse upload(String fileName, byte[] data) throws GlobalException;
 
     /**
      * 下载文件
-     * @param url
+     * @param fileDataVO
      * @return
      * @throws GlobalException
      */
-    byte[] download(String url) throws GlobalException;
+    FileResponse download(FileDataVO fileDataVO) throws GlobalException;
 
     /**
      * 删除文件
-     * @param url
+     * @param fileDataVO
      * @return
      * @throws GlobalException
      */
-    boolean remove(String url) throws GlobalException;
+    FileResponse remove(FileDataVO fileDataVO) throws GlobalException;
 
     /**
      * 文件管理方式，参考：ModeEnum 枚举

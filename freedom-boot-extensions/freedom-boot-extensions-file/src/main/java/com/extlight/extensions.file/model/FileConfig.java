@@ -29,32 +29,32 @@ public class FileConfig extends BaseResponse {
 	/**
 	 * 主键
 	 */
-		@Id
-		private Long id;
+	@Id
+	private Long id;
 
 	/**
 	 * 配置名称
 	 */
-		private String configName;
+	private String configName;
 
 	/**
 	 * 配置值
 	 */
-		private String configValue;
+	private String configValue;
 
 	/**
 	 * 类型 1：默认 2：七牛 3：oss
 	 */
-		private Integer configType;
+	private Integer configType;
 
 	/**
 	 * 创建时间
 	 */
-		private LocalDateTime createTime;
+	private LocalDateTime createTime;
 
 	/**
 	 * 修改时间
 	 */
-		private LocalDateTime updateTime;
+	private LocalDateTime updateTime;
 
 }

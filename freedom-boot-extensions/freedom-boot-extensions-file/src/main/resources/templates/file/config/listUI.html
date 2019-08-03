@@ -10,69 +10,92 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="panel">
-                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" method="post">
+                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" method="post" >
                     <div class="panel-body">
                         <p class="text-main text-bold">基本资料</p>
-                        <hr>
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">文件管理方式</label>
                             <div class="col-lg-7 col-sm-9">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="manageMode" value="1"
-                                               data-bv-notempty="true"
-                                               data-bv-notempty-message="性别不能为空" /> 默认（本地）
+                                        <input type="radio" name="manage_mode" value="1" th:checked="${fileConfigMap['manage_mode']} == '1' ? 'checked' : ''"/> 默认（本地）
                                     </label>
                                     <label>
-                                        <input type="radio" name="manageMode" value="2" /> 七牛云
+                                        <input type="radio" name="manage_mode" value="2" th:checked="${fileConfigMap['manage_mode']} == '2' ? 'checked' : ''"/> 七牛云
                                     </label>
                                     <label>
-                                        <input type="radio" name="manageMode" value="3" /> OSS
+                                        <input type="radio" name="manage_mode" value="3" th:checked="${fileConfigMap['manage_mode']} == '3' ? 'checked' : ''"/> OSS
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <p class="text-main text-bold">默认配置</p>
-                        <hr>
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">文件上传目录</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="uploadDir" placeholder="文件上传目录" />
+                                <input type="text" class="form-control" name="upload_dir" placeholder="文件上传目录" th:value="${fileConfigMap['upload_dir']}" />
                             </div>
                         </div>
+                        <hr>
                         <p class="text-main text-bold">七牛云配置</p>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">域名</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="qn_domain" name="qn_domain" class="form-control" placeholder="域名"th:value="${fileConfigMap['qn_domain']}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">AccessKey</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="qn_accessKey" name="qn_access_key" class="form-control" placeholder="AccessKey" th:value="${fileConfigMap['qn_access_key']}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">SecretKey</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="qn_secretKey" name="qn_secret_key" class="form-control" placeholder="SecretKey" th:value="${fileConfigMap['qn_secret_key']}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">Bucket</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="qn_bucket" name="qn_bucket" class="form-control" placeholder="Bucket" th:value="${fileConfigMap['qn_bucket']}">
+                            </div>
+                        </div>
                         <hr>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件上传目录</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="uploadDir" placeholder="文件上传目录" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件上传目录</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="uploadDir" placeholder="文件上传目录" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件上传目录</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="uploadDir" placeholder="文件上传目录" />
-                            </div>
-                        </div>
                         <p class="text-main text-bold">OSS 配置</p>
-                        <hr>
                         <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">文件上传目录</label>
+                            <label class="col-lg-3 col-sm-2 control-label">Endpoint</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="uploadDir" placeholder="文件上传目录" />
+                                <input type="text" id="oss_endpoint" name="oss_endpoint" class="form-control" placeholder="Endpoint">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">AccessKey</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="oss_accessKey" name="oss_access_key" class="form-control"
+                                       placeholder="AccessKey">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">SecretKey</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="oss_secretKey" name="oss_secret_key" class="form-control"
+                                       placeholder="SecretKey">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">ObjectName</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" id="oss_object" name="oss_object" class="form-control" placeholder="ObjectName">
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn btn-primary" type="button" id="submitBtn">提交</button>
                                 <button class="btn btn-default" type="reset">重置</button>
                             </div>
                         </div>
@@ -88,6 +111,9 @@
 
     $(function() {
         var prefix = [[${prefix}]];
+        $("#submitBtn").on("click", function () {
+            $.freedom.action.request(prefix + "/save.json", $("#dataForm").serialize());
+        });
 
     });
 

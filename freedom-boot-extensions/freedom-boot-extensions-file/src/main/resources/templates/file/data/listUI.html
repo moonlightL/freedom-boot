@@ -39,8 +39,8 @@
                                     <th data-align="center" data-field="id" data-sortable="true">ID</th>
                                     <th data-align="center" data-field="name">文件名称</th>
                                     <th data-align="center" data-field="url">文件路径</th>
-                                    <th data-align="center" data-field="thumbnailUrl">缩略图路径</th>
-                                    <th data-align="center" data-field="code">管理类型</th>
+                                    <th data-align="center" data-field="thumbnailUrl" data-formatter="reviewFormatter">预览</th>
+                                    <th data-align="center" data-field="code" data-formatter="codeFormatter">管理类型</th>
                                     <th data-align="center" data-field="contentType">内容类型</th>
                                     <th data-align="center" data-field="operatorId">操作者 id</th>
                                     <th data-align="center" data-field="createTime">创建时间</th>
@@ -88,6 +88,24 @@
 <!--End page content-->
 <div th:include="common :: script"></div>
 <script type="text/javascript" th:inline="javascript" >
+
+    function reviewFormatter(value, row) {
+        var url = row.thumbnailUrl;
+        if (row.code != 1) {
+            url = "http://" + url;
+        }
+        return "<img src='"+url+"' width='32' height='32'/>"
+    }
+
+    function codeFormatter(value, row) {
+        if (value == 1) {
+            return "默认";
+        } else if (value == 2) {
+            return "七牛云";
+        } else if (value == 3) {
+            return "阿里云"
+        }
+    }
 
     function actionFormatter(value, row) {
         var btnArr = [];
