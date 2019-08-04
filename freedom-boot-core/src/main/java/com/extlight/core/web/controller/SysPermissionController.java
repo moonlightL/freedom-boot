@@ -7,6 +7,7 @@ import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.core.constant.SysPermissionExceptionEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.dto.SysPermissionDTO;
@@ -82,7 +83,7 @@ public class SysPermissionController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermissionVO vo = this.sysPermissionService.getById(id);
         if (vo == null) {
-            throw new GlobalException(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -117,7 +118,7 @@ public class SysPermissionController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermissionVO vo = this.sysPermissionService.getById(id);
         if (vo == null) {
-            throw new GlobalException(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -165,7 +166,7 @@ public class SysPermissionController extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
         SysPermissionVO dbData = this.sysPermissionService.getById(sysPermissionDTO.getId());
         if (dbData == null) {
-            throw new GlobalException(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
         SysPermission sysPermission = sysPermissionDTO.toDo(SysPermission.class);

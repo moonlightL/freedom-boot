@@ -4,6 +4,7 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IoUtil;
 import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
@@ -70,7 +71,7 @@ public class OssFileServiceImpl implements FileService {
 			OSSObject ossObject = ossClient.getObject(this.getBucket(), fileDataVO.getName());
 			byte[] data = IoUtil.toByteArray(ossObject.getObjectContent());
 			if (data == null || data.length == 0) {
-				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
+				ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
 			}
 
 			fileResponse.setSuccess(true).setData(data);
@@ -134,7 +135,7 @@ public class OssFileServiceImpl implements FileService {
 		if (StringUtil.isBlank(endpoint)
 			|| StringUtil.isBlank(accessKeyId)
 			|| StringUtil.isBlank(accessKeySecret)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
 		}
 
 		// 创建OSSClient实例
@@ -152,7 +153,7 @@ public class OssFileServiceImpl implements FileService {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
 		String endpoint = fileConfigMap.get(FileConstant.OSS_ENDPOINT);
 		if (StringUtil.isBlank(endpoint)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
 		}
 
 		return endpoint;
@@ -166,7 +167,7 @@ public class OssFileServiceImpl implements FileService {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
 		String bucket = fileConfigMap.get(FileConstant.OSS_BUCKET);
 		if (StringUtil.isBlank(bucket)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_OSS_CONFIG_IS_EMPTY);
 		}
 
 		return bucket;

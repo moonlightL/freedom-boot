@@ -1,6 +1,7 @@
 package com.extlight.extensions.file.component.file;
 
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IoUtil;
 import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
@@ -78,7 +79,7 @@ public class QiniuFileServiceImpl implements FileService {
 			URL url = new URL("http://" + fileDataVO.getUrl());
 			byte[] data = IoUtil.toByteArray(url.openStream());
 			if (data == null || data.length == 0) {
-				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
+				ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
 			}
 			fileResponse.setSuccess(true).setData(data);
 
@@ -141,7 +142,7 @@ public class QiniuFileServiceImpl implements FileService {
 		String secretKey = fileConfigMap.get(FileConstant.QN_SECRET_KEY);
 
 		if (StringUtil.isBlank(accessKey) || StringUtil.isBlank(secretKey)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
 		}
 
 		Auth auth = Auth.create(accessKey, secretKey);
@@ -157,7 +158,7 @@ public class QiniuFileServiceImpl implements FileService {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
 		String bucket = fileConfigMap.get(FileConstant.QN_BUCKET);
 		if (StringUtil.isBlank(bucket)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
 		}
 
 		return bucket;
@@ -171,7 +172,7 @@ public class QiniuFileServiceImpl implements FileService {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
 		String domain = fileConfigMap.get(FileConstant.QN_DOMAIN);
 		if (StringUtil.isBlank(domain)) {
-			throw new GlobalException(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
+			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
 		}
 
 		return domain;

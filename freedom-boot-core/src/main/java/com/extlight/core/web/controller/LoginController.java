@@ -7,6 +7,7 @@ import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IpUtil;
 import com.extlight.common.utils.RsaUtil;
 import com.extlight.core.constant.SysUserExceptionEnum;
@@ -103,7 +104,7 @@ public class LoginController extends BaseController {
 
         String capText = (String) session.getAttribute(SystemContant.CAPTCHA);
         if (!loginDTO.getVerifyCode().equals(capText)) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_VERIFY_CODE_WRONG);
+            ExceptionUtil.throwEx(GlobalExceptionEnum.ERROR_VERIFY_CODE_WRONG);
         }
 
         session.removeAttribute(SystemContant.CAPTCHA);
@@ -116,10 +117,10 @@ public class LoginController extends BaseController {
             token.setRememberMe(loginDTO.getRememberMe());
             subject.login(token);
         } catch (UnknownAccountException e) {
-            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
+            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
 
         } catch (IncorrectCredentialsException e) {
-            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_PASSWORD_WRONG);
+            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_PASSWORD_WRONG);
 
         }
 

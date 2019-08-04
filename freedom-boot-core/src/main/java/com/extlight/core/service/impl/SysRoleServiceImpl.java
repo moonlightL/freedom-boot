@@ -4,6 +4,7 @@ import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.core.constant.SysRoleExceptionEnum;
 import com.extlight.core.mapper.SysRoleMapper;
 import com.extlight.core.model.SysRole;
@@ -72,7 +73,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleVO> impl
 
         SysRoleVO target = super.getById(roleId);
         if (target == null) {
-            throw new GlobalException(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         // 解绑

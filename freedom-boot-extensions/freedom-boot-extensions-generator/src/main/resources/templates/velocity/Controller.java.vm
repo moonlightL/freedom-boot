@@ -12,6 +12,7 @@ import ${packageName}.${moduleName}.model.${className};
 import ${packageName}.${moduleName}.model.dto.${className}DTO;
 import ${packageName}.${moduleName}.model.vo.${className}VO;
 import ${packageName}.${moduleName}.service.${className}Service;
+import com.extlight.common.utils.ExceptionUtil;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class ${className}Controller extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
             ${className}VO vo = this.${variableName}Service.getById(id);
         if (vo == null) {
-            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -95,7 +96,7 @@ public class ${className}Controller extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
             ${className}VO vo = this.${variableName}Service.getById(id);
         if (vo == null) {
-            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -139,7 +140,7 @@ public class ${className}Controller extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) ${className}DTO ${variableName}DTO) throws GlobalException {
         ${className}VO dbData = this.${variableName}Service.getById(${variableName}DTO.getId());
         if (dbData == null) {
-            throw new GlobalException(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
         ${className} ${variableName} = ${variableName}DTO.toDo(${className}.class);

@@ -16,6 +16,8 @@ public enum SysUserExceptionEnum implements GlobalExceptionMap {
     ERROR_USER_PASSWORD_WRONG(1002, "用户名或密码不正确"),
     ERROR_LOGIN_EXPIRE(1003, "未登录或登陆过期"),
     ERROR_OLD_PASSWORD_WRONG(1004, "原始密码不正确"),
+    ERROR_UPLOAD_AVATAR_IS_EMPTY(1005, "上传头像为空"),
+    ERROR_UPDATE_AVATAR_FAIL(1006, "修改个人头像失败"),
 
     ;
 

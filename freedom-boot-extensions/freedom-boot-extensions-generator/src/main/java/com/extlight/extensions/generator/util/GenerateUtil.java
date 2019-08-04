@@ -1,7 +1,7 @@
 package com.extlight.extensions.generator.util;
 
-import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.DateUtil;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.extensions.generator.model.GenColumn;
 import com.extlight.extensions.generator.model.GenTable;
 import com.extlight.extensions.generator.model.dto.GeneratorParam;
@@ -194,7 +194,7 @@ public class GenerateUtil {
             tableVO.setPk(tableVO.getColumnList().get(0));
         }
 
-        //设置velocity资源加载器
+        //设置 velocity 资源加载器
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
@@ -232,7 +232,7 @@ public class GenerateUtil {
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (IOException e) {
-                throw new GlobalException(500, "渲染模板失败，表名：" + tableVO.getTableName());
+                ExceptionUtil.throwEx(500, "渲染模板失败，表名：" + tableVO.getTableName());
             }
         }
 

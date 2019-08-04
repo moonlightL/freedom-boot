@@ -5,6 +5,9 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
+import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.common.utils.StringUtil;
+import com.extlight.common.utils.ThreadUtil;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.mapper.SysUserMapper;
 import com.extlight.core.model.SysUser;
@@ -12,6 +15,7 @@ import com.extlight.core.model.dto.SysUserDTO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
 import com.extlight.core.web.config.CoreConfig;
+import com.extlight.extensions.file.service.FileDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +41,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private FileDataService fileDataService;
 
     @Override
     public BaseMapper<SysUser> getBaseMapper() {
@@ -74,7 +81,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     @Transactional(rollbackFor = GlobalException.class)
     public int remove(Long id) throws GlobalException {
         if (id == 1L) {
-            throw new GlobalException(GlobalExceptionEnum.ERROR_CAN_NOT_DELETE_RESOURCE);
+            ExceptionUtil.throwEx(GlobalExceptionEnum.ERROR_CAN_NOT_DELETE_RESOURCE);
         }
         return super.remove(id);
     }
@@ -102,7 +109,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
 
         SysUserVO target = super.getById(userId);
         if (target == null) {
-            throw new GlobalException(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
+            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         // 解绑
@@ -123,6 +130,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
         }
 
         return 1;
+    }
+
+    @Override
+    public boolean updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
+
+        String url = this.fileDataService.uploadFile(originalFilename, contentType, data);
+        if (StringUtil.isBlank(url)) {
+            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_UPDATE_AVATAR_FAIL);
+        }
+
+        Long userId = ThreadUtil.get();
+        SysUser sysUser = new SysUser();
+        sysUser.setId(userId).setAvatar(url);
+
+        return super.update(sysUser) > 0;
     }
 
     @Override

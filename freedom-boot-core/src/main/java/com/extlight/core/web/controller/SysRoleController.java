@@ -7,6 +7,7 @@ import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.JsonUtil;
 import com.extlight.core.constant.SysRoleExceptionEnum;
 import com.extlight.core.model.SysRole;
@@ -70,7 +71,7 @@ public class SysRoleController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
-            throw new GlobalException(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -103,7 +104,7 @@ public class SysRoleController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRoleVO vo = this.sysRoleService.getById(id);
         if (vo == null) {
-            throw new GlobalException(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         resultMap.put("vo", vo);
@@ -147,7 +148,7 @@ public class SysRoleController extends BaseController {
     public Result update(@Validated(BaseRequest.Update.class) SysRoleDTO sysRoleDTO) throws GlobalException {
         SysRoleVO dbData = this.sysRoleService.getById(sysRoleDTO.getId());
         if (dbData == null) {
-            throw new GlobalException(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         SysRole sysRole = sysRoleDTO.toDo(SysRole.class);

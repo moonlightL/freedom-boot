@@ -4,6 +4,7 @@ import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.ThreadUtil;
 import com.extlight.extensions.file.component.file.FileResponse;
 import com.extlight.extensions.file.component.file.FileService;
@@ -106,7 +107,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     public boolean removeFile(Long id) throws GlobalException {
         FileDataVO fileDataVO = super.getById(id);
         if (fileDataVO == null) {
-            throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DELETED);
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DELETED);
         }
 
         FileService fileService = this.getFileService();

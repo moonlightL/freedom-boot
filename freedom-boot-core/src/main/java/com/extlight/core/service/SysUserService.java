@@ -30,4 +30,14 @@ public interface SysUserService extends BaseService<SysUser, SysUserVO> {
      * @throws GlobalException
      */
     int asignRole(Long userId, String roleIdStr) throws GlobalException;
+
+	/**
+	 * 修改个人头像
+	 * @param originalFilename
+	 * @param contentType
+	 * @param data
+	 * @return
+	 * @throws GlobalException
+	 */
+	boolean updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException;
 }

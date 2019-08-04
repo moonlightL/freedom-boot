@@ -1,6 +1,7 @@
 package com.extlight.extensions.file.component.file;
 
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
 import com.extlight.extensions.file.constant.FileConstant;
@@ -109,7 +110,7 @@ public class DefaultFileServiceImpl implements FileService {
         Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
         String uploadDir = fileConfigMap.get(FileConstant.UPLOAD_DIR);
         if (StringUtil.isBlank(uploadDir)) {
-            throw new GlobalException(FileConfigExceptionEnum.ERROR_UPLOAD_DIR_IS_EMPTY);
+            ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_UPLOAD_DIR_IS_EMPTY);
         }
 
         return uploadDir;

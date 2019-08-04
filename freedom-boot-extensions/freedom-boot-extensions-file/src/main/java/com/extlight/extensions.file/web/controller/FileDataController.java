@@ -7,6 +7,7 @@ import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.model.dto.FileDataDTO;
 import com.extlight.extensions.file.model.vo.FileDataVO;
@@ -79,7 +80,7 @@ public class FileDataController extends BaseController {
     public void download(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         FileDataVO vo = this.fileDataService.getById(id);
         if (vo == null) {
-            throw new GlobalException(FileDataExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_NOT_EXIST);
         }
 
         byte[] data = this.fileDataService.downloadFile(id);
@@ -94,7 +95,7 @@ public class FileDataController extends BaseController {
     @ActionLog(value="文件上传", moduleName = ModuleEnum.FILE, actionType = ActionEnum.SAVE)
     public Result save(MultipartFile[] files) throws GlobalException {
         if (files.length == 0) {
-            throw new GlobalException(FileDataExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_NOT_EXIST);
         }
 
         List<String> filePathList = new ArrayList<>(files.length);

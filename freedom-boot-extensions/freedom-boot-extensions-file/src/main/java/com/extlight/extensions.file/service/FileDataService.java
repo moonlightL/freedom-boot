@@ -21,7 +21,7 @@ public interface FileDataService extends BaseService<FileData, FileDataVO> {
 	 * @param originalFilename
 	 * @param contentType
 	 * @param data
-	 * @return
+	 * @return 文件路径
 	 */
 	String uploadFile(String originalFilename, String contentType, byte[] data) throws GlobalException;
 
