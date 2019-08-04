@@ -35,7 +35,6 @@ public class FileDataVO implements Serializable {
 	/**
 	 * 文件路径
 	 */
-	@JsonIgnore
 	private String url;
 
 	/**

@@ -13,6 +13,7 @@
         <module>freedom-boot-core</module>
         <module>freedom-boot-extensions</module>
         <module>freedom-boot-web</module>
+        <module>freedom-boot-business</module>
     </modules>
 
     <name>freedom-boot</name>

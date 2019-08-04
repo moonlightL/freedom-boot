@@ -15,8 +15,9 @@ spring:
         name: freedom-boot
     profiles:
         active: @profiles.active@
-        # 引入其他 yml 文件
+        # 引入其他模块的 yml 文件
         include:
+          - business
           - core
           - generator
           - monitor

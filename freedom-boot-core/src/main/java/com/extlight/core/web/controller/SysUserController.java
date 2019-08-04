@@ -174,22 +174,19 @@ public class SysUserController extends BaseController {
     }
 
 
-    //#########################################【私人定制方法】##################################################
+    //#########################################【特殊方法】##################################################
 
     @GetMapping("/profile.html")
     public String profileUI(Map<String,Object> resultMap) throws GlobalException {
         Subject subject = SecurityUtils.getSubject();
         SysUserVO sysUserVO = (SysUserVO) subject.getPrincipal();
 
-        // 重新查询用户信息
-        SysUserVO dbUser = this.sysUserService.getById(sysUserVO.getId());
-
         SysLogVO sysLogVO = this.sysLogService.queryUserLog(sysUserVO.getId());
-        dbUser.setLoginCount(sysLogVO.getLoginCount())
+        sysUserVO.setLoginCount(sysLogVO.getLoginCount())
                 .setLastLoginIp(sysLogVO.getIp())
                 .setLastLoginTime(sysLogVO.getCreateTime());
 
-        resultMap.put("currentUser", dbUser);
+        resultMap.put("currentUser", sysUserVO);
         resultMap.put("updateBasicAction", super.getPrefix() + "/updateBasicInfo.json");
         resultMap.put("updatePwdAction", super.getPrefix() + "/updatePassword.json");
 

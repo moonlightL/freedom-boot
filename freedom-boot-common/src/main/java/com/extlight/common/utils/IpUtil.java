@@ -1,14 +1,16 @@
 package com.extlight.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,7 +19,7 @@ import java.net.UnknownHostException;
  * @Author MoonlightL
  * @ClassName: IpUtil
  * @ProjectName freedom-boot
- * @Description:
+ * @Description: ip 工具类
  * @Date 2019/5/31 11:23
  */
 @Slf4j
@@ -43,9 +45,13 @@ public class IpUtil {
      */
     public static String getInfo(String ip) {
 
+        DbSearcher searcher = null;
+
         try {
-            ClassPathResource resource = new ClassPathResource("ip2region.db");
-            File file = resource.getFile();
+            InputStream inputStream = IpUtil.class.getClassLoader().getResourceAsStream("ip2region.db");
+            // 打包后无法读取 db 文件， 因此使用临时文件方式解决
+            File file = new File(System.getProperties().getProperty("java.io.tmpdir") , "ip.db");
+            FileUtils.copyInputStreamToFile(inputStream, file);
 
             if (!file.exists()) {
                 log.error("=======ip2region.db 文件不存在=========");
@@ -55,7 +61,7 @@ public class IpUtil {
             //查询算法
             int algorithm = DbSearcher.BTREE_ALGORITHM;
             DbConfig config = new DbConfig();
-            DbSearcher searcher = new DbSearcher(config, file.getAbsolutePath());
+            searcher = new DbSearcher(config, file.getAbsolutePath());
 
             Method method = null;
             switch (algorithm) {
@@ -84,6 +90,14 @@ public class IpUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (searcher != null) {
+                try {
+                    searcher.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return "未知";

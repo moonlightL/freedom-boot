@@ -78,7 +78,7 @@ public class QiniuFileServiceImpl implements FileService {
 			URL url = new URL("http://" + fileDataVO.getUrl());
 			byte[] data = IoUtil.toByteArray(url.openStream());
 			if (data == null || data.length == 0) {
-				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DATA_IS_EMPTY);
+				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
 			}
 			fileResponse.setSuccess(true).setData(data);
 

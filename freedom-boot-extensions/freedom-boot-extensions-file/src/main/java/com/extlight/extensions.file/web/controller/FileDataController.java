@@ -106,8 +106,8 @@ public class FileDataController extends BaseController {
                 e.printStackTrace();
             }
 
-
-            filePathList.add(this.fileDataService.uploadFile(file.getOriginalFilename(), file.getContentType(), data));
+            String url = this.fileDataService.uploadFile(file.getOriginalFilename(), file.getContentType(), data);
+            filePathList.add(url);
         }
 
         return Result.success(filePathList);

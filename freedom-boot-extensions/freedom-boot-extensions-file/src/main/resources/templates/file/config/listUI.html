@@ -92,10 +92,12 @@
                     </div>
                     <div class="panel-footer">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <button class="btn btn-primary" type="button" id="submitBtn">提交</button>
-                                <button class="btn btn-default" type="reset">重置</button>
-                            </div>
+                            <span th:each="button: ${buttonList}" >
+                                <div class="col-sm-12" th:if="${#strings.containsIgnoreCase(button.code,'save')}" th:shiro:hasPermission="${button.code}">
+                                    <button class="btn btn-primary" type="button" id="submitBtn">保存</button>
+                                    <button class="btn btn-default" type="reset">重置</button>
+                                </div>
+                            </span>
                         </div>
                     </div>
                 </form>

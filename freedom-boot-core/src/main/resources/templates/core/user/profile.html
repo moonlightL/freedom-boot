@@ -313,7 +313,7 @@
         function getLogData(pageNum, pageSize) {
             $.ajax({
                 type: "GET",
-                url: "/system/log/list.json",
+                url: "/core/log/list.json",
                 data: {pageNum: pageNum, pageSize: pageSize, userId: [[${currentUser.id}]]},
                 dataType: "JSON",
                 success: function(resp) {

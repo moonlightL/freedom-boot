@@ -13,14 +13,12 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- 引入 core  -->
+        <!-- 引入 bussiness  -->
         <dependency>
             <groupId>com.extlight</groupId>
-            <artifactId>freedom-boot-core</artifactId>
+            <artifactId>freedom-boot-business</artifactId>
             <version>${freedom.boot.version}</version>
         </dependency>
-
-
 
         <!-- flywaydb -->
         <dependency>

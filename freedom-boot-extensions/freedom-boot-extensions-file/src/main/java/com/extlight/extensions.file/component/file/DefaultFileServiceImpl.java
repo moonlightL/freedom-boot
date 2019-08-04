@@ -37,17 +37,17 @@ public class DefaultFileServiceImpl implements FileService {
 
         try {
 
-            Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
-            if (StringUtil.isBlank(FileConstant.UPLOAD_DIR)) {
-                throw new GlobalException(FileConfigExceptionEnum.ERROR_UPLOAD_DIR_IS_EMPTY);
-            }
-
+            String uploadDir = this.getUploadDir();
             ByteArrayInputStream bis = new ByteArrayInputStream(data);
-            File dest = new File(fileConfigMap.get(FileConstant.UPLOAD_DIR), fileName);
+
+            File dest = new File(uploadDir, fileName);
             FileUtils.copyToFile(bis, dest);
 
             fileResponse.setSuccess(true).setUrl(dest.getAbsolutePath());
             return fileResponse;
+
+        } catch (GlobalException e) {
+            throw e;
 
         } catch (Exception e) {
             log.error("========【默认管理】文件 fileName: {} 文件上传失败=============", fileName);
@@ -98,5 +98,20 @@ public class DefaultFileServiceImpl implements FileService {
     @Override
     public int getCode() {
         return ModeEnum.DEFAULT.getCode();
+    }
+
+    /**
+     * 获取文件上传目录
+     * @return
+     * @throws GlobalException
+     */
+    private String getUploadDir() throws GlobalException {
+        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+        String uploadDir = fileConfigMap.get(FileConstant.UPLOAD_DIR);
+        if (StringUtil.isBlank(uploadDir)) {
+            throw new GlobalException(FileConfigExceptionEnum.ERROR_UPLOAD_DIR_IS_EMPTY);
+        }
+
+        return uploadDir;
     }
 }

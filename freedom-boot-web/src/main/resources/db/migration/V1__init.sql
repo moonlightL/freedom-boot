@@ -66,7 +66,8 @@ INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pi
     (28, '删除', 'fa fa-trash', '', 3, 'file:data:remove', 26, 1, 2, 1),
     (29, '查询', 'fa fa-search', '', 3, 'file:data:query', 26, 1, 3, 1),
     (30, '下载', 'fa fa-cloud-download', '', 3, 'file:data:download', 26, 1, 4, 1),
-    (31, '文件配置', 'fa fa-config', '/file/config/listUI.html', 2, 'file:config:listUI', 25, 1, 1, 1);
+    (31, '文件配置', 'fa fa-config', '/file/config/listUI.html', 2, 'file:config:listUI', 25, 1, 1, 1),
+    (32, '保存', 'fa fa-save', '', 3, 'file:config:save', 31, 1, 1, 1);
 /*!40000 ALTER TABLE `t_sys_permission` ENABLE KEYS */;
 
 -- 导出  表 freedom-boot.t_sys_role 结构

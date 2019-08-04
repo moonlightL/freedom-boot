@@ -49,7 +49,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    protected Example getExample(BaseRequest params) {
+    protected Example getExample(BaseRequest params) throws GlobalException {
 
         Example example = new Example(FileData.class);
         if (params != null) {
@@ -64,7 +64,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    public String uploadFile(String fileName, String contentType, byte[] data) {
+    public String uploadFile(String fileName, String contentType, byte[] data) throws GlobalException {
         FileService fileService = this.getFileService();
         FileResponse fileResponse = fileService.upload(fileName, data);
 
@@ -87,7 +87,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    public byte[] downloadFile(Long id) {
+    public byte[] downloadFile(Long id) throws GlobalException {
 
         FileDataVO fileDataVO = super.getById(id);
 
@@ -103,7 +103,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    public boolean removeFile(Long id) {
+    public boolean removeFile(Long id) throws GlobalException {
         FileDataVO fileDataVO = super.getById(id);
         if (fileDataVO == null) {
             throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DELETED);
@@ -121,7 +121,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    public boolean removeFileBatch(List<Long> idList) {
+    public boolean removeFileBatch(List<Long> idList) throws GlobalException {
         List<Boolean> tmp = new ArrayList<>(idList.size());
         for (Long id : idList) {
             tmp.add(this.removeFile(id));

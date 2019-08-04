@@ -1,6 +1,7 @@
 package com.extlight.extensions.file.service;
 
 import com.extlight.common.base.BaseService;
+import com.extlight.common.exception.GlobalException;
 import com.extlight.extensions.file.model.FileData;
 import com.extlight.extensions.file.model.vo.FileDataVO;
 
@@ -22,27 +23,27 @@ public interface FileDataService extends BaseService<FileData, FileDataVO> {
 	 * @param data
 	 * @return
 	 */
-	String uploadFile(String originalFilename, String contentType, byte[] data);
+	String uploadFile(String originalFilename, String contentType, byte[] data) throws GlobalException;
 
 	/**
 	 * 下载文件
 	 * @param id
 	 * @return
 	 */
-	byte[] downloadFile(Long id);
+	byte[] downloadFile(Long id) throws GlobalException;
 
 	/**
 	 * 删除文件
 	 * @param id
 	 * @return
 	 */
-	boolean removeFile(Long id);
+	boolean removeFile(Long id) throws GlobalException;
 
 	/**
 	 * 删除文件
 	 * @param idList
 	 * @return
 	 */
-	boolean removeFileBatch(List<Long> idList);
+	boolean removeFileBatch(List<Long> idList) throws GlobalException;
 }
 

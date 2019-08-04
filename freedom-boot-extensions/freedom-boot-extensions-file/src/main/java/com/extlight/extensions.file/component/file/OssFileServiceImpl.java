@@ -70,7 +70,7 @@ public class OssFileServiceImpl implements FileService {
 			OSSObject ossObject = ossClient.getObject(this.getBucket(), fileDataVO.getName());
 			byte[] data = IoUtil.toByteArray(ossObject.getObjectContent());
 			if (data == null || data.length == 0) {
-				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DATA_IS_EMPTY);
+				throw new GlobalException(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
 			}
 
 			fileResponse.setSuccess(true).setData(data);
