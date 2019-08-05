@@ -38,7 +38,7 @@ public interface FileService {
     FileResponse remove(FileDataVO fileDataVO) throws GlobalException;
 
     /**
-     * 文件管理方式，参考：ModeEnum 枚举
+     * 文件管理方式，参考：FileManageEnum 枚举
      * @return
      */
     int getCode();

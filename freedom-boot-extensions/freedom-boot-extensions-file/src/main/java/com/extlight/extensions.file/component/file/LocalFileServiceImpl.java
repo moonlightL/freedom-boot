@@ -19,14 +19,14 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: DefaultFileServiceImpl
+ * @Title: LocalFileServiceImpl
  * @ProjectName: freedom-boot
  * @Description: 默认
  * @DateTime: 2019/7/31 16:45
  */
-@Component("defaultFileService")
+@Component
 @Slf4j
-public class DefaultFileServiceImpl implements FileService {
+public class LocalFileServiceImpl implements FileService {
 
     @Autowired
     private FileConfigService fileConfigService;
@@ -98,7 +98,7 @@ public class DefaultFileServiceImpl implements FileService {
 
     @Override
     public int getCode() {
-        return ModeEnum.DEFAULT.getCode();
+        return FileManageEnum.LOCAL.getCode();
     }
 
     /**

@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author: moonlight
+ * @Author: MoonlightL
  * @ClassName: HttpUtil
  * @ProjectName: freedom-boot
  * @Description: Http 工具类

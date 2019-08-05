@@ -4,7 +4,7 @@ import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionMap;
 
 /**
- * @Author: moonlight
+ * @Author: MoonlightL
  * @ClassName: ExceptionUtil
  * @ProjectName: freedom-boot
  * @Description: 异常工具类

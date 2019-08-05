@@ -116,7 +116,7 @@ public class OssFileServiceImpl implements FileService {
 
 	@Override
 	public int getCode() {
-		return ModeEnum.OSS.getCode();
+		return FileManageEnum.OSS.getCode();
 	}
 
 	/**

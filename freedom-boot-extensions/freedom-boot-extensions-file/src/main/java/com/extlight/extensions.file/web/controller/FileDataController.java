@@ -8,9 +8,12 @@ import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.extensions.file.component.file.FileManageEnum;
+import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.model.dto.FileDataDTO;
 import com.extlight.extensions.file.model.vo.FileDataVO;
+import com.extlight.extensions.file.service.FileConfigService;
 import com.extlight.extensions.file.service.FileDataService;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -43,6 +46,9 @@ public class FileDataController extends BaseController {
     @Autowired
     private FileDataService fileDataService;
 
+    @Autowired
+    private FileConfigService fileConfigService;
+
     /**
      * 新增页面
      * @param resultMap
@@ -65,6 +71,8 @@ public class FileDataController extends BaseController {
     @GetMapping("/listUI.html")
     @RequiresPermissions("file:data:listUI")
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
+        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+        resultMap.put("fileManage", FileManageEnum.getMessageByCode(Integer.valueOf(fileConfigMap.get(FileConstant.MANAGE_MODE))));
         resultMap.put("downloadUrl", "/file/data/download/{id}.html");
         return render(LIST_PAGE, resultMap);
     }

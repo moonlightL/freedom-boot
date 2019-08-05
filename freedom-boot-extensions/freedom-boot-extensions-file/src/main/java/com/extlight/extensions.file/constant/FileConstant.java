@@ -1,7 +1,7 @@
 package com.extlight.extensions.file.constant;
 
 /**
- * @Author: moonlight
+ * @Author: MoonlightL
  * @ClassName: FileConstant
  * @ProjectName: freedom-boot
  * @Description: 文件模块常量

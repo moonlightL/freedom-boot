@@ -127,7 +127,7 @@ public class QiniuFileServiceImpl implements FileService {
 
 	@Override
 	public int getCode() {
-		return ModeEnum.QI_NIU.getCode();
+		return FileManageEnum.QI_NIU.getCode();
 	}
 
 

@@ -254,7 +254,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/updateAvatar.json")
     @ResponseBody
-    @ActionLog(value="修改个人资料", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="修改个人头像", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result updateAvatar(MultipartFile avatar) throws GlobalException {
         if (avatar == null || avatar.isEmpty()) {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_UPLOAD_AVATAR_IS_EMPTY);

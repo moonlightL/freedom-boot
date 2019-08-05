@@ -5,6 +5,7 @@ import com.extlight.common.model.Result;
 import com.extlight.common.utils.HttpUtil;
 import com.extlight.common.utils.JsonUtil;
 import com.extlight.common.utils.ThreadUtil;
+import com.extlight.core.constant.StateEnum;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.vo.SysUserVO;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author: moonlightL
+ * @Author: MoonlightL
  * @ClassName: UserInterceptor
  * @ProjectName: freedom-boot
  * @Description: 用户拦截器
@@ -39,7 +40,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		SysUserVO sysUserVO = (SysUserVO) obj;
-		if (sysUserVO.getState() != 1) {
+		if (!sysUserVO.getState().equals(StateEnum.NORMAL.getCode())) {
 			if (HttpUtil.isAjax(request)) {
 				this.print(response, JsonUtil.toStr(Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG), false));
 			} else {

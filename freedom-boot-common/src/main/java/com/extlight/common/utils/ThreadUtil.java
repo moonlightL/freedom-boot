@@ -1,7 +1,7 @@
 package com.extlight.common.utils;
 
 /**
- * @Author: moonlight
+ * @Author: MoonlightL
  * @ClassName: ThreadUtil
  * @ProjectName: freedom-boot
  * @Description: 线程工具类
