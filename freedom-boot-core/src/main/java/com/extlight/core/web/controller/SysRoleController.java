@@ -182,7 +182,7 @@ public class SysRoleController extends BaseController {
         }
 
         resultMap.put("target", target);
-        resultMap.put("action", "/core/role/assignPermission.json");
+        resultMap.put("action", super.getPrefix() + "/assignPermission.json");
 
         List<TreeNode> permissionList = this.sysPermissionService.findPermissionNodesByRoleId(roleId);
         resultMap.put("zTreeNodes", JsonUtil.toStr(permissionList, false));

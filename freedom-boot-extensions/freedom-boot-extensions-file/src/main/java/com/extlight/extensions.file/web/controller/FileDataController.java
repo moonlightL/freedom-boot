@@ -73,7 +73,7 @@ public class FileDataController extends BaseController {
     public String listUI(Map<String,Object> resultMap) throws GlobalException {
         Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
         resultMap.put("fileManage", FileManageEnum.getMessageByCode(Integer.valueOf(fileConfigMap.get(FileConstant.MANAGE_MODE))));
-        resultMap.put("downloadUrl", "/file/data/download/{id}.html");
+        resultMap.put("downloadUrl", super.getPrefix() + "/download/{id}.html");
         return render(LIST_PAGE, resultMap);
     }
 

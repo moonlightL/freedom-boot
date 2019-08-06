@@ -227,7 +227,7 @@ public class SysUserController extends BaseController {
             resultMap.put("roleList", allRoleList);
         }
 
-        resultMap.put("action", "/core/user/assignRole.json");
+        resultMap.put("action", super.getPrefix() + "/assignRole.json");
         return render("assignRoleUI", resultMap);
     }
 
