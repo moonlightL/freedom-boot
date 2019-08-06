@@ -36,8 +36,8 @@ public interface SysUserService extends BaseService<SysUser, SysUserVO> {
 	 * @param originalFilename
 	 * @param contentType
 	 * @param data
-	 * @return
+	 * @return 文件访问地址
 	 * @throws GlobalException
 	 */
-	boolean updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException;
+	String updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException;
 }

@@ -42,6 +42,7 @@ public class QiniuFileServiceImpl implements FileService {
 		FileResponse fileResponse = new FileResponse();
 
 		try {
+			// Zone.zone2() 根据自己情况选择
 			Configuration cfg = new Configuration(Zone.zone2());
 			UploadManager uploadManager = new UploadManager(cfg);
 			Auth auth = this.createAuth();

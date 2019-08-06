@@ -18,6 +18,8 @@
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
     <link th:href="@{/assets/css/nifty-icons.min.css}" rel="stylesheet">
     <link th:href="@{/assets/css/nifty-login.min.css}" rel="stylesheet">
+    <!-- Bootstrap-fileinput -->
+    <link th:href="@{/plugins/bootstrap-fileinput/css/fileinput.min.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -28,12 +30,12 @@
                 <!-- Simple profile -->
                 <div class="text-center pad-all bord-btm">
                     <div class="pad-ver">
-                        <img th:src="@{${currentUser.avatar}}" class="img-lg img-border img-circle" alt="Profile Picture">
+                        <img id="avatar" th:src="@{${currentUser.avatar}}" class="img-lg img-border img-circle" alt="Profile Picture">
                     </div>
                     <h4 class="text-lg text-overflow mar-no" th:text="${currentUser.username}">MoonlightL</h4>
                     <p class="text-sm text-muted" th:text="${currentUser.remark}">remark</p>
 
-                    <button class="btn btn-block btn-success">修改头像</button>
+                    <button data-target="#upload-modal" data-toggle="modal" class="btn btn-block btn-success" type="button">修改头像</button>
                 </div>
                 <p class="text-semibold text-main pad-all mar-no">关于我</p>
                 <ul class="list-group bg-trans text-sm">
@@ -52,13 +54,12 @@
                     <small class="text-muted">[[${currentUser.remark}]]</small>
                 </div>
 
-                <p class="text-semibold text-main pad-all mar-no">Skills</p>
+                <p class="text-semibold text-main pad-all mar-no">技能</p>
                 <ul class="list-inline mar-hor">
-                    <li class="tag tag-sm">PHP Programming</li>
-                    <li class="tag tag-sm">Marketing</li>
-                    <li class="tag tag-sm">Graphic Design</li>
-                    <li class="tag tag-sm">Sketch</li>
-                    <li class="tag tag-sm">Photography</li>
+                    <li class="tag tag-sm">Java</li>
+                    <li class="tag tag-sm">HTML,CSS,Javascript</li>
+                    <li class="tag tag-sm">MySQL,Mongodb,Redis</li>
+                    <li class="tag tag-sm">RabbitMQ</li>
                 </ul>
             </div>
         </div>
@@ -257,43 +258,64 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="upload-modal" role="dialog" tabindex="-1" aria-labelledby="default-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                    <h4 class="modal-title">修改头像</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <input id="upload" type="file" name="avatar" multiple />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END SETTINGS -->
 <div th:include="common :: script"></div>
 <script th:src="@{/plugins/infinite/infinite.js}"></script>
 <!--Bootstrap Validator -->
 <script th:src="@{/assets/js/bootstrapvalidator.min.js}"></script>
-<!--Form validation [ SAMPLE ]-->
-<!--<script th:src="@{/assets/js/form-validation.js}"></script>-->
+<!-- Bootstrap-fileinput -->
+<script th:src="@{/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+<script th:src="@{/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+<script th:src="@{/plugins/module-file.js}"></script>
 <script>
     $(function() {
-        // 表单通过内嵌属性校验数据，具体 http://bootstrapvalidator.votintsev.ru/getting-started/
-        $('#basicDataForm').bootstrapValidator().on('success.form.bv', function(e) {
-            e.preventDefault();
-            var $form = $(e.target);
-            // 发送请求
-            $.freedom.action.submit($form.attr('action'), $form.serialize(), function(resp) {
+
+        $.module.file.init({
+            id: "upload",
+            uploadUrl: "/core/user/updateAvatar.json",
+            dropZoneTitle: "选择一张图片进行上传",
+            allowedFileExtensions: ['jpg','jpeg','png'],
+            maxImageWidth: 400,
+            maxImageHeight: 400,
+            maxFileCount: 1,
+            callback: function(data) {
+                var resp = data.response;
                 if (resp.success) {
-                    $.freedom.modal.msg(resp.msg, 1, function() {
-                        window.location.reload();
-                    });
+                    $("#avatar").attr("src", resp.data);
+                } else {
+                    $.freedom.modal.msg(resp.msg);
                 }
+            }
+        });
+
+        $.freedom.action.save("basicDataForm", null, function (resp) {
+            $.freedom.modal.msg(resp.msg, 1, function() {
+                window.location.reload();
             });
         });
 
-        $('#passwordForm').bootstrapValidator().on('success.form.bv', function(e) {
-            e.preventDefault();
-            var $form = $(e.target);
-            // 发送请求
-            $.freedom.action.submit($form.attr('action'), $form.serialize(), function(resp) {
-                if (resp.success) {
-                    $.freedom.modal.msg(resp.msg, 1, function() {
-                        window.location.reload();
-                    });
-                }
+        $.freedom.action.save("passwordForm", null, function (resp) {
+            $.freedom.modal.msg(resp.msg, 1, function() {
+                window.location.reload();
             });
         });
+
 
         var pageNum = 1;
         var pageSize = 10;
@@ -327,6 +349,7 @@
                 }
             });
         }
+
     });
 </script>
 </body>

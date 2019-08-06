@@ -133,7 +133,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     }
 
     @Override
-    public boolean updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
+    public String updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
 
         String url = this.fileDataService.uploadFile(originalFilename, contentType, data);
         if (StringUtil.isBlank(url)) {
@@ -144,7 +144,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
         SysUser sysUser = new SysUser();
         sysUser.setId(userId).setAvatar(url);
 
-        return super.update(sysUser) > 0;
+        super.update(sysUser);
+
+
+        return sysUser.getAvatar();
     }
 
     @Override

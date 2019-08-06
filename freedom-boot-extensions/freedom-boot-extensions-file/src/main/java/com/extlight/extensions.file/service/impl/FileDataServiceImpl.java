@@ -73,6 +73,11 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
             return null;
         }
 
+
+        if (!fileResponse.getUrl().startsWith("http://")) {
+            fileResponse.setUrl("http://" + fileResponse.getUrl());
+        }
+
         FileData fileData = new FileData();
         fileData.setName(fileName)
                 .setContentType(contentType)

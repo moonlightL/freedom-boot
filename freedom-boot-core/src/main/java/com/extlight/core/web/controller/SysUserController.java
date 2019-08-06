@@ -267,7 +267,8 @@ public class SysUserController extends BaseController {
             e.printStackTrace();
         }
 
-        return this.sysUserService.updateAvatar(avatar.getOriginalFilename(), avatar.getContentType(), bytes) ? Result.success() : Result.fail();
+        String url = this.sysUserService.updateAvatar(avatar.getOriginalFilename(), avatar.getContentType(), bytes);
+        return Result.success(url);
     }
 
     /**

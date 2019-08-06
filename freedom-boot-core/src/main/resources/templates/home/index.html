@@ -716,7 +716,7 @@
                                 <div class="profile-wrap">
                                     <div class="pad-btm">
                                         <span class="label label-success pull-right">New</span>
-                                        <img class="img-circle img-sm img-border" th:src="@{/assets/picture/1.png}" alt="Profile Picture">
+                                        <img class="img-circle img-sm img-border" th:src="@{${session.currentUser.avatar}}" alt="Profile Picture">
                                     </div>
                                     <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
