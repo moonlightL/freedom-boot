@@ -70,7 +70,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         FileResponse fileResponse = fileService.upload(fileName, data);
 
         if (!fileResponse.isSuccess()) {
-            return null;
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_UPLOAD);
         }
 
 
@@ -102,7 +102,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         FileResponse fileResponse = fileService.download(fileDataVO);
 
         if (!fileResponse.isSuccess()) {
-            return null;
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
         }
 
         return fileResponse.getData();

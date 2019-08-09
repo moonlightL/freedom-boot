@@ -221,15 +221,12 @@ public class GenerateUtil {
         List<String> templates = TEMPLATE_LIST;
         for (String template : templates) {
             //渲染模板
-            StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, "UTF-8");
-            tpl.merge(context, sw);
-
-            try {
+            try (StringWriter sw = new StringWriter()){
+                Template tpl = Velocity.getTemplate(template, "UTF-8");
+                tpl.merge(context, sw);
                 //添加到zip
                 zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName())));
                 IOUtils.write(sw.toString(), zip, "UTF-8");
-                IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (IOException e) {
                 ExceptionUtil.throwEx(500, "渲染模板失败，表名：" + tableVO.getTableName());

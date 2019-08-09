@@ -397,6 +397,20 @@
                 closeAll: function () {
                     layer.closeAll();
                 },
+            },
+            storage: {
+                set: function(k ,v) {
+                    localStorage.setItem(k, v);
+                },
+                get: function(k) {
+                    localStorage.getItem(k);
+                },
+                remove: function(k) {
+                    localStorage.removeItem(k);
+                },
+                clear: function() {
+                    localStorage.clear();
+                }
             }
         }
     })

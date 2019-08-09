@@ -12,7 +12,6 @@ import com.extlight.extensions.generator.model.dto.GeneratorParam;
 import com.extlight.extensions.generator.model.vo.GenTableVO;
 import com.extlight.extensions.generator.service.GeneratorService;
 import com.extlight.extensions.generator.util.GenerateUtil;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -88,17 +87,13 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> 
 
     @Override
     public byte[] generateCode(String[] tableNameArr, GeneratorParam generatorParam) throws GlobalException {
-        ByteArrayOutputStream outputStream = null;
-        ZipOutputStream zip = null;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         if (StringUtils.isEmpty(generatorParam.getProjectName())) {
             generatorParam.setProjectName(this.projectName);
         }
 
-        try {
-            outputStream = new ByteArrayOutputStream();
-            zip = new ZipOutputStream(outputStream);
-
+        try (ZipOutputStream zip = new ZipOutputStream(outputStream)){
             for (String tableName : tableNameArr){
                 //查询表信息
                 GenTable table = this.queryTable(tableName);
@@ -107,9 +102,10 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> 
                 //生成代码
                 GenerateUtil.generateCode(generatorParam, table, columnList, zip);
             }
-        } finally {
-            IOUtils.closeQuietly(zip);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return outputStream.toByteArray();
     }
 

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CacheUtil {
 
-	private static final Map<String, Object> cacheMap = new ConcurrentHashMap<>();
+	private static final Map<String, Object> CACHE_MAP = new ConcurrentHashMap<>();
 
 	private CacheUtil() {}
 
@@ -23,7 +23,7 @@ public class CacheUtil {
 	 * @param <T>
 	 */
 	public static <T> void put(String key, T obj) {
-		cacheMap.put(key, obj);
+		CACHE_MAP.put(key, obj);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class CacheUtil {
 	 * @return
 	 */
 	public static <T> T get(String key) {
-		return (T) cacheMap.get(key);
+		return (T) CACHE_MAP.get(key);
 	}
 
 	/**
@@ -41,6 +41,6 @@ public class CacheUtil {
 	 * @param key
 	 */
 	public static void remove(String key) {
-		cacheMap.remove(key);
+		CACHE_MAP.remove(key);
 	}
 }

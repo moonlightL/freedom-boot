@@ -10,21 +10,21 @@ package com.extlight.common.utils;
 public class ThreadUtil {
 
 
-	private static final ThreadLocal<Long> userIdMap = new ThreadLocal<>();
+	private static final ThreadLocal<Long> USER_ID_MAP = new ThreadLocal<>();
 
 	private ThreadUtil() {}
 
 
 	public static void set(Long value) {
-		userIdMap.set(value);
+		USER_ID_MAP.set(value);
 	}
 
 	public static Long get() {
-		return userIdMap.get();
+		return USER_ID_MAP.get();
 	}
 
 	public static void remove() {
-		userIdMap.remove();
+		USER_ID_MAP.remove();
 	}
 
 }
