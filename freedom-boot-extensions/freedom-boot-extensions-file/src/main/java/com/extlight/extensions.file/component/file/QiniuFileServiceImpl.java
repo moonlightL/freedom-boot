@@ -27,12 +27,14 @@ import java.util.Map;
  * @Author: MoonlightL
  * @ClassName: QiniuFileServiceImpl
  * @ProjectName: freedom-boot
- * @Description: 七牛云文件管理
+ * @Description: 七牛云文件管理，参考：https://developer.qiniu.com/kodo/sdk/1239/java#5
  * @DateTime: 2019-08-03 11:14
  */
 @Component
 @Slf4j
 public class QiniuFileServiceImpl implements FileService {
+
+	private static final Integer RETRY_NUM = 3;
 
 	@Autowired
 	private FileConfigService fileConfigService;
@@ -50,7 +52,7 @@ public class QiniuFileServiceImpl implements FileService {
 
 			Response response = uploadManager.put(data, fileName, upToken);
 			int retry = 0;
-			while(response.needRetry() && retry < 3) {
+			while(response.needRetry() && retry < RETRY_NUM) {
 				response = uploadManager.put(data, fileName, upToken);
 				retry++;
 			}
@@ -103,7 +105,7 @@ public class QiniuFileServiceImpl implements FileService {
 			String bucket = this.getBucket();
 			Response response = bucketManager.delete(bucket, fileDataVO.getFileKey());
 			int retry = 0;
-			while(response.needRetry() && retry < 3) {
+			while(response.needRetry() && retry < RETRY_NUM) {
 				response = bucketManager.delete(bucket, fileDataVO.getFileKey());
 				retry++;
 			}
@@ -157,6 +159,7 @@ public class QiniuFileServiceImpl implements FileService {
 	 */
 	private String getBucket() throws GlobalException {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+
 		String bucket = fileConfigMap.get(FileConstant.QN_BUCKET);
 		if (StringUtil.isBlank(bucket)) {
 			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);
@@ -171,6 +174,7 @@ public class QiniuFileServiceImpl implements FileService {
 	 */
 	private String getDomain() throws GlobalException {
 		Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+
 		String domain = fileConfigMap.get(FileConstant.QN_DOMAIN);
 		if (StringUtil.isBlank(domain)) {
 			ExceptionUtil.throwEx(FileConfigExceptionEnum.ERROR_QN_CONFIG_IS_EMPTY);

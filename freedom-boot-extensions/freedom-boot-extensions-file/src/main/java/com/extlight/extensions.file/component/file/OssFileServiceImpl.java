@@ -23,7 +23,7 @@ import java.util.Map;
  * @Author: MoonlightL
  * @ClassName: OssFileServiceImpl
  * @ProjectName: freedom-boot
- * @Description: OSS 文件管理
+ * @Description: OSS 文件管理，参考：https://help.aliyun.com/document_detail/84781.html?spm=a2c4g.11186623.6.834.4ae66328XPkGZq
  * @DateTime: 2019-08-03 23:10
  */
 @Component

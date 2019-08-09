@@ -9,6 +9,7 @@ import com.extlight.extensions.file.model.FileConfig;
 import com.extlight.extensions.file.model.dto.FileConfigDTO;
 import com.extlight.extensions.file.model.vo.FileConfigVO;
 import com.extlight.extensions.file.service.FileConfigService;
+import com.extlight.extensions.file.utils.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -24,6 +25,8 @@ import java.util.*;
  */
 @Service
 public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfigVO> implements FileConfigService {
+
+    private static final String CONFIG_KEY = "fileConfigMap";
 
     @Autowired
     private FileConfigMapper fileConfigMapper;
@@ -48,10 +51,15 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
 
     @Override
     public Map<String, String> getFileConfigMap() throws GlobalException {
+        Map<String, String> result = CacheUtil.get(CONFIG_KEY);
 
-        List<FileConfigVO> list = super.list();
-        Map<String, String> result = new HashMap<>(list.size());
-        list.stream().forEach(i -> result.put(i.getConfigName(), i.getConfigValue()));
+        if (result == null) {
+            List<FileConfigVO> list = super.list();
+            result = new HashMap<>(list.size());
+            Map<String, String> finalResult = result;
+            list.stream().forEach(i -> finalResult.put(i.getConfigName(), i.getConfigValue()));
+            CacheUtil.put(CONFIG_KEY, result);
+        }
 
         return result;
     }
@@ -73,6 +81,9 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
         });
 
         this.fileConfigMapper.updateByConfigName(fjleConfigList);
+
+        // 清除缓存
+        CacheUtil.remove(CONFIG_KEY);
 
         return true;
     }
