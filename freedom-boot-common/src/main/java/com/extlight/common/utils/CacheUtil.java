@@ -1,4 +1,4 @@
-package com.extlight.extensions.file.utils;
+package com.extlight.common.utils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

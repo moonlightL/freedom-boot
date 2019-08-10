@@ -1,10 +1,9 @@
 package com.extlight.common.utils;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -95,4 +94,34 @@ public class DateUtil {
     public static String toStr(LocalDateTime localDateTime) {
         return DATETIME_FORMATTER.format(localDateTime);
     }
+
+    /**
+     * Date 转字符串
+     * @param date
+     * @return
+     */
+    public static String toStr(Date date, String... patterns) {
+        String pattern = (patterns.length == 0 ? DATETIME_FORMAT : patterns[0]);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 获取当月的第一天日期
+     * @return
+     */
+    public static LocalDate getFirstDayOfMonth() {
+        LocalDate now = LocalDate.now();
+        return now.with(TemporalAdjusters.firstDayOfMonth());
+    }
+
+    /**
+     * 获取当前周的周一
+     * @return
+     */
+    public static LocalDate getMonday() {
+        LocalDate now = LocalDate.now();
+        return now.with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.MONDAY));
+    }
+
 }

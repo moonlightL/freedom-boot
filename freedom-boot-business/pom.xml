@@ -18,6 +18,27 @@
             <artifactId>freedom-boot-core</artifactId>
             <version>${freedom.boot.version}</version>
         </dependency>
+
+        <!-- 引入 extensions-generator -->
+        <dependency>
+            <groupId>com.extlight</groupId>
+            <artifactId>freedom-boot-extensions-generator</artifactId>
+            <version>${freedom.boot.version}</version>
+        </dependency>
+
+        <!-- 引入 extensions-monitor -->
+        <dependency>
+            <groupId>com.extlight</groupId>
+            <artifactId>freedom-boot-extensions-monitor</artifactId>
+            <version>${freedom.boot.version}</version>
+        </dependency>
+
+        <!-- 引入 extensions-file -->
+        <dependency>
+            <groupId>com.extlight</groupId>
+            <artifactId>freedom-boot-extensions-file</artifactId>
+            <version>${freedom.boot.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,5 +1,9 @@
 package com.extlight.extensions.file.component.file;
 
+import com.extlight.common.component.file.FileManageEnum;
+import com.extlight.common.component.file.FileRequest;
+import com.extlight.common.component.file.FileResponse;
+import com.extlight.common.component.file.FileService;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IoUtil;
@@ -7,7 +11,6 @@ import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
 import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
-import com.extlight.extensions.file.model.vo.FileDataVO;
 import com.extlight.extensions.file.service.FileConfigService;
 import com.google.gson.Gson;
 import com.qiniu.common.Zone;
@@ -40,8 +43,11 @@ public class QiniuFileServiceImpl implements FileService {
 	private FileConfigService fileConfigService;
 
 	@Override
-	public FileResponse upload(String fileName, byte[] data) throws GlobalException {
+	public FileResponse upload(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		byte[] data = fileRequest.getData();
+		String fileName = fileRequest.getFileName();
 
 		try {
 			// Zone.zone2() 根据自己情况选择
@@ -62,7 +68,7 @@ public class QiniuFileServiceImpl implements FileService {
 			}
 
 			fileResponse = new Gson().fromJson(response.bodyString(), FileResponse.class);
-			fileResponse.setSuccess(true).setUrl(this.getDomain() + "/" + fileResponse.getKey());
+			fileResponse.setSuccess(true).setUrl(this.parseUrl(this.getDomain() + "/" + fileResponse.getKey()));
 
 		} catch(GlobalException e) {
 			throw e;
@@ -76,10 +82,13 @@ public class QiniuFileServiceImpl implements FileService {
 	}
 
 	@Override
-	public FileResponse download(FileDataVO fileDataVO) throws GlobalException {
+	public FileResponse download(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		String urlStr = fileRequest.getUrl();
+
 		try {
-			URL url = new URL("http://" + fileDataVO.getUrl());
+			URL url = new URL(urlStr);
 			byte[] data = IoUtil.toByteArray(url.openStream());
 			if (data == null || data.length == 0) {
 				ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
@@ -87,15 +96,17 @@ public class QiniuFileServiceImpl implements FileService {
 			fileResponse.setSuccess(true).setData(data);
 
 		} catch (Exception e) {
-			log.error("========【默认管理】文件 url: {} 文件下载失败=============", fileDataVO.getUrl());
+			log.error("========【默认管理】文件 url: {} 文件下载失败=============", urlStr);
 			e.printStackTrace();
 		}
 		return fileResponse;
 	}
 
 	@Override
-	public FileResponse remove(FileDataVO fileDataVO) throws GlobalException {
+	public FileResponse remove(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		String fileKey = fileRequest.getFileKey();
 
 		try {
 			Configuration cfg = new Configuration(Zone.zone2());
@@ -103,10 +114,10 @@ public class QiniuFileServiceImpl implements FileService {
 			BucketManager bucketManager = new BucketManager(auth, cfg);
 
 			String bucket = this.getBucket();
-			Response response = bucketManager.delete(bucket, fileDataVO.getFileKey());
+			Response response = bucketManager.delete(bucket, fileKey);
 			int retry = 0;
 			while(response.needRetry() && retry < RETRY_NUM) {
-				response = bucketManager.delete(bucket, fileDataVO.getFileKey());
+				response = bucketManager.delete(bucket, fileKey);
 				retry++;
 			}
 
@@ -121,7 +132,7 @@ public class QiniuFileServiceImpl implements FileService {
 			throw e;
 
 		} catch (Exception ex) {
-			log.error("========【七牛云管理】文件 fileName: {} 文件删除失败=============", fileDataVO.getName());
+			log.error("========【七牛云管理】文件 fileName: {} 文件删除失败=============", fileRequest.getFileName());
 			ex.printStackTrace();
 		}
 

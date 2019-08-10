@@ -10,16 +10,6 @@ package com.extlight.extensions.file.constant;
 public class FileConstant {
 
 	/**
-	 * 文件管理模式
-	 */
-	public static final String MANAGE_MODE = "manage_mode";
-
-	/**
-	 * 文件上传目录
-	 */
-	public static final String UPLOAD_DIR = "upload_dir";
-
-	/**
 	 * 七牛云相关
 	 */
 	public static final String QN_DOMAIN = "qn_domain";

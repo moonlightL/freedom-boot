@@ -31,13 +31,4 @@ public class StringUtil {
     public static boolean isBlank(String value) {
         return StringUtils.isBlank(value);
     }
-
-    /**
-     * 是否空
-     * @param value
-     * @return
-     */
-    public static boolean isEmpty(String value) {
-        return StringUtils.isEmpty(value);
-    }
 }

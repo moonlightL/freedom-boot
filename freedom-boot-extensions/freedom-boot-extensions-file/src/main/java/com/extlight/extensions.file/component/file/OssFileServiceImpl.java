@@ -3,6 +3,10 @@ package com.extlight.extensions.file.component.file;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.OSSObject;
+import com.extlight.common.component.file.FileManageEnum;
+import com.extlight.common.component.file.FileRequest;
+import com.extlight.common.component.file.FileResponse;
+import com.extlight.common.component.file.FileService;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IoUtil;
@@ -10,7 +14,6 @@ import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
 import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
-import com.extlight.extensions.file.model.vo.FileDataVO;
 import com.extlight.extensions.file.service.FileConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +37,11 @@ public class OssFileServiceImpl implements FileService {
 	private FileConfigService fileConfigService;
 
 	@Override
-	public FileResponse upload(String fileName, byte[] data) throws GlobalException {
+	public FileResponse upload(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		String fileName = fileRequest.getFileName();
+		byte[] data = fileRequest.getData();
 
 		OSS ossClient = null;
 
@@ -43,7 +49,7 @@ public class OssFileServiceImpl implements FileService {
 			ossClient = this.buildOssClient();
 			ossClient.putObject(this.getBucket(), fileName, new ByteArrayInputStream(data));
 
-			fileResponse.setSuccess(true).setUrl(this.getBucket() + "." + this.getEndpoint() + "/" + fileName);
+			fileResponse.setSuccess(true).setUrl(this.parseUrl(this.getBucket() + "." + this.getEndpoint() + "/" + fileName));
 
 		} catch (GlobalException e) {
 			throw e;
@@ -61,14 +67,16 @@ public class OssFileServiceImpl implements FileService {
 	}
 
 	@Override
-	public FileResponse download(FileDataVO fileDataVO) throws GlobalException {
+	public FileResponse download(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		String fileName = fileRequest.getFileName();
 
 		OSS ossClient = null;
 
 		try {
 			ossClient = this.buildOssClient();
-			OSSObject ossObject = ossClient.getObject(this.getBucket(), fileDataVO.getName());
+			OSSObject ossObject = ossClient.getObject(this.getBucket(), fileName);
 			byte[] data = IoUtil.toByteArray(ossObject.getObjectContent());
 			if (data == null || data.length == 0) {
 				ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
@@ -77,7 +85,7 @@ public class OssFileServiceImpl implements FileService {
 			fileResponse.setSuccess(true).setData(data);
 
 		} catch (Exception e) {
-			log.error("========【OSS 管理】文件 fileName: {} 文件下载失败=============", fileDataVO.getName());
+			log.error("========【OSS 管理】文件 fileName: {} 文件下载失败=============", fileName);
 			e.printStackTrace();
 		} finally {
 			if (ossClient != null) {
@@ -89,13 +97,15 @@ public class OssFileServiceImpl implements FileService {
 	}
 
 	@Override
-	public FileResponse remove(FileDataVO fileDataVO) throws GlobalException {
+	public FileResponse remove(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
+
+		String fileName = fileRequest.getFileName();
 
 		OSS ossClient = null;
 		try {
 			ossClient = this.buildOssClient();
-			ossClient.deleteObject(this.getBucket(), fileDataVO.getName());
+			ossClient.deleteObject(this.getBucket(), fileName);
 
 			fileResponse.setSuccess(true);
 
@@ -103,7 +113,7 @@ public class OssFileServiceImpl implements FileService {
 			throw e;
 
 		} catch (Exception e) {
-			log.error("========【OSS 管理】文件 fileName: {} 文件删除失败=============", fileDataVO.getName());
+			log.error("========【OSS 管理】文件 fileName: {} 文件删除失败=============", fileName);
 			e.printStackTrace();
 		} finally {
 			if (ossClient != null) {

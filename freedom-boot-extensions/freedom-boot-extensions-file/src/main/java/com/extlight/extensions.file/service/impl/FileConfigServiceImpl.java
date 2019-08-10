@@ -4,17 +4,22 @@ import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
 import com.extlight.common.exception.GlobalException;
+import com.extlight.common.utils.CacheUtil;
 import com.extlight.extensions.file.mapper.FileConfigMapper;
 import com.extlight.extensions.file.model.FileConfig;
 import com.extlight.extensions.file.model.dto.FileConfigDTO;
 import com.extlight.extensions.file.model.vo.FileConfigVO;
 import com.extlight.extensions.file.service.FileConfigService;
-import com.extlight.extensions.file.utils.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.*;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author MoonlightL
@@ -49,6 +54,11 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
         return example;
     }
 
+    @PostConstruct
+    public void loadData() {
+        this.getFileConfigMap();
+    }
+
     @Override
     public Map<String, String> getFileConfigMap() throws GlobalException {
         Map<String, String> result = CacheUtil.get(CONFIG_KEY);
@@ -65,6 +75,7 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
     }
 
     @Override
+    @Transactional(rollbackFor = GlobalException.class)
     public boolean save(Map<String, String> paramMap) throws GlobalException {
 
         if (paramMap.isEmpty()) {
@@ -84,6 +95,8 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
 
         // 清除缓存
         CacheUtil.remove(CONFIG_KEY);
+        // 重新加载入缓存
+        this.getFileConfigMap();
 
         return true;
     }

@@ -3,8 +3,10 @@ package com.extlight.core.service.impl;
 import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
+import com.extlight.common.component.file.*;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
+import com.extlight.common.utils.CacheUtil;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.StringUtil;
 import com.extlight.common.utils.ThreadUtil;
@@ -15,7 +17,6 @@ import com.extlight.core.model.dto.SysUserDTO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
 import com.extlight.core.web.config.CoreConfig;
-import com.extlight.extensions.file.service.FileDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,8 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> implements SysUserService {
 
+    private static final String CONFIG_KEY = "fileConfigMap";
+
     @Autowired
     private CoreConfig coreConfig;
 
@@ -43,7 +46,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     private SysUserMapper sysUserMapper;
 
     @Autowired
-    private FileDataService fileDataService;
+    private FileServiceFactory fileServiceFactory;
 
     @Override
     public BaseMapper<SysUser> getBaseMapper() {
@@ -135,7 +138,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     @Override
     public String updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
 
-        String url = this.fileDataService.uploadFile(originalFilename, contentType, data);
+        FileRequest fileRequest = new FileRequest();
+        fileRequest.setFileName(originalFilename).setData(data);
+        FileResponse fileResponse = this.getFileService().upload(fileRequest);
+
+        String url = fileResponse.getUrl();
         if (StringUtil.isBlank(url)) {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_UPDATE_AVATAR_FAIL);
         }
@@ -160,5 +167,23 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     @Override
     public int update(SysUser model) throws GlobalException {
         return super.update(model);
+    }
+
+    /**
+     * 获取 FileService 实现
+     * @return
+     */
+    private FileService getFileService() {
+        Map<String, String> fileConfigMap = CacheUtil.get(CONFIG_KEY);
+        int code = 0;
+        if (fileConfigMap != null && fileConfigMap.containsKey(GlobalFileConstant.MANAGE_MODE)) {
+            code = Integer.valueOf(fileConfigMap.get(GlobalFileConstant.MANAGE_MODE));
+        } else {
+            // fileConfigMap 为空说明 extensions-file 项目没被引用，使用本地文件管理方式
+            code = FileManageEnum.LOCAL.getCode();
+        }
+        FileService fileService = this.fileServiceFactory.getInstance(code);
+
+        return fileService;
     }
 }

@@ -3,13 +3,10 @@ package com.extlight.extensions.file.service.impl;
 import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
+import com.extlight.common.component.file.*;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.ThreadUtil;
-import com.extlight.extensions.file.component.file.FileResponse;
-import com.extlight.extensions.file.component.file.FileService;
-import com.extlight.extensions.file.component.file.FileServiceFactory;
-import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.mapper.FileDataMapper;
 import com.extlight.extensions.file.model.FileData;
@@ -17,6 +14,7 @@ import com.extlight.extensions.file.model.dto.FileDataDTO;
 import com.extlight.extensions.file.model.vo.FileDataVO;
 import com.extlight.extensions.file.service.FileConfigService;
 import com.extlight.extensions.file.service.FileDataService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -67,15 +65,15 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     @Override
     public String uploadFile(String fileName, String contentType, byte[] data) throws GlobalException {
         FileService fileService = this.getFileService();
-        FileResponse fileResponse = fileService.upload(fileName, data);
+
+        FileRequest fileRequest = new FileRequest();
+        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+        fileRequest.setUploadDir(fileConfigMap.get(GlobalFileConstant.UPLOAD_DIR)).setFileName(fileName).setData(data);
+
+        FileResponse fileResponse = fileService.upload(fileRequest);
 
         if (!fileResponse.isSuccess()) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_UPLOAD);
-        }
-
-
-        if (!fileResponse.getUrl().startsWith("http://")) {
-            fileResponse.setUrl("http://" + fileResponse.getUrl());
         }
 
         FileData fileData = new FileData();
@@ -96,10 +94,15 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     public byte[] downloadFile(Long id) throws GlobalException {
 
         FileDataVO fileDataVO = super.getById(id);
+        if (fileDataVO == null) {
+            ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DELETED);
+        }
 
         FileService fileService = this.getFileService();
 
-        FileResponse fileResponse = fileService.download(fileDataVO);
+        FileRequest fileRequest = new FileRequest();
+        BeanUtils.copyProperties(fileDataVO, fileRequest);
+        FileResponse fileResponse = fileService.download(fileRequest);
 
         if (!fileResponse.isSuccess()) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DOWNLOAD);
@@ -116,7 +119,10 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         }
 
         FileService fileService = this.getFileService();
-        FileResponse fileResponse = fileService.remove(fileDataVO);
+
+        FileRequest fileRequest = new FileRequest();
+        BeanUtils.copyProperties(fileDataVO, fileRequest);
+        FileResponse fileResponse = fileService.remove(fileRequest);
 
         boolean result = fileResponse.isSuccess();
         if (result) {
@@ -143,7 +149,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     private FileService getFileService() {
 
         Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
-        int code = Integer.valueOf(fileConfigMap.get(FileConstant.MANAGE_MODE));
+        int code = Integer.valueOf(fileConfigMap.get(GlobalFileConstant.MANAGE_MODE));
         FileService fileService = this.fileServiceFactory.getInstance(code);
 
         return fileService;
