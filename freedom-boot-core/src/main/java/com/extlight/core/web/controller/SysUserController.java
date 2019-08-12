@@ -213,7 +213,7 @@ public class SysUserController extends BaseController {
 
         resultMap.put("target", target);
 
-        List<SysRoleVO> allRoleList = this.sysRoleService.list();
+        List<SysRoleVO> allRoleList = this.sysRoleService.listAll();
         if (allRoleList.isEmpty()) {
             resultMap.put("roleList", new ArrayList<>());
         } else {

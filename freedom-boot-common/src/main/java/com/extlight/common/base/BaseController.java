@@ -60,6 +60,7 @@ public abstract class BaseController {
     }
 
     protected String render(String toPage, Map<String,Object> resultMap) {
+
         if (!resultMap.containsKey(PREFIX)) {
             resultMap.put(PREFIX, this.getPrefix());
         }
@@ -80,6 +81,7 @@ public abstract class BaseController {
      * @return
      */
     protected String getPrefix() {
+
         RequestMapping annotation = this.getClass().getAnnotation(RequestMapping.class);
         String[] values = annotation.value();
         if (values.length == 0) {
@@ -131,24 +133,31 @@ public abstract class BaseController {
         response.setHeader("Content-disposition", "attachment;filename=" + this.getFinalName(request, fileName));
         response.addHeader("Content-Length", "" + data.length);
         response.setContentType("application/octet-stream; charset=UTF-8");
+
         // 写出
         ServletOutputStream outputStream = response.getOutputStream();
         IOUtils.write(data, outputStream);
     }
 
     private String getFinalName(HttpServletRequest request, String fileName) throws UnsupportedEncodingException {
+
         final String agent = request.getHeader("USER-AGENT");
         String filename = fileName;
+
         if (agent.contains(BrowserConstant.MSIE)) {
-            filename = URLEncoder.encode(filename, "utf-8");
+            filename = URLEncoder.encode(filename, "UTF-8");
             filename = filename.replace("+", " ");
+
         } else if (agent.contains(BrowserConstant.FIREFOX)) {
             filename = new String(fileName.getBytes(), "ISO8859-1");
+
         } else if (agent.contains(BrowserConstant.CHROME)) {
-            filename = URLEncoder.encode(filename, "utf-8");
+            filename = URLEncoder.encode(filename, "UTF-8");
+
         } else {
-            filename = URLEncoder.encode(filename, "utf-8");
+            filename = URLEncoder.encode(filename, "UTF-8");
         }
+
         return filename;
     }
 

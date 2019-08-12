@@ -56,11 +56,11 @@ public interface BaseService<T extends BaseResponse, V> {
     V getById(Long id) throws GlobalException;
 
     /**
-     * 查询所有列表
+     * 查询所有列表（列表形式）
      * @return
      * @throws GlobalException
      */
-    List<V> list() throws GlobalException;
+    List<V> listAll() throws GlobalException;
 
     /**
      * 条件查询列表
@@ -70,6 +70,14 @@ public interface BaseService<T extends BaseResponse, V> {
      */
     List<V> list(BaseRequest params) throws GlobalException;
 
+
+    /**
+     * 查询所有数据（分页形式封装，针对前端 bootstrap table 使用）
+     * @return
+     * @throws GlobalException
+     */
+    PageInfo<V> pageAll() throws GlobalException;
+
     /**
      * 获取分页数据
      * @param params  搜索参数
@@ -77,7 +85,6 @@ public interface BaseService<T extends BaseResponse, V> {
      * @throws GlobalException
      */
     PageInfo<V> page(BaseRequest params) throws GlobalException;
-
 
     /**
      * 条件查询

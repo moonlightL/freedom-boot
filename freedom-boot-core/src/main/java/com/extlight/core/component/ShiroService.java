@@ -97,7 +97,7 @@ public class ShiroService {
     private void setRoles(SysUserVO sysUserVO) {
         List<SysRoleVO> roleList;
         if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
-            roleList = this.sysRoleService.list();
+            roleList = this.sysRoleService.listAll();
         } else {
             roleList = this.sysRoleService.findRoleListByUserId(sysUserVO.getId());
         }
@@ -109,7 +109,7 @@ public class ShiroService {
     private void setPermissions(SysUserVO sysUserVO) {
         List<SysPermissionVO> permissionList;
         if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
-            permissionList = this.sysPermissionService.list();
+            permissionList = this.sysPermissionService.listAll();
         } else {
             permissionList = this.sysPermissionService.findPermissionListByUserId(sysUserVO.getId());
         }

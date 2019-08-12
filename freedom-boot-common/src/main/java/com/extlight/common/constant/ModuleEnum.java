@@ -15,7 +15,7 @@ public enum ModuleEnum {
     SYSTEM(1, "系统模块"),
     GENERATOR(2, "生成器模块"),
     MONITOR(3, "监控模块"),
-    FILE(4, "监控模块"),
+    FILE(4, "文件模块"),
     ;
 
     private int code;

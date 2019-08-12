@@ -13,7 +13,6 @@ import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.dto.SysPermissionDTO;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.service.SysPermissionService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,16 +176,8 @@ public class SysPermissionController extends BaseController {
     @RequiresPermissions("core:permission:listUI")
     @ResponseBody
     public Result list() throws GlobalException {
-        List<SysPermissionVO> list = this.sysPermissionService.list();
-        Page<SysPermissionVO> page = new Page<>(1, list.size(), false);
-        int count = 0;
-        if (!list.isEmpty()) {
-            page.addAll(list);
-            count = this.sysPermissionService.count(null);
-        }
-        page.setTotal(count);
-        return Result.success(new PageInfo<>(page));
+        PageInfo<SysPermissionVO> pageInfo = this.sysPermissionService.pageAll();
+        return Result.success(pageInfo);
     }
-
 
 }

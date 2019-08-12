@@ -64,7 +64,7 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
         Map<String, String> result = CacheUtil.get(CONFIG_KEY);
 
         if (result == null) {
-            List<FileConfigVO> list = super.list();
+            List<FileConfigVO> list = super.listAll();
             result = new HashMap<>(list.size());
             Map<String, String> finalResult = result;
             list.stream().forEach(i -> finalResult.put(i.getConfigName(), i.getConfigValue()));

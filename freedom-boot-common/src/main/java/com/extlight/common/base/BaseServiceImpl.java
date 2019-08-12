@@ -75,20 +75,17 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
     @Override
     public V getById(Long id) throws GlobalException {
         T bo = this.getBaseMapper().selectByPrimaryKey(id);
-        if (bo == null) {
-            return null;
-        }
-        return  bo.toVO(voClass);
+        return bo != null ? bo.toVO(voClass) : null;
     }
 
     @Override
-    public List<V> list() throws GlobalException {
+    public List<V> listAll() throws GlobalException {
+
         List<T> list = this.getBaseMapper().selectAll();
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
+
         List<V> result = new ArrayList<>();
         list.forEach(i -> result.add(i.toVO(voClass)));
+
         return result;
     }
 
@@ -122,6 +119,15 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
     }
 
     @Override
+    public PageInfo<V> pageAll() throws GlobalException {
+        List<V> data = this.listAll();
+        Page<V> page = new Page<>(1, data.size(), false);
+        page.addAll(data);
+        page.setTotal(this.count(null));
+        return new PageInfo<>(page);
+    }
+
+    @Override
     public List<V> listByExample(Example example, int pageNum, int pageSize, boolean count) throws GlobalException {
 
         if (pageNum != 0 && pageSize != 0) {
@@ -137,15 +143,12 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
         return this.getBaseMapper().selectCountByExample(example);
     }
 
-
     private List<V> getList(Example example) {
         List<T> list = this.getBaseMapper().selectByExample(example);
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
 
         List<V> result = new ArrayList<>();
         list.forEach(i -> result.add(i.toVO(voClass)));
+
         return result;
     }
 }
