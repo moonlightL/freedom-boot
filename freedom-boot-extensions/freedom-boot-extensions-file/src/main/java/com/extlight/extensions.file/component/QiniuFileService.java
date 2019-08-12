@@ -1,4 +1,4 @@
-package com.extlight.extensions.file.component.file;
+package com.extlight.extensions.file.component;
 
 import com.extlight.common.component.file.FileManageEnum;
 import com.extlight.common.component.file.FileRequest;
@@ -28,14 +28,14 @@ import java.util.Map;
 
 /**
  * @Author: MoonlightL
- * @ClassName: QiniuFileServiceImpl
+ * @ClassName: QiniuFileService
  * @ProjectName: freedom-boot
  * @Description: 七牛云文件管理，参考：https://developer.qiniu.com/kodo/sdk/1239/java#5
  * @DateTime: 2019-08-03 11:14
  */
 @Component
 @Slf4j
-public class QiniuFileServiceImpl implements FileService {
+public class QiniuFileService implements FileService {
 
 	private static final Integer RETRY_NUM = 3;
 

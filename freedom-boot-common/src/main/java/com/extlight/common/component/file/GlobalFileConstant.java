@@ -1,7 +1,7 @@
 package com.extlight.common.component.file;
 
 /**
- * @Author: moonlight
+ * @Author: MoonlightL
  * @ClassName: GlobalFileConstant
  * @ProjectName: freedom-boot
  * @Description: 文件常量

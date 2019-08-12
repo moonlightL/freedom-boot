@@ -16,14 +16,14 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: LocalFileServiceImpl
+ * @Title: LocalFileService
  * @ProjectName: freedom-boot
- * @Description: 默认
+ * @Description: 本地文件管理
  * @DateTime: 2019/7/31 16:45
  */
 @Component
 @Slf4j
-public class LocalFileServiceImpl implements FileService {
+public class LocalFileService implements FileService {
 
     @Override
     public FileResponse upload(FileRequest fileRequest) throws GlobalException {
@@ -31,11 +31,12 @@ public class LocalFileServiceImpl implements FileService {
         FileResponse fileResponse = new FileResponse();
 
         try {
-            String uploadDir = this.getUploadDir(fileRequest);
 
             ByteArrayInputStream bis = new ByteArrayInputStream(fileRequest.getData());
 
+            String uploadDir = this.getUploadDir(fileRequest);
             uploadDir = uploadDir + "/files/" + DateUtil.toStr(new Date(), "yyyy/MM/dd");
+
             File dir = new File(uploadDir);
             if (!dir.exists()) {
                 dir.mkdirs();

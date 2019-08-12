@@ -1,4 +1,4 @@
-package com.extlight.extensions.file.component.file;
+package com.extlight.extensions.file.component;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
@@ -24,14 +24,14 @@ import java.util.Map;
 
 /**
  * @Author: MoonlightL
- * @ClassName: OssFileServiceImpl
+ * @ClassName: OssFileService
  * @ProjectName: freedom-boot
  * @Description: OSS 文件管理，参考：https://help.aliyun.com/document_detail/84781.html?spm=a2c4g.11186623.6.834.4ae66328XPkGZq
  * @DateTime: 2019-08-03 23:10
  */
 @Component
 @Slf4j
-public class OssFileServiceImpl implements FileService {
+public class OssFileService implements FileService {
 
 	@Autowired
 	private FileConfigService fileConfigService;

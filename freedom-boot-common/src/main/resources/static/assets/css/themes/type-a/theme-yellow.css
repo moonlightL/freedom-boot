@@ -239,7 +239,7 @@ body,
   color: #c2a300;
 }
 #mainnav-menu .active:not(.active-sub) > a {
-  color: #c2a300;
+  /*color: #c2a300;*/
 }
 #mainnav-menu > .active {
   background-color: #fafafa;
