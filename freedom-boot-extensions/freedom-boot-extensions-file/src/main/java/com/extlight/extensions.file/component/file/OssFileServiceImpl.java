@@ -40,7 +40,7 @@ public class OssFileServiceImpl implements FileService {
 	public FileResponse upload(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
 
-		String fileName = fileRequest.getFileName();
+		String fileName = fileRequest.getFilename();
 		byte[] data = fileRequest.getData();
 
 		OSS ossClient = null;
@@ -70,7 +70,7 @@ public class OssFileServiceImpl implements FileService {
 	public FileResponse download(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
 
-		String fileName = fileRequest.getFileName();
+		String fileName = fileRequest.getFilename();
 
 		OSS ossClient = null;
 
@@ -100,7 +100,7 @@ public class OssFileServiceImpl implements FileService {
 	public FileResponse remove(FileRequest fileRequest) throws GlobalException {
 		FileResponse fileResponse = new FileResponse();
 
-		String fileName = fileRequest.getFileName();
+		String fileName = fileRequest.getFilename();
 
 		OSS ossClient = null;
 		try {

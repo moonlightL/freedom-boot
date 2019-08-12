@@ -39,6 +39,7 @@
             <artifactId>freedom-boot-extensions-file</artifactId>
             <version>${freedom.boot.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

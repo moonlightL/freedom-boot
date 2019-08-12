@@ -37,8 +37,6 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> implements SysUserService {
 
-    private static final String CONFIG_KEY = "fileConfigMap";
-
     @Autowired
     private CoreConfig coreConfig;
 
@@ -139,7 +137,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     public String updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
 
         FileRequest fileRequest = new FileRequest();
-        fileRequest.setFileName(originalFilename).setData(data);
+        String[] names = originalFilename.split(".");
+        String newFilename = names[0] + "_" + System.currentTimeMillis() + "." + names[1];
+        fileRequest.setFilename(newFilename).setData(data);
         FileResponse fileResponse = this.getFileService().upload(fileRequest);
 
         String url = fileResponse.getUrl();
@@ -174,14 +174,18 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
      * @return
      */
     private FileService getFileService() {
-        Map<String, String> fileConfigMap = CacheUtil.get(CONFIG_KEY);
+
+        Map<String, String> fileConfigMap = CacheUtil.get(GlobalFileConstant.FILE_CONFIG_KEY);
+
         int code = 0;
         if (fileConfigMap != null && fileConfigMap.containsKey(GlobalFileConstant.MANAGE_MODE)) {
             code = Integer.valueOf(fileConfigMap.get(GlobalFileConstant.MANAGE_MODE));
+
         } else {
             // fileConfigMap 为空说明 extensions-file 项目没被引用，使用本地文件管理方式
             code = FileManageEnum.LOCAL.getCode();
         }
+
         FileService fileService = this.fileServiceFactory.getInstance(code);
 
         return fileService;

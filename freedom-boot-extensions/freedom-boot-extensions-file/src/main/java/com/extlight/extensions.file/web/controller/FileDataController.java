@@ -92,7 +92,7 @@ public class FileDataController extends BaseController {
         }
 
         byte[] data = this.fileDataService.downloadFile(id);
-        super.download(data, vo.getName(), request, response);
+        super.download(data, vo.getOriginalFilename(), request, response);
     }
 
     //#########################################【AJAX 请求】##################################################

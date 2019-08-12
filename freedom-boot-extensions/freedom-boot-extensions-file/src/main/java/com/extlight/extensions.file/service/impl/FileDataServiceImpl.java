@@ -63,12 +63,13 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     }
 
     @Override
-    public String uploadFile(String fileName, String contentType, byte[] data) throws GlobalException {
+    public String uploadFile(String originalFilename, String contentType, byte[] data) throws GlobalException {
         FileService fileService = this.getFileService();
 
         FileRequest fileRequest = new FileRequest();
-        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
-        fileRequest.setUploadDir(fileConfigMap.get(GlobalFileConstant.UPLOAD_DIR)).setFileName(fileName).setData(data);
+        String[] names = originalFilename.split(".");
+        String newFilename = names[0] + "_" + System.currentTimeMillis() + "." + names[1];
+        fileRequest.setUploadDir(this.getUploadDir()).setFilename(newFilename).setData(data);
 
         FileResponse fileResponse = fileService.upload(fileRequest);
 
@@ -77,7 +78,8 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         }
 
         FileData fileData = new FileData();
-        fileData.setName(fileName)
+        fileData.setFilename(newFilename)
+                .setOriginalFilename(originalFilename)
                 .setContentType(contentType)
                 .setUrl(fileResponse.getUrl())
                 .setThumbnailUrl(fileData.getUrl())
@@ -153,5 +155,14 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         FileService fileService = this.fileServiceFactory.getInstance(code);
 
         return fileService;
+    }
+
+    /**
+     * 获取文件上传目录
+     * @return
+     */
+    private String getUploadDir() {
+        Map<String, String> fileConfigMap = this.fileConfigService.getFileConfigMap();
+        return fileConfigMap.get(GlobalFileConstant.UPLOAD_DIR);
     }
 }

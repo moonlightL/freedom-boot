@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 
@@ -39,7 +37,7 @@ public class FileConfigDTO extends BaseRequest {
 	private String configValue;
 
 	/**
-	 * 类型 1：默认 2：七牛 3：oss
+	 * 类型 1：本地 2：七牛 3：oss
 	 */
 	private Integer configType;
 

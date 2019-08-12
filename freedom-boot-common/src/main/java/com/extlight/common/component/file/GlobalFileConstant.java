@@ -19,4 +19,9 @@ public class GlobalFileConstant {
 	 */
 	public static final String UPLOAD_DIR = "upload_dir";
 
+	/**
+	 * 配置文件 key
+	 */
+	public static final String FILE_CONFIG_KEY = "fileConfigMap";
+
 }

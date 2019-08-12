@@ -1,5 +1,6 @@
-package com.extlight.common.component.file;
+package com.extlight.core.component;
 
+import com.extlight.common.component.file.*;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.CacheUtil;
 import com.extlight.common.utils.DateUtil;
@@ -24,8 +25,6 @@ import java.util.Map;
 @Slf4j
 public class LocalFileServiceImpl implements FileService {
 
-    private static final String CONFIG_KEY = "fileConfigMap";
-
     @Override
     public FileResponse upload(FileRequest fileRequest) throws GlobalException {
 
@@ -42,7 +41,7 @@ public class LocalFileServiceImpl implements FileService {
                 dir.mkdirs();
             }
 
-            File dest = new File(uploadDir, fileRequest.getFileName());
+            File dest = new File(uploadDir, fileRequest.getFilename());
             FileUtils.copyToFile(bis, dest);
 
             fileResponse.setSuccess(true).setUrl(dest.getAbsolutePath());
@@ -52,7 +51,7 @@ public class LocalFileServiceImpl implements FileService {
             throw e;
 
         } catch (Exception e) {
-            log.error("========【默认管理】文件 fileName: {} 文件上传失败=============", fileRequest.getFileName());
+            log.error("========【默认管理】文件 fileName: {} 文件上传失败=============", fileRequest.getFilename());
             e.printStackTrace();
         }
 
@@ -104,7 +103,7 @@ public class LocalFileServiceImpl implements FileService {
         String uploadDir = fileRequest.getUploadDir();
         if (StringUtil.isBlank(uploadDir)) {
 
-            Map<String, String> fileConfigMap = CacheUtil.get(CONFIG_KEY);
+            Map<String, String> fileConfigMap = CacheUtil.get(GlobalFileConstant.FILE_CONFIG_KEY);
             if (fileConfigMap != null
                 && fileConfigMap.containsKey(GlobalFileConstant.UPLOAD_DIR)
                 && !StringUtil.isBlank(fileConfigMap.get(GlobalFileConstant.UPLOAD_DIR))) {

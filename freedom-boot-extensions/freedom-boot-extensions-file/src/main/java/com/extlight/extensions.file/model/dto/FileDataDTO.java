@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 
@@ -31,7 +29,12 @@ public class FileDataDTO extends BaseRequest {
 	/**
 	 * 文件名称
 	 */
-	private String name;
+	private String filename;
+
+	/**
+	 * 文件原始名称
+	 */
+	private String originalFilename;
 
 	/**
 	 * 文件路径

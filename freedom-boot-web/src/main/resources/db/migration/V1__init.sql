@@ -181,7 +181,8 @@ CREATE TABLE IF NOT EXISTS `t_sys_log` (
 
 CREATE TABLE `t_file_data` (
 	`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-	`name` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '文件名称',
+	`filename` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '文件名称',
+	`original_filename` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '原始文件名称',
 	`url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件路径',
 	`thumbnail_url` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
 	`file_key` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '文件 key(七牛云返回)',
@@ -192,7 +193,8 @@ CREATE TABLE `t_file_data` (
 	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
 	PRIMARY KEY (`id`),
 	INDEX `idx_operator_id` (`operator_id`),
-	INDEX `idx_name` (`name`),
+	INDEX `idx_filename` (`filename`),
+	INDEX `idx_original_filename` (`original_filename`),
 	INDEX `idx_create_time` (`create_time`)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件数据';
@@ -209,13 +211,14 @@ CREATE TABLE `t_file_config` (
   KEY `idx_config_name` (`config_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件配置';
 
-INSERT INTO `t_file_config`(`id`, `config_name`, `config_value`, `config_type`) VALUES (1, 'manage_mode', '1', 0),
-(2, 'upload_dir', '', 1),
-(3, 'qn_domain', '', 2),
-(4, 'qn_accessKey', '', 2),
-(5, 'qn_secretKey', '', 2),
-(6, 'qn_bucket', '', 2),
-(7, 'oss_endpoint', '', 3),
-(8, 'oss_accessKey', '', 3),
-(9, 'oss_secretKey', '', 3),
-(10, 'oss_bucket', '', 3);
+INSERT INTO `t_file_config`(`id`, `config_name`, `config_value`, `config_type`) VALUES
+  (1, 'manage_mode', '1', 0),
+  (2, 'upload_dir', '', 1),
+  (3, 'qn_domain', '', 2),
+  (4, 'qn_access_key', '', 2),
+  (5, 'qn_secret_key', '', 2),
+  (6, 'qn_bucket', '', 2),
+  (7, 'oss_endpoint', '', 3),
+  (8, 'oss_access_key', '', 3),
+  (9, 'oss_secret_key', '', 3),
+  (10, 'oss_bucket', '', 3);

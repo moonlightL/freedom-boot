@@ -18,11 +18,23 @@ public class FileResponse {
 
 	private boolean isSuccess;
 
+	/**
+	 * 七牛云返回的 key
+	 */
 	private String key;
 
+	/**
+	 * 七牛云返回的 hash
+	 */
 	private String hash;
 
+	/**
+	 * 文件路径
+	 */
 	private String url;
 
+	/**
+	 * 文件数据字节数组
+	 */
 	private byte[] data;
 }

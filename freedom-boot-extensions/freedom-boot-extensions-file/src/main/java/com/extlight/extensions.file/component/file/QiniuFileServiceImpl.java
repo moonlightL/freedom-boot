@@ -47,7 +47,7 @@ public class QiniuFileServiceImpl implements FileService {
 		FileResponse fileResponse = new FileResponse();
 
 		byte[] data = fileRequest.getData();
-		String fileName = fileRequest.getFileName();
+		String fileName = fileRequest.getFilename();
 
 		try {
 			// Zone.zone2() 根据自己情况选择
@@ -132,7 +132,7 @@ public class QiniuFileServiceImpl implements FileService {
 			throw e;
 
 		} catch (Exception ex) {
-			log.error("========【七牛云管理】文件 fileName: {} 文件删除失败=============", fileRequest.getFileName());
+			log.error("========【七牛云管理】文件 fileName: {} 文件删除失败=============", fileRequest.getFilename());
 			ex.printStackTrace();
 		}
 

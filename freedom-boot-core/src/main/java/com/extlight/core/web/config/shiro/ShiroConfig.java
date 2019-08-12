@@ -48,6 +48,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean(name = "securityManager")
+    @DependsOn("flywayConfig")
     public DefaultWebSecurityManager securityManager(ShiroProperties properties) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置 realm

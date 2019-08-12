@@ -3,6 +3,7 @@ package com.extlight.web;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -17,7 +18,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @Description: 启动类
  * @Date 2019/5/30 13:40
  */
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, FlywayAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.extlight.*"})
 @MapperScan(basePackages = {"com.extlight.*.mapper", "com.extlight.extensions.*.mapper"})
 @Slf4j

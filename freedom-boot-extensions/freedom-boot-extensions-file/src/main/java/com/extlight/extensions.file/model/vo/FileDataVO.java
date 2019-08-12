@@ -30,7 +30,12 @@ public class FileDataVO implements Serializable {
 	/**
 	 * 文件名称
 	 */
-	private String name;
+	private String filename;
+
+	/**
+	 * 文件原始名称
+	 */
+	private String originalFilename;
 
 	/**
 	 * 文件路径
