@@ -67,7 +67,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
         FileService fileService = this.getFileService();
 
         FileRequest fileRequest = new FileRequest();
-        String[] names = originalFilename.split(".");
+        String[] names = originalFilename.split("\\.");
         String newFilename = names[0] + "_" + System.currentTimeMillis() + "." + names[1];
         fileRequest.setUploadDir(this.getUploadDir()).setFilename(newFilename).setData(data);
 

@@ -137,7 +137,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     public String updateAvatar(String originalFilename, String contentType, byte[] data) throws GlobalException {
 
         FileRequest fileRequest = new FileRequest();
-        String[] names = originalFilename.split(".");
+        String[] names = originalFilename.split("\\.");
         String newFilename = names[0] + "_" + System.currentTimeMillis() + "." + names[1];
         fileRequest.setFilename(newFilename).setData(data);
         FileResponse fileResponse = this.getFileService().upload(fileRequest);
@@ -150,9 +150,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
         Long userId = ThreadUtil.get();
         SysUser sysUser = new SysUser();
         sysUser.setId(userId).setAvatar(url);
-
         super.update(sysUser);
-
 
         return sysUser.getAvatar();
     }
