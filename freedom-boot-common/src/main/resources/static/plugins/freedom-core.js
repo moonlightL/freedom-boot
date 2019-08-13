@@ -12,6 +12,7 @@
                     listUrl: "list.json", // 列表数据地址
                     deleteUrl: "remove.json", // 删除地址
                     queryFormId: "queryForm", // 搜索框表单 id
+                    treeGrid: false,
                     pagination: true, // 是否分页
                     fixedNumber: 7
                 },
@@ -97,7 +98,7 @@
 
                         },
                         onResetView: function() {
-                            if (options.treeGrid) {
+                            if ($.freedom.table.options.treeGrid) {
                                 $table.treegrid({
                                     treeColumn: 1,
                                     initialState: "expanded",
