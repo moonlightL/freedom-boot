@@ -22,6 +22,7 @@
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'remove')}" class="btn btn-danger freedom-delete" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                  </span>
+                                <button id="oc-btn" class="btn btn-success"><i class=""></i> 开展/折叠</button>
                             </div>
                         </div>
                     </div>
@@ -35,14 +36,14 @@
                                 <tr>
                                     <th data-align="" data-radio="true"></th>
                                     <th data-align="" data-field="name">名称</th>
-                                    <th data-align="" data-field="icon">图标</th>
-                                    <th data-align="" data-field="url">地址</th>
-                                    <th data-align="" data-field="type" data-formatter="typeFormatter">类型</th>
-                                    <th data-align="" data-field="code">权限编码</th>
-                                    <th data-align="" data-field="state" data-formatter="stateFormatter">状态</th>
-                                    <th data-align="" data-field="createTime">创建时间</th>
-                                    <th data-align="" data-field="updateTime">修改时间</th>
-                                    <th data-align="" data-formatter="actionFormatter">操作</th>
+                                    <th data-align="center" data-field="icon">图标</th>
+                                    <th data-align="center" data-field="url">地址</th>
+                                    <th data-align="center" data-field="type" data-formatter="typeFormatter">类型</th>
+                                    <th data-align="center" data-field="code">权限编码</th>
+                                    <th data-align="center" data-field="state" data-formatter="stateFormatter">状态</th>
+                                    <th data-align="center" data-field="createTime">创建时间</th>
+                                    <th data-align="center" data-field="updateTime">修改时间</th>
+                                    <th data-align="center" data-formatter="actionFormatter">操作</th>
                                 </tr>
                             </thead>
                         </table>
@@ -89,9 +90,6 @@
     function actionFormatter(value, row) {
         var btnArr = [];
         var permissions = [[${permissions}]];
-        if (permissions.indexOf("core:permission:query") > -1) {
-            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
-        }
 
         if (permissions.indexOf("core:permission:remove") > -1) {
             btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
@@ -115,7 +113,7 @@
          *    pagination：true              // 是否分页
          */
         var prefix = [[${prefix}]];
-        $.freedom.table.init({
+        $.freedom.ui.table.init({
             baseUrl: prefix,
             parentIdField: "pid", // 指定父id列
             treeShowField: "name", // 在哪一列展开树形
@@ -123,6 +121,12 @@
             pagination: false  // 分页
         });
 
+        var state = ($.freedom.ui.table.options.treeGridState == "close");
+        $("#oc-btn").on("click", function () {
+            var action = (state ? "expandAll"  : "collapseAll");
+            $("#" + $.freedom.ui.table.options.id).treegrid(action);
+            state = !state;
+        });
     });
 
 </script>

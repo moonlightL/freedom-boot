@@ -1,153 +1,163 @@
 ;(function($) {
     $.extend({
         freedom: {
-            table: {
-                instance: null,
-                options: {
-                    id: "listTable", // table id
-                    baseUrl: "",
-                    addUIUrl: "saveUI.html", // 新增页面地址
-                    editUIUrl: "updateUI/{id}.html", // 编辑页面地址
-                    detailUIUrl: "detailUI/{id}.html", // 详情页面地址
-                    listUrl: "list.json", // 列表数据地址
-                    deleteUrl: "remove.json", // 删除地址
-                    queryFormId: "queryForm", // 搜索框表单 id
-                    treeGrid: false,
-                    pagination: true, // 是否分页
-                    fixedNumber: 7
-                },
-                getListUrl: function() {
-                    return $.freedom.table.formatUrl($.freedom.table.options.listUrl);
-                },
-                getAddUIUrl: function() {
-                    return $.freedom.table.formatUrl($.freedom.table.options.addUIUrl);
-                },
-                getEditUrl: function(id) {
-                    return $.freedom.table.formatUrl($.freedom.table.options.editUIUrl.replace(/{id}/, id));
-                },
-                getDeleteUrl: function() {
-                    return $.freedom.table.formatUrl($.freedom.table.options.deleteUrl);
-                },
-                getDetailUIUrl: function(id) {
-                    return $.freedom.table.formatUrl($.freedom.table.options.detailUIUrl.replace(/{id}/, id));
-                },
-                formatUrl: function(url) {
-                  return $.freedom.table.options.baseUrl + "/" + url;
-                },
-                init: function(options) {
-                    $.extend($.freedom.table.options, options || {});
-                    var $table = $("#" + $.freedom.table.options.id);
-                    $table.bootstrapTable('destroy').bootstrapTable({
-                        url: $.freedom.table.getListUrl(),
-                        columns: options.columns,
-                        idField : 'id',
-                        parentIdField: options.parentIdField, // 指定父id列
-                        treeShowField: options.treeShowField, // 在哪一列展开树形
-                        fixedColumns: true,
-                        fixedNumber: $.freedom.table.options.fixedNumber,
-                        height: $(window.parent).height() - 320,
-                        detailView : false,
-                        cache: false,
-                        minimumCountColumns : 2,
-                        clickToSelect : true,
-                        pagination: $.freedom.table.options.pagination,
-                        sidePagination : 'server',
-                        paginationLoop : true,
-                        silentSort : false,
-                        smartDisplay : false,
-                        escape : true,
-                        maintainSelected : true,
-                        showRefresh: true,
-                        showExport: true,
-                        showFooter: true,
-                        showToggle: false, // 切换视图
-                        showFullscreen: false,
-                        showColumns: true,
-                        pageList: [10, 25, 50, 100],
-                        queryParams: function(params) {
-                            return {
-                                pageNum: (params.offset / params.limit + 1) || 1, // 当前页
-                                pageSize: params.limit || 10,    // 页面大小
-                                searchData: params.searchData, // 查询内容
-                                sortName: params.sort,     // 排序字段名
-                                sortOrder: params.order,    // 排序方式 asc/desc
-                                search: params.search
-                            };
-                        },
-                        responseHandler : function(resp) {
-                            if (resp.success) {
+            /**
+             * ui 展示
+             */
+            ui: {
+                table: {
+                    instance: null,
+                    options: {
+                        id: "listTable", // table id
+                        baseUrl: "",
+                        addUIUrl: "saveUI.html", // 新增页面地址
+                        editUIUrl: "updateUI/{id}.html", // 编辑页面地址
+                        detailUIUrl: "detailUI/{id}.html", // 详情页面地址
+                        listUrl: "list.json", // 列表数据地址
+                        deleteUrl: "remove.json", // 删除地址
+                        queryFormId: "queryForm", // 搜索框表单 id
+                        treeGrid: false,
+                        treeGridState: "close", // 节点展开状态 open/close
+                        pagination: true, // 是否分页
+                        fixedNumber: 7
+                    },
+                    getListUrl: function() {
+                        return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.listUrl);
+                    },
+                    getAddUIUrl: function() {
+                        return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.addUIUrl);
+                    },
+                    getEditUrl: function(id) {
+                        return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.editUIUrl.replace(/{id}/, id));
+                    },
+                    getDeleteUrl: function() {
+                        return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.deleteUrl);
+                    },
+                    getDetailUIUrl: function(id) {
+                        return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.detailUIUrl.replace(/{id}/, id));
+                    },
+                    formatUrl: function(url) {
+                        return $.freedom.ui.table.options.baseUrl + "/" + url;
+                    },
+                    init: function(options) {
+                        $.extend($.freedom.ui.table.options, options || {});
+                        var $table = $("#" + $.freedom.ui.table.options.id);
+                        $table.bootstrapTable('destroy').bootstrapTable({
+                            url: $.freedom.ui.table.getListUrl(),
+                            columns: options.columns,
+                            idField : 'id',
+                            parentIdField: options.parentIdField, // 指定父id列
+                            treeShowField: options.treeShowField, // 在哪一列展开树形
+                            fixedColumns: true,
+                            fixedNumber: $.freedom.ui.table.options.fixedNumber,
+                            height: $(window.parent).height() - 320,
+                            detailView : false,
+                            cache: false,
+                            minimumCountColumns : 2,
+                            clickToSelect : true,
+                            pagination: $.freedom.ui.table.options.pagination,
+                            sidePagination : 'server',
+                            paginationLoop : true,
+                            silentSort : false,
+                            smartDisplay : false,
+                            escape : true,
+                            maintainSelected : true,
+                            showRefresh: true,
+                            showExport: true,
+                            showFooter: true,
+                            showToggle: false, // 切换视图
+                            showFullscreen: false,
+                            showColumns: true,
+                            pageList: [10, 25, 50, 100],
+                            queryParams: function(params) {
                                 return {
-                                    "total" : resp.data.total || 0, // 总页数
-                                    "rows" : resp.data.list || [] // 数据
+                                    pageNum: (params.offset / params.limit + 1) || 1, // 当前页
+                                    pageSize: params.limit || 10,    // 页面大小
+                                    searchData: params.searchData, // 查询内容
+                                    sortName: params.sort,     // 排序字段名
+                                    sortOrder: params.order,    // 排序方式 asc/desc
+                                    search: params.search
                                 };
-                            } else {
-                                return {
-                                    "total" : 0, // 总页数
-                                    "rows" : [] // 数据
-                                };
-                            }
-                        },
-                        detailFormatter: function(index, row) {
-                            var html = [];
-                            $.each(row, function(key, value) {
-                                html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-                            });
-                            return html.join('');
-                        },
-                        onLoadSuccess: function(data) {
-
-                        },
-                        onResetView: function() {
-                            if ($.freedom.table.options.treeGrid) {
-                                $table.treegrid({
-                                    treeColumn: 1,
-                                    initialState: "expanded",
-                                    onChange: function() {
-                                        $table.bootstrapTable('resetWidth')
-                                    }
+                            },
+                            responseHandler : function(resp) {
+                                if (resp.success) {
+                                    return {
+                                        "total" : resp.data.total || 0, // 总页数
+                                        "rows" : resp.data.list || [] // 数据
+                                    };
+                                } else {
+                                    return {
+                                        "total" : 0, // 总页数
+                                        "rows" : [] // 数据
+                                    };
+                                }
+                            },
+                            detailFormatter: function(index, row) {
+                                var html = [];
+                                $.each(row, function(key, value) {
+                                    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
                                 });
-                            }
-                        }
-                    });
+                                return html.join('');
+                            },
+                            onLoadSuccess: function(data) {
 
-                    // 绑定工具栏按钮事件
-                    $.freedom.action.bindEvent();
+                            },
+                            onResetView: function() {
+                                if ($.freedom.ui.table.options.treeGrid) {
+                                    var state = ($.freedom.ui.table.options.treeGridState == "close" ? "collapsed" : "expanded");
+                                    $table.treegrid({
+                                        treeColumn: 1,
+                                        initialState: state,
+                                        onChange: function() {
+                                            $table.bootstrapTable('resetWidth')
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                        // 绑定工具栏按钮事件
+                        $.freedom.action.bindEvent();
+                    },
+                    refreshData: function() {
+                        $("#" + $.freedom.ui.table.options.id).bootstrapTable('refresh');
+                    },
+                    refreshOption: function(options) {
+                        $("#" + $.freedom.ui.table.options.id).bootstrapTable('refreshOptions', options);
+                    }
                 },
-                refreshData: function() {
-                    $("#" + $.freedom.table.options.id).bootstrapTable('refresh');
-                },
-                refreshOption: function(options) {
-                    $("#" + $.freedom.table.options.id).bootstrapTable('refreshOptions', options);
-                }
-            },
-            tree: {
-                zTreeObj: null,
-                setting: function() {
-                    var setting = {
-                        data: {
-                            simpleData: {
+                tree: {
+                    zTreeObj: null,
+                    setting: function() {
+                        var setting = {
+                            data: {
+                                simpleData: {
+                                    enable: true,
+                                    idKey: "id",
+                                    pIdKey: "pid"
+                                }
+                            },
+                            check: {
                                 enable: true,
-                                idKey: "id",
-                                pIdKey: "pid"
+                                chkStyle: "checkbox",
+                                chkboxType: { "Y": "ps", "N": "s" }
                             }
-                        },
-                        check: {
-                            enable: true,
-                            chkStyle: "checkbox",
-                            chkboxType: { "Y": "ps", "N": "s" }
-                        }
-                    };
+                        };
 
-                    return setting;
-                },
-                init: function(id, data) {
-                    $.freedom.tree.zTreeObj = $.fn.zTree.init($("#" + id), $.freedom.tree.setting(), data);
-                    return $.freedom.tree.zTreeObj;
+                        return setting;
+                    },
+                    init: function(id, data) {
+                        $.freedom.ui.tree.zTreeObj = $.fn.zTree.init($("#" + id), $.freedom.ui.tree.setting(), data);
+                        return $.freedom.ui.tree.zTreeObj;
+                    }
                 }
             },
+            /**
+             * 事件处理
+             */
             action: {
                 bindEvent: function() {
-                    var options = $("#" + $.freedom.table.options.id).bootstrapTable("getOptions");
+                    var options = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getOptions");
                     $(options.toolbar).on("click", function(e) {
                         var $target = $(e.target);
                         if ($target.hasClass("freedom-add")) {
@@ -162,7 +172,7 @@
                     });
 
                     // 控制按鈕失效状态
-                    var $table = $("#" + $.freedom.table.options.id);
+                    var $table = $("#" + $.freedom.ui.table.options.id);
                     $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
                         $(".freedom-edit, .freedom-delete").each(function(index,domEle) {
                             $(domEle).prop('disabled', !$table.bootstrapTable('getSelections').length);
@@ -170,30 +180,30 @@
                     });
                 },
                 showAddUI: function() {
-                    if (!$.freedom.table.options.addUIUrl) {
+                    if (!$.freedom.ui.table.options.addUIUrl) {
                         $.freedom.modal.msg("未设置新增页面地址");
                         return;
                     }
 
-                    $.freedom.modal.window("新增", $.freedom.table.getAddUIUrl(), 800, $(window).height() - 80);
+                    $.freedom.modal.window("新增", $.freedom.ui.table.getAddUIUrl(), 800, $(window).height() - 80);
                 },
                 showEditUI: function() {
-                    if (!$.freedom.table.options.editUIUrl) {
+                    if (!$.freedom.ui.table.options.editUIUrl) {
                         $.freedom.modal.msg("未设置编辑页面地址");
                         return;
                     }
 
-                    var selections = $("#" + $.freedom.table.options.id).bootstrapTable("getSelections");
+                    var selections = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getSelections");
                     var rowNum = selections.length;
                     if (rowNum == 0 || rowNum > 1) {
                         $.freedom.modal.msg("请选择一条记录进行编辑操作");
                         return;
                     }
 
-                    $.freedom.modal.window("编辑", $.freedom.table.getEditUrl(selections[0].id), 800, $(window).height() - 80);
+                    $.freedom.modal.window("编辑", $.freedom.ui.table.getEditUrl(selections[0].id), 800, $(window).height() - 80);
                 },
                 showDetailUI: function(id) {
-                    if (!$.freedom.table.options.detailUIUrl) {
+                    if (!$.freedom.ui.table.options.detailUIUrl) {
                         $.freedom.modal.msg("未设置详情页面地址");
                         return;
                     }
@@ -203,7 +213,7 @@
                         return;
                     }
 
-                    $.freedom.modal.window("详情", $.freedom.table.getDetailUIUrl(id), 800, $(window).height() - 80);
+                    $.freedom.modal.window("详情", $.freedom.ui.table.getDetailUIUrl(id), 800, $(window).height() - 80);
                 },
                 /**
                  * 对外暴露的表单提交方法
@@ -224,13 +234,13 @@
                     });
                 },
                 delete: function(id) {
-                    if (!$.freedom.table.options.deleteUrl) {
+                    if (!$.freedom.ui.table.options.deleteUrl) {
                         $.freedom.modal.msg("未设置删除地址");
                         return;
                     }
                     var idArr = [];
                     if (!id) {
-                        var selections = $("#" + $.freedom.table.options.id).bootstrapTable("getSelections");
+                        var selections = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getSelections");
                         var rowNum = selections.length;
                         if (rowNum == 0) {
                             $.freedom.modal.msg("请选择记录进行删除操作");
@@ -245,22 +255,22 @@
                     }
 
                     $.freedom.modal.confirm("确定要删除该记录吗？", function() {
-                        $.freedom.action.submit($.freedom.table.getDeleteUrl(), {idStr: idArr.join(",")}, function(resp) {
-                            $.freedom.table.refreshData();
+                        $.freedom.action.submit($.freedom.ui.table.getDeleteUrl(), {idStr: idArr.join(",")}, function(resp) {
+                            $.freedom.ui.table.refreshData();
                             $.freedom.modal.closeAll();
                         });
                     });
                 },
                 query: function() {
-                    var $queryForm = $("#" + $.freedom.table.options.queryFormId);
+                    var $queryForm = $("#" + $.freedom.ui.table.options.queryFormId);
                     var $queryBtn = $queryForm.find("button[type='submit']");
 
                     $queryBtn.on("click", function(e) {
                         e.preventDefault();
                         var formParamArr = $queryForm.serializeArray();
-                        var options = $("#" + $.freedom.table.options.id).bootstrapTable('getOptions');
+                        var options = $("#" + $.freedom.ui.table.options.id).bootstrapTable('getOptions');
                         options.queryParams = function(params) {
-                           var paramter = {
+                           var parameter = {
                                 pageNum: (params.offset / params.limit + 1) || 1, // 当前页
                                 pageSize: params.limit || 10,    // 页面大小
                                 sortName: params.sort,     // 排序字段名
@@ -268,12 +278,12 @@
                             };
 
                            for (var i=0, len=formParamArr.length; i<len; i++) {
-                               paramter[formParamArr[i].name] = formParamArr[i].value;
+                               parameter[formParamArr[i].name] = formParamArr[i].value;
                            }
-                           return paramter;
+                           return parameter;
                         }
 
-                        $.freedom.table.refreshOption(options);
+                        $.freedom.ui.table.refreshOption(options);
                     });
 
                     $queryForm.find("button[type='button']").on("click", function(e) {
@@ -294,11 +304,11 @@
                  * @param fn
                  */
                 submit: function(url, data, fn) {
-                    if (fn == null) {
+                    if (typeof fn != "function") {
                         fn = function(resp) {
                             $.freedom.modal.msg(resp.msg, 1, function() {
                                 window.parent.$.freedom.modal.closeAll();
-                                window.parent.$.freedom.table.refreshData();
+                                window.parent.$.freedom.ui.table.refreshData();
                             });
                         }
                     }
@@ -357,6 +367,9 @@
                     });
                 }
             },
+            /**
+             * 拟态窗
+             */
             modal: {
                 msg: function(msg, icon, fn) {
                     layer.msg(msg, {icon: icon, time: 1500}, function() {
@@ -397,10 +410,16 @@
                 },
                 closeAll: function () {
                     layer.closeAll();
-                },
+                }
             },
+            /**
+             * 存储
+             */
             storage: {
                 set: function(k ,v) {
+                    if (typeof v != "string") {
+                        v = JSON.stringify(v);
+                    }
                     localStorage.setItem(k, v);
                 },
                 get: function(k) {

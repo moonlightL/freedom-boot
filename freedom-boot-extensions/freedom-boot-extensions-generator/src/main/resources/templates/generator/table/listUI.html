@@ -134,12 +134,12 @@
          *    pagination：true              // 是否分页
          */
         var prefix = [[${prefix}]];
-        $.freedom.table.init({
+        $.freedom.ui.table.init({
             baseUrl: prefix,
             pagination: false  // 分页
         });
 
-        var $table = $("#" + $.freedom.table.options.id);
+        var $table = $("#" + $.freedom.ui.table.options.id);
         $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
             var rows = $table.bootstrapTable('getSelections');
             var checkedArr = [];

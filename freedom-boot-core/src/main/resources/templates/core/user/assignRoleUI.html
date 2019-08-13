@@ -66,7 +66,7 @@
             $.freedom.action.request(document.getElementsByTagName("form")[0].action, param, function(resp) {
                 $.freedom.modal.msg(resp.msg, 1, function() {
                     window.parent.$.freedom.modal.closeAll();
-                    window.parent.$.freedom.table.refreshData();
+                    window.parent.$.freedom.ui.table.refreshData();
                 });
             });
         });

@@ -109,7 +109,7 @@
         $.freedom.modal.confirm("确定要踢出【"+username+"】用户吗？", function() {
             $.freedom.action.request("/monitor/online/kick.json", {sessionId: sessionId}, function() {
                 $.freedom.modal.closeAll();
-                $.freedom.table.refreshData();
+                $.freedom.ui.table.refreshData();
             });
         });
 
@@ -130,7 +130,7 @@
          *    pagination：true              // 是否分页
          */
         var prefix = [[${prefix}]];
-        $.freedom.table.init({
+        $.freedom.ui.table.init({
             baseUrl: prefix,
             pagination: false
         });

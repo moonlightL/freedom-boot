@@ -37,7 +37,7 @@
             callback: function(data) {
                 var resp = data.response;
                 if (resp.success) {
-                    window.parent.$.freedom.table.refreshData();
+                    window.parent.$.freedom.ui.table.refreshData();
                 } else {
                     $.freedom.modal.msg(resp.msg);
                 }
