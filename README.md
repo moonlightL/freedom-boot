@@ -1,6 +1,6 @@
 ## 项目介绍
 
-Freedom Boot 是一款基于 Spring Boot 2.0 开发的后台管理系统，提供用户身份认证和授权的核心功能，同时扩展系统监控、代码生成和文件管理功能，是开发者接私活的神器。
+Freedom Boot 是一款基于 Spring Boot 2.0 + MySQL 开发的后台管理系统，提供用户身份认证和授权的核心功能，同时扩展系统监控、代码生成和文件管理功能，是开发者接私活的神器。
 
 [![](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/moonlightL/ml-blog/blob/master/LICENSE)
 ![](https://img.shields.io/badge/language-Java-blue.svg)
@@ -90,12 +90,16 @@ zTree | 多功能的“树”插件 | [前往](http://www.treejs.cn/v3/api.php)
 ```
 1.下载项目
 
-2.在本地数据库中创建名为 freedom-boot 的数据库
+2.在数据库中创建名为 freedom-boot 的数据库
 
 3.修改项目中连接数据库的配置
 
 4.启动项目即可
 ```
+
+管理员账户： admin/admin 
+
+游客账户： guest/123456
 
 ## 效果图
 
