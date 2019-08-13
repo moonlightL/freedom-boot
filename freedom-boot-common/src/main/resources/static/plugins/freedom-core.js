@@ -423,7 +423,7 @@
                     localStorage.setItem(k, v);
                 },
                 get: function(k) {
-                    localStorage.getItem(k);
+                    return localStorage.getItem(k);
                 },
                 remove: function(k) {
                     localStorage.removeItem(k);
