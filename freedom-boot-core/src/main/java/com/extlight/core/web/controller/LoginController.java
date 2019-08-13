@@ -114,7 +114,7 @@ public class LoginController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
 
         try {
-            token.setRememberMe(loginDTO.getRememberMe());
+//            token.setRememberMe(loginDTO.getRememberMe());
             subject.login(token);
         } catch (UnknownAccountException e) {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
