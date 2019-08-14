@@ -92,7 +92,7 @@ zTree | 多功能的“树”插件 | [前往](http://www.treejs.cn/v3/api.php)
 
 2.修改项目中数据库的连接配置(url、username、password)
 
-3.在数据库中创建第2步骤中 url 对应的数据库名称，默认数据库名为 freedom-boot
+3.在数据库中创建上述 url 对应的数据库名称，默认数据库名为 freedom-boot
 
 4. mvn clean 后启动项目即可(在 freedom-boot-web 中启动)
 ```
