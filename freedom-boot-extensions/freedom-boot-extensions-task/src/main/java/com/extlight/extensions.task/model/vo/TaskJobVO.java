@@ -59,7 +59,7 @@ public class TaskJobVO implements Serializable {
 	private String cronExpression;
 
 	/**
-	 * 状态 0：关闭 1：开启 2：暂停
+	 * 状态 0：关闭 1：开启
 	 */
 	private Integer state;
 

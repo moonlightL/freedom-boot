@@ -22,6 +22,7 @@ spring:
           - generator
           - monitor
           - file
+          - task
     thymeleaf:
         mode: HTML5
         encoding: UTF-8
@@ -78,7 +79,7 @@ mybatis:
       - classpath:mybatis/mapper/generator/*.xml
       - classpath:mybatis/mapper/monitor/*.xml
       - classpath:mybatis/mapper/file/*.xml
-
+      - classpath:mybatis/mapper/task/*.xml
 # 通用 mapper 配置
 mapper:
     mappers:

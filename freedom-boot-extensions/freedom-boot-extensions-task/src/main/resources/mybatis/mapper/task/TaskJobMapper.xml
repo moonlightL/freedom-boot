@@ -3,4 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.extlight.extensions.task.mapper.TaskJobMapper">
 
+    <select id="findByJobName" parameterType="java.lang.String" resultType="com.extlight.extensions.task.model.TaskJob">
+        SELECT id FROM t_task_job WHERE job_name = #{jobName}
+    </select>
+
 </mapper>

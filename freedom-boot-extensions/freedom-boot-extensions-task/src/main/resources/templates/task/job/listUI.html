@@ -43,7 +43,7 @@
                                     <th data-align="center" data-field="methodName">方法名</th>
                                     <th data-align="center" data-field="params">参数</th>
                                     <th data-align="center" data-field="cronExpression">cron 表达式</th>
-                                    <th data-align="center" data-field="state">状态</th>
+                                    <th data-align="center" data-field="state" data-formatter="stateFormatter">状态</th>
                                     <th data-align="center" data-field="remark">备注</th>
                                     <th data-align="center" data-field="createTime">创建时间</th>
                                     <th data-align="center" data-field="updateTime">修改时间</th>
@@ -93,6 +93,14 @@
 
     function numFormatter(value, row, index) {
         return index + 1;
+    }
+
+    function stateFormatter(value, row) {
+        if (value == 1) {
+            return "运行";
+        } else if (value == 0) {
+            return "暂停";
+        }
     }
 
     function actionFormatter(value, row) {
