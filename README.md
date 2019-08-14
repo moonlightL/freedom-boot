@@ -43,7 +43,7 @@ freedom-boot
 │  ├─freedom-boot-extensions-file        -- 扩展模块-文件
 │  ├─freedom-boot-extensions-generator   -- 扩展模块-代码生成器
 │  └─freedom-boot-extensions-monitor     -- 扩展模块-系统监控
-└─freedom-boot-web                       -- 启动模块
+└─freedom-boot-web                       -- 启动模块（管理总配置文件和启动类）
 ```
 
 ## 技术选型
@@ -88,13 +88,11 @@ zTree | 多功能的“树”插件 | [前往](http://www.treejs.cn/v3/api.php)
 ## 安装
 
 ```
-1.下载项目
+1.下载项目 git clone https://github.com/moonlightL/freedom-boot.git
 
-2.在数据库中创建名为 freedom-boot 的数据库
+2.修改项目中数据库的连接配置(url、username、password)
 
-3.修改项目中连接数据库的配置
-
-4.启动项目即可
+3.启动项目即可(在 freedom-boot-web 中启动)
 ```
 
 管理员账户： admin/admin 
