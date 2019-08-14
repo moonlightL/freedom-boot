@@ -1,21 +1,3 @@
--- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.21-log - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win64
--- HeidiSQL 版本:                  9.2.0.4949
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
--- 导出 freedom-boot 的数据库结构
-CREATE DATABASE IF NOT EXISTS `freedom-boot` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `freedom-boot`;
-
-
--- 导出  表 freedom-boot.t_sys_permission 结构
 CREATE TABLE IF NOT EXISTS `t_sys_permission` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '名称',
@@ -33,8 +15,6 @@ CREATE TABLE IF NOT EXISTS `t_sys_permission` (
   KEY `idx_pid` (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COMMENT='系统权限表';
 
--- 正在导出表  freedom-boot.t_sys_permission 的数据：~22 rows (大约)
-/*!40000 ALTER TABLE `t_sys_permission` DISABLE KEYS */;
 INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pid`, `state`, `sort`, `common`) VALUES
 	(1, '系统管理', 'fa fa-cogs', '', 1, '', 0, 1, 1, 1),
 	(2, '用户管理', 'fa fa-users', '/core/user/listUI.html', 2, 'core:user:listUI', 1, 1, 1, 1),
@@ -68,9 +48,7 @@ INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pi
     (30, '下载', 'fa fa-cloud-download', '', 3, 'file:data:download', 26, 1, 4, 1),
     (31, '文件配置', 'fa fa-config', '/file/config/listUI.html', 2, 'file:config:listUI', 25, 1, 1, 1),
     (32, '保存', 'fa fa-save', '', 3, 'file:config:save', 31, 1, 1, 1);
-/*!40000 ALTER TABLE `t_sys_permission` ENABLE KEYS */;
 
--- 导出  表 freedom-boot.t_sys_role 结构
 CREATE TABLE IF NOT EXISTS `t_sys_role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '角色名称',
@@ -81,13 +59,9 @@ CREATE TABLE IF NOT EXISTS `t_sys_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统角色表';
 
--- Dumping data for table freedom-boot.t_sys_role: ~1 rows (approximately)
-/*!40000 ALTER TABLE `t_sys_role` DISABLE KEYS */;
 INSERT INTO `t_sys_role` (`id`, `name`, `code`, `descr`) VALUES
 	(1, '游客', 'guest', '游客角色只有查看权限');
-/*!40000 ALTER TABLE `t_sys_role` ENABLE KEYS */;
 
--- 导出  表 freedom-boot.t_sys_role_permission 结构
 CREATE TABLE IF NOT EXISTS `t_sys_role_permission` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `role_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '角色 id',
@@ -97,8 +71,6 @@ CREATE TABLE IF NOT EXISTS `t_sys_role_permission` (
   KEY `idx_permission_id` (`permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
--- Dumping data for table freedom-boot.t_sys_role_permission: ~10 rows (approximately)
-/*!40000 ALTER TABLE `t_sys_role_permission` DISABLE KEYS */;
 INSERT INTO `t_sys_role_permission` (`id`, `role_id`, `permission_id`) VALUES
 	(1, 1, 1),
 	(2, 1, 2),
@@ -112,9 +84,7 @@ INSERT INTO `t_sys_role_permission` (`id`, `role_id`, `permission_id`) VALUES
 	(10, 1, 21),
 	(11, 1, 22),
 	(12, 1, 23);
-/*!40000 ALTER TABLE `t_sys_role_permission` ENABLE KEYS */;
 
--- 导出  表 freedom-boot.t_sys_user 结构
 CREATE TABLE IF NOT EXISTS `t_sys_user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `username` varchar(30) NOT NULL COMMENT '用户名',
@@ -138,15 +108,10 @@ CREATE TABLE IF NOT EXISTS `t_sys_user` (
   UNIQUE KEY `idx_email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
--- 正在导出表  freedom-boot.t_sys_user 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `t_sys_user` DISABLE KEYS */;
 INSERT INTO `t_sys_user` (`id`, `username`, `nickname`, `password`, `avatar`, `gender`, `email`, `qq`, `mobile`, `address`, `salt`, `state`, `del`, `super_admin`, `remark`) VALUES
 	(1, 'admin', '超级管理员', '21232f297a57a5a743894a0e4a801fc3', '/assets/picture/default-avatar.png', 1, 'jx8996@163.com', 0, '', '', 'freedom-boot', 1, 0, 1, '拥有最高权限'),
   (2, 'guest', '游客', 'e10adc3949ba59abbe56e057f20f883e', '/assets/picture/default-avatar.png', 1, 'guest@163.com', 0, '', '', 'freedom-boot', 1, 0, 0, '拥有查看权限');
-/*!40000 ALTER TABLE `t_sys_user` ENABLE KEYS */;
 
-
--- 导出  表 freedom-boot.t_sys_user_role 结构
 CREATE TABLE IF NOT EXISTS `t_sys_user_role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户 id',
@@ -156,12 +121,8 @@ CREATE TABLE IF NOT EXISTS `t_sys_user_role` (
   KEY `idx_role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
 
--- Dumping data for table freedom-boot.t_sys_user_role: ~1 rows (approximately)
-/*!40000 ALTER TABLE `t_sys_user_role` DISABLE KEYS */;
 INSERT INTO `t_sys_user_role` (`user_id`, `role_id`) VALUES ('2', '1');
-/*!40000 ALTER TABLE `t_sys_user_role` ENABLE KEYS */;
 
--- 导出  表 freedom-boot.t_sys_log 结构
 CREATE TABLE IF NOT EXISTS `t_sys_log` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
 	`module_name` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '模块名称',
