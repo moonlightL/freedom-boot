@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:include="common :: header"></head>
+    <!--Font Awesome [ OPTIONAL ]-->
+    <link th:href="@{/assets/css/magic-check.min.css}" rel="stylesheet">
+</head>
+
+<body>
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" th:object="${vo}" method="post">
+                    <input type="hidden" name="id" th:field="*{id}">
+                    <div class="panel-body">
+                        <p class="text-main text-bold">基本资料</p>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">任务名称</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="jobName" th:field="*{jobName}"
+                                       placeholder="任务名称" data-bv-notempty="true"
+                                       data-bv-notempty-message="任务名称不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">任务组</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="jobGroupName" th:field="*{jobGroupName}"
+                                       placeholder="任务组" data-bv-notempty="true"
+                                       data-bv-notempty-message="任务组不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">bean 名称</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="beanName" th:field="*{beanName}"
+                                       placeholder="bean 名称" data-bv-notempty="true"
+                                       data-bv-notempty-message="bean 名称不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">方法名</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="methodName" th:field="*{methodName}"
+                                       placeholder="方法名" data-bv-notempty="true"
+                                       data-bv-notempty-message="方法名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">参数</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="params" th:field="*{params}"
+                                       placeholder="参数" data-bv-notempty="true"
+                                       data-bv-notempty-message="参数不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">cron 表达式</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="cronExpression"
+                                       th:field="*{cronExpression}" placeholder="cron 表达式" data-bv-notempty="true"
+                                       data-bv-notempty-message="cron 表达式不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">状态</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="state" value="0"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="状态不能为空"  th:field="*{state}"/> 关闭
+                                </label>
+                                <label>
+                                    <input type="radio" name="state" value="1"  th:field="*{state}"/> 开启
+                                </label>
+                                <label>
+                                    <input type="radio" name="state" value="2"  th:field="*{state}"/> 暂停
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">备注</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <textarea type="text" class="form-control" name="remark" placeholder="备注" th:field="*{remark}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" th:if="${!readOnly}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END SETTINGS -->
+<div th:include="common :: script"></div>
+<!--Form validation [ SAMPLE ]-->
+<!--<script th:src="@{/assets/js/form-validation.js}"></script>-->
+<script th:inline="javascript">
+    $(function () {
+        var readOnly = [[${readOnly}]];
+        if (readOnly) {
+            $("input,select,textarea").attr("disabled", "disabled");
+        } else {
+            $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+        }
+    });
+</script>
+</body>
+</html>

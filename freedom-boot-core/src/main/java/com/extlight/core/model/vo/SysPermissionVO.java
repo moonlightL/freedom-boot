@@ -23,6 +23,8 @@ import java.util.List;
 @EqualsAndHashCode(of = {"id", "name"})
 public class SysPermissionVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      *  id
      */

@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author MoonlightL
- * @Title: CacheUtil
+ * @ClassName: CacheUtil
  * @ProjectName: freedom-boot
  * @Description: 缓存工具类
  * @DateTime: 2019/8/9 14:11

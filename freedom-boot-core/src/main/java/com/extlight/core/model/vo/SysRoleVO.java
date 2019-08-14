@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 @ToString
 public class SysRoleVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      *  id
      */

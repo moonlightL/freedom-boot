@@ -5,7 +5,7 @@ import com.extlight.common.utils.StringUtil;
 
 /**
  * @Author MoonlightL
- * @Title: FileService
+ * @ClassName: FileService
  * @ProjectName: freedom-boot
  * @Description: 文件Service
  * @DateTime 2019/7/31 16:36

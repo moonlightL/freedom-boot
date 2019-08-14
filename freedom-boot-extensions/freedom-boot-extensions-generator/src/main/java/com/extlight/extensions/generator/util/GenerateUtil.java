@@ -2,6 +2,7 @@ package com.extlight.extensions.generator.util;
 
 import com.extlight.common.utils.DateUtil;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.generator.model.GenColumn;
 import com.extlight.extensions.generator.model.GenTable;
 import com.extlight.extensions.generator.model.dto.GeneratorParam;
@@ -79,7 +80,7 @@ public class GenerateUtil {
      * 列名转换成 Java 属性名
      */
     public static String columnToJava(String columnName) {
-        return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "" );
+        return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**
@@ -87,7 +88,7 @@ public class GenerateUtil {
      */
     public static String tableToJava(String tableName, String tablePrefix) {
         if (StringUtils.isNotBlank(tablePrefix)) {
-            tableName = tableName.replaceFirst(tablePrefix, "" );
+            tableName = tableName.replaceFirst(tablePrefix, "");
         }
         return columnToJava(tableName);
     }
@@ -95,7 +96,7 @@ public class GenerateUtil {
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, String className, String packageName, String moduleName) {
+    public static String getFileName(String template, String className, String packageName, String moduleName, String requestMapping) {
         String packagePath = "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
@@ -133,25 +134,51 @@ public class GenerateUtil {
             return packagePath + "constant" + File.separator + className + "ExceptionEnum.java";
         }
 
+        String[] split = requestMapping.split("/");
         if (template.contains("Mapper.xml.vm")) {
-            return "main" + File.separator + "resources" + File.separator + "mybatis" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Mapper.xml";
+            return "main" + File.separator + "resources" + File.separator + "mybatis" + File.separator + "mapper" + File.separator + split[0] + File.separator + className + "Mapper.xml";
         }
 
         if (template.contains("listUI.html.vm")) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "listUI.html";
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + split[0] + File.separator + split[1] + File.separator + "listUI.html";
         }
 
         if (template.contains("saveUI.html.vm")) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "saveUI.html";
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + split[0] + File.separator + split[1] + File.separator + "saveUI.html";
         }
 
         if (template.contains("updateUI.html.vm")) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + moduleName + File.separator + className + File.separator + "updateUI.html";
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + split[0] + File.separator + split[1] + File.separator + "updateUI.html";
         }
 
         return null;
     }
 
+    /**
+     * 获取 mapping
+     * @param tableName
+     * @param tablePrefix
+     * @return
+     */
+    public static String getRequestMapping(String tableName, String tablePrefix) {
+        if (StringUtils.isNotBlank(tablePrefix)) {
+            tableName = tableName.replaceFirst(tablePrefix, "");
+        }
+        return StringUtil.join(tableName.split("_"), "/");
+    }
+
+    /**
+     * 获取权限
+     * @param tableName
+     * @param tablePrefix
+     * @return
+     */
+    public static String getPermission(String tableName, String tablePrefix) {
+        if (StringUtils.isNotBlank(tablePrefix)) {
+            tableName = tableName.replaceFirst(tablePrefix, "");
+        }
+        return StringUtil.join(tableName.split("_"), ":");
+    }
 
     public static void generateCode(GeneratorParam generatorParam, GenTable table, List<GenColumn> columns, ZipOutputStream zip) {
 
@@ -215,6 +242,10 @@ public class GenerateUtil {
         map.put("email", generatorParam.getEmail());
         map.put("projectName", generatorParam.getProjectName());
         map.put("dateTime", DateUtil.toStr(LocalDateTime.now()));
+        map.put("permission", getPermission(tableVO.getTableName(), generatorParam.getTablePrefix()));
+        String requestMapping = getRequestMapping(tableVO.getTableName(), generatorParam.getTablePrefix());
+        map.put("requestMapping", requestMapping);
+
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表
@@ -225,7 +256,7 @@ public class GenerateUtil {
                 Template tpl = Velocity.getTemplate(template, "UTF-8");
                 tpl.merge(context, sw);
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName())));
+                zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName(), requestMapping)));
                 IOUtils.write(sw.toString(), zip, "UTF-8");
                 zip.closeEntry();
             } catch (IOException e) {
@@ -234,5 +265,4 @@ public class GenerateUtil {
         }
 
     }
-
 }

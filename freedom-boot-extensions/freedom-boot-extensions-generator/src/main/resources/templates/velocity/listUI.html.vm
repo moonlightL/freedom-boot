@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th data-align="center" data-checkbox="true"></th>
-                                    <th data-align="center" data-field="id" data-sortable="true">ID</th>
+                                    <th data-align="center" data-formatter="numFormatter">ID</th>
                                     #foreach ($column in $columnList)
                                     <th data-align="center" data-field="$column.attrName">$column.columnComment</th>
                                     #end
@@ -83,6 +83,10 @@
 <!--End page content-->
 <div th:include="common :: script"></div>
 <script type="text/javascript" th:inline="javascript" >
+
+    function numFormatter(value, row, index) {
+        return index + 1;
+    }
 
     function actionFormatter(value, row) {
         var btnArr = [];

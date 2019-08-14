@@ -17,6 +17,8 @@ import lombok.ToString;
 @ToString
 public class GenColumnVO extends BaseResponse {
 
+    private static final long serialVersionUID =1L;
+
     /**
      * 字段名称
      */

@@ -4,7 +4,7 @@ import com.extlight.common.exception.GlobalExceptionMap;
 
 /**
  * @Author MoonlightL
- * @Title: SysUserExceptionEnum
+ * @ClassName: SysUserExceptionEnum
  * @ProjectName: freedom-boot
  * @Description: 用户异常枚举
  * @DateTime: 2019/7/31 20:09

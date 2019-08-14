@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @Author MoonlightL
- * @Title: FileServiceFactory
+ * @ClassName: FileServiceFactory
  * @ProjectName: freedom-boot
  * @Description: FileService 工厂
  * @DateTime: 2019/7/31 16:41

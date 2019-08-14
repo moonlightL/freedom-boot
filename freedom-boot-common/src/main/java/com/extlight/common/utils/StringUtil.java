@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * @Author MoonlightL
- * @Title: StringUtil
+ * @ClassName: StringUtil
  * @ProjectName: freedom-boot
  * @Description: 字符串工具
  * @DateTime: 2019/8/1 16:15

@@ -11,10 +11,10 @@ import com.extlight.common.exception.GlobalExceptionMap;
  */
 public enum FileDataExceptionEnum implements GlobalExceptionMap {
 
-    ERROR_FILE_NOT_EXIST(5001, "文件不存在"),
-    ERROR_FILE_UPLOAD(5002, "文件上传失败"),
-    ERROR_FILE_DOWNLOAD(5003, "文件下载失败"),
-    ERROR_FILE_DELETED(5004, "该文件已被删除"),
+    ERROR_FILE_NOT_EXIST(4001, "文件不存在"),
+    ERROR_FILE_UPLOAD(4002, "文件上传失败"),
+    ERROR_FILE_DOWNLOAD(4003, "文件下载失败"),
+    ERROR_FILE_DELETED(4004, "该文件已被删除"),
 
 	;
 

@@ -49,7 +49,7 @@ public class ShiroConfig {
      */
     @Bean(name = "securityManager")
     @DependsOn("flywayConfig")
-    public DefaultWebSecurityManager securityManager(ShiroProperties properties) {
+    public DefaultWebSecurityManager securityManager(ShiroProperties properties, net.sf.ehcache.CacheManager cacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置 realm
         securityManager.setRealm(this.systemRealm());
@@ -58,7 +58,7 @@ public class ShiroConfig {
         // 设置记住我管理器
         securityManager.setRememberMeManager(rememberMeManager(properties));
         // 设置缓存管理器
-        securityManager.setCacheManager(this.ehCacheManager());
+        securityManager.setCacheManager(this.ehCacheManager(cacheManager));
 
         return securityManager;
     }
@@ -102,12 +102,13 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public CacheManager ehCacheManager() {
-        EhCacheManager cacheManager = new EhCacheManager();
+    public EhCacheManager ehCacheManager(net.sf.ehcache.CacheManager cacheManager) {
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
         // 缓存配置文件
-        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 
-        return cacheManager;
+        return ehCacheManager;
     }
 
 // ################################ session 管理配置 ######################################
@@ -230,9 +231,9 @@ public class ShiroConfig {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(ShiroProperties shiroProperties) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(ShiroProperties shiroProperties, net.sf.ehcache.CacheManager cacheManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(this.securityManager(shiroProperties));
+        advisor.setSecurityManager(this.securityManager(shiroProperties, cacheManager));
 
         return advisor;
     }
@@ -244,9 +245,9 @@ public class ShiroConfig {
      * @return
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(ShiroProperties shiroProperties) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(ShiroProperties shiroProperties, net.sf.ehcache.CacheManager cacheManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(this.securityManager(shiroProperties));
+        shiroFilterFactoryBean.setSecurityManager(this.securityManager(shiroProperties, cacheManager));
 
         // 配置过滤器
         Map<String,String> filterMap = new LinkedHashMap<>();

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * @Author MoonlightL
- * @Title: FileManageEnum
+ * @ClassName: FileManageEnum
  * @ProjectName freedom-boot
  * @Description: 文件管理模式枚举
  * @Date 2019/7/31 16:35

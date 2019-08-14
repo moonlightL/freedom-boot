@@ -1,15 +1,14 @@
 package com.extlight.web.flyway;
 
 import org.flywaydb.core.Flyway;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
 /**
  * @Author MoonlightL
- * @Title: FlywayConfig
+ * @ClassName: FlywayConfig
  * @ProjectName: freedom-boot
  * @Description: 自定义 Flyway 配置，由于加载数据顺序问题，因此需要自定义
  * @DateTime: 2019/8/12 18:05
@@ -17,17 +16,23 @@ import javax.sql.DataSource;
 @Configuration
 public class FlywayConfig {
 
-	@Autowired
-	private DataSource dataSource;
+	@Value("${spring.datasource.druid.master.url}")
+	private String url;
+
+	@Value("${spring.datasource.druid.master.username}")
+	private String username;
+
+	@Value("${spring.datasource.druid.master.password}")
+	private String password;
 
 	@PostConstruct
 	public void migrate() {
 		Flyway flyway = Flyway.configure()
-				.dataSource(dataSource)
+				.dataSource(url, username, password)
 				.cleanDisabled(true)
 				.baselineOnMigrate(true)
 				.baselineVersion("0")
-				.locations("db/migration")
+				.locations("db/migration/")
 				.load();
 		flyway.migrate();
 	}

@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @ToString
 public class FileConfigVO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键

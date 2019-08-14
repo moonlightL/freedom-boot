@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class OnlineVO {
+public class OnlineVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String sessionId;
 

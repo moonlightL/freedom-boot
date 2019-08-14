@@ -20,6 +20,8 @@ import java.util.List;
 @ToString
 public class GenTableVO implements Serializable {
 
+    private static final long serialVersionUID =1L;
+
     /**
      * 库名
      */

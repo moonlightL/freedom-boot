@@ -22,7 +22,7 @@
                              <label class="col-lg-3 col-sm-2 control-label">$column.columnComment</label>
                              <div class="col-lg-7 col-sm-9">
                                  <input type="text" class="form-control" name="$column.attrName" placeholder="$column.columnComment" data-bv-notempty="true"
-                                        data-bv-notempty-message="不能为空"/>
+                                        data-bv-notempty-message="${column.columnComment}不能为空"/>
                              </div>
                          </div>
                          #end

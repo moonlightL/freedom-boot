@@ -55,7 +55,7 @@ public class IpUtil {
 
             if (!file.exists()) {
                 log.error("=======ip2region.db 文件不存在=========");
-                return "异常";
+                return "";
             }
 
             //查询算法
@@ -90,6 +90,7 @@ public class IpUtil {
 
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("======== ip 查询异常========");
         } finally {
             if (searcher != null) {
                 try {
@@ -100,7 +101,7 @@ public class IpUtil {
             }
         }
 
-        return "未知";
+        return "";
     }
 
     /**
@@ -110,7 +111,7 @@ public class IpUtil {
      */
     public static String getProvince(String ip) {
         String info = getInfo(ip);
-        return info.split("\\|")[2];
+        return !StringUtil.isBlank(info) ? info.split("\\|")[2] : "未知";
     }
 
     /**
@@ -129,7 +130,7 @@ public class IpUtil {
      */
     public static String getCity(String ip) {
         String info = getInfo(ip);
-        return info.split("\\|")[3];
+        return !StringUtil.isBlank(info) ? info.split("\\|")[3] : "未知";
     }
 
     /**
@@ -148,8 +149,12 @@ public class IpUtil {
      */
     public static String getLocation(String ip) {
         String info = getInfo(ip);
-        String[] infoArr = info.split("\\|");
-        return infoArr[0] + "|" + infoArr[2] + "|" + infoArr[3];
+        if (!StringUtil.isBlank(info)) {
+            String[] infoArr = info.split("\\|");
+            return infoArr[0] + "|" + infoArr[2] + "|" + infoArr[3];
+        }
+
+        return "未知";
     }
 
     /**
