@@ -141,7 +141,7 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
             tmp.add(this.removeFile(id));
         }
 
-        return tmp.stream().filter(i -> i == false).count() == 0;
+        return tmp.stream().filter(i -> !i).count() == 0;
     }
 
     /**
