@@ -82,7 +82,7 @@ public class ActionLogAspect {
                  .setRemark(syslog.value())
                  .setCreateTime(LocalDateTime.now());
 
-            publisher.publishEvent(event);
+            this.publisher.publishEvent(event);
         }
     }
 

@@ -26,6 +26,7 @@ public class SysLogListener implements ApplicationListener<SysLogEvent> {
 
         SysLog sysLog = new SysLog();
         BeanUtils.copyProperties(event, sysLog);
+
         this.sysLogService.save(sysLog);
     }
 }

@@ -15,9 +15,10 @@ public enum TaskJobExceptionEnum implements GlobalExceptionMap {
     ERROR_REPEAT_JOB_NAME(5002, "任务名重复"),
     ERROR_SCHEDULE_JOB_FAIL(5003, "调度任务失败"),
     ERROR_TRIGGER_JOB_FAIL(5004, "触发任务失败"),
-    ERROR_PAUSE_JOB_FAIL(5005, "暂停任务失败"),
-    ERROR_RESUME_JOB_FAIL(5006, "恢复任务失败"),
-    ERROR_DELETE_JOB_FAIL(5007, "调度任务失败"),
+    ERROR_RESCHEDULE_JOB_FAIL(5005, "重新调度任务失败"),
+    ERROR_PAUSE_JOB_FAIL(5006, "暂停任务失败"),
+    ERROR_RESUME_JOB_FAIL(5007, "恢复任务失败"),
+    ERROR_DELETE_JOB_FAIL(5008, "调度任务失败"),
 	;
 
     private int code;

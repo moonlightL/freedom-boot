@@ -12,10 +12,17 @@ import com.extlight.extensions.task.model.TaskJob;
 import com.extlight.extensions.task.model.dto.TaskJobDTO;
 import com.extlight.extensions.task.model.vo.TaskJobVO;
 import com.extlight.extensions.task.service.TaskJobService;
+import lombok.extern.slf4j.Slf4j;
+import org.quartz.CronTrigger;
+import org.quartz.SchedulerException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @Author MoonlightL
@@ -25,6 +32,7 @@ import tk.mybatis.mapper.entity.Example;
  * @DateTime: 2019-08-14 17:44:56
  */
 @Service
+@Slf4j
 public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> implements TaskJobService {
 
     @Autowired
@@ -50,6 +58,34 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
 
         return example;
     }
+
+    /**
+     * 加载定时器
+     * @param taskJobVO
+     */
+    @PostConstruct
+    public void reloadTaskJob(TaskJobVO taskJobVO) {
+
+        List<TaskJobVO> taskJobList = super.listAll();
+        if (!taskJobList.isEmpty()) {
+            for (TaskJobVO jobVO : taskJobList) {
+                try {
+                    CronTrigger cronTrigger = this.scheduleJobService.getCronTrigger(taskJobVO.getId());
+                    TaskJob taskJob = new TaskJob();
+                    BeanUtils.copyProperties(jobVO, taskJob);
+                    if(cronTrigger == null) {
+                        this.save(taskJob);
+                    } else {
+                        this.update(taskJob);
+                    }
+                } catch (SchedulerException e) {
+                    e.printStackTrace();
+                    log.error("=========reloadTaskJob 异常 {}===========", e.getMessage());
+                }
+            }
+        }
+    }
+
 
     @Override
     @Transactional(rollbackFor = GlobalException.class)
@@ -84,11 +120,17 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
     @Transactional(rollbackFor = GlobalException.class)
     public int update(TaskJob taskJob) throws GlobalException {
 
+        TaskJob dbJob = this.taskJobMapper.findByJobName(taskJob.getJobName());
+        // 不是修改同一条记录
+        if (dbJob != null && dbJob.getId().equals(dbJob.getId())) {
+            ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_REPEAT_JOB_NAME);
+        }
+
         int num = super.update(taskJob);
         if (num > 0) {
-            if (taskJob.getState() == 1) {
-                this.scheduleJobService.resumeTaskJob(taskJob.getId());
-            } else {
+            this.scheduleJobService.rescheduleTaskJob(dbJob.getId());
+
+            if (taskJob.getState() == 0) {
                 this.scheduleJobService.pauseTaskJob(taskJob.getId());
             }
         }

@@ -28,29 +28,27 @@ public class ScheduleJobService {
 	 */
 	public boolean addTaskJob(TaskJob taskJob) {
 		boolean result = false;
-		if (taskJob != null) {
-			try {
-				// 作业明细
-				JobDetail jobDetail = JobBuilder.newJob(ScheduleJob.class).withIdentity(this.getJobKey(taskJob.getId())).build();
-				jobDetail.getJobDataMap().put(TaskJobConstant.RUN_JOB, taskJob);
+		try {
+			// 作业明细
+			JobDetail jobDetail = JobBuilder.newJob(ScheduleJob.class).withIdentity(this.getJobKey(taskJob.getId())).build();
+			jobDetail.getJobDataMap().put(TaskJobConstant.RUN_JOB, taskJob);
 
-				// 触发器
-				CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(taskJob.getCronExpression()).withMisfireHandlingInstructionDoNothing();
-				CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(this.getTriggerKey(taskJob.getId())).withSchedule(cronScheduleBuilder).build();
+			// 触发器
+			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(taskJob.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+			CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(this.getTriggerKey(taskJob.getId())).withSchedule(cronScheduleBuilder).build();
 
-				// 调度器
-				this.scheduler.scheduleJob(jobDetail, cronTrigger);
+			// 调度器
+			this.scheduler.scheduleJob(jobDetail, cronTrigger);
 
-				// 暂停
-				if (taskJob.getState() == 0) {
-					result = this.pauseTaskJob(taskJob.getId());
-				}
-
-				result = true;
-			} catch (SchedulerException e) {
-				e.printStackTrace();
-				ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_SCHEDULE_JOB_FAIL);
+			// 暂停
+			if (taskJob.getState() == 0) {
+				result = this.pauseTaskJob(taskJob.getId());
 			}
+
+			result = true;
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_SCHEDULE_JOB_FAIL);
 		}
 
 		return result;
@@ -63,17 +61,32 @@ public class ScheduleJobService {
 	 */
 	public boolean runTaskJob(TaskJob taskJob) {
 		boolean result = false;
-		if (taskJob != null) {
-			JobDataMap dataMap = new JobDataMap();
-			dataMap.put(TaskJobConstant.JOB_NAME, taskJob);
+		JobDataMap dataMap = new JobDataMap();
+		dataMap.put(TaskJobConstant.JOB_NAME, taskJob);
 
-			try {
-				this.scheduler.triggerJob(this.getJobKey(taskJob.getId()), dataMap);
-				result = true;
-			} catch (SchedulerException e) {
-				e.printStackTrace();
-				ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_TRIGGER_JOB_FAIL);
-			}
+		try {
+			this.scheduler.triggerJob(this.getJobKey(taskJob.getId()), dataMap);
+			result = true;
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_TRIGGER_JOB_FAIL);
+		}
+		return result;
+	}
+
+	/**
+	 * 重新调度定时器
+	 * @param jobId
+	 * @return
+	 */
+	public boolean rescheduleTaskJob(Long jobId) {
+		boolean result = false;
+		try {
+			this.scheduler.rescheduleJob(this.getTriggerKey(jobId), this.getCronTrigger(jobId));
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESCHEDULE_JOB_FAIL);
 		}
 		return result;
 	}
@@ -153,7 +166,8 @@ public class ScheduleJobService {
 	/**
 	 * 获取表达式触发器
 	 */
-	public CronTrigger getCronTrigger(Long jobId) throws Exception  {
+	public CronTrigger getCronTrigger(Long jobId) throws SchedulerException {
 		return (CronTrigger) scheduler.getTrigger(this.getTriggerKey(jobId));
 	}
+
 }

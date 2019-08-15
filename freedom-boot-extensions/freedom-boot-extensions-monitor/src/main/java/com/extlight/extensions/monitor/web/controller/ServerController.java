@@ -37,7 +37,7 @@ public class ServerController extends BaseController {
      */
     @GetMapping("/listUI.html")
     @RequiresPermissions("monitor:server:listUI")
-    public String listUI(Map<String,Object> resultMap) throws GlobalException {
+    public String listUI(Map<String,Object> resultMap) {
         return render("listUI", resultMap);
     }
 
@@ -49,7 +49,7 @@ public class ServerController extends BaseController {
     @PostMapping("/getServerInfo.json")
     @RequiresPermissions("monitor:server:listUI")
     @ResponseBody
-    public Result getServerInfo() throws GlobalException {
+    public Result getServerInfo() {
         Server serviceInfo = this.monitorService.getServiceInfo();
         return serviceInfo != null ? Result.success(serviceInfo) : Result.fail();
     }
