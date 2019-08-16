@@ -14,7 +14,7 @@ import java.util.List;
  * @Description: 文件数据 Service
  * @DateTime: 2019-08-02 00:04:21
  */
-public interface FileDataService extends BaseService<FileData, FileDataVO> {
+public interface FileDataService extends BaseService<FileData> {
 
 	/**
 	 * 上传文件

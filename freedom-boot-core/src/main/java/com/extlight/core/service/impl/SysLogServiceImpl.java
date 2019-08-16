@@ -25,7 +25,7 @@ import java.util.List;
  * @Date 2019-07-09 13:53:07
  */
 @Service
-public class SysLogServiceImpl extends BaseServiceImpl<SysLog, SysLogVO> implements SysLogService {
+public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLogService {
 
     @Autowired
     private SysLogMapper sysLogMapper;
@@ -61,11 +61,14 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog, SysLogVO> impleme
         Example example = new Example(SysLog.class);
         example.createCriteria().andEqualTo("userId", userId).andEqualTo("actionType", ActionEnum.LOGIN.getCode());
         example.orderBy("createTime").desc();
-        List<SysLogVO> logList = super.listByExample(example, 0, 2, false);
-        SysLogVO sysLogVO = logList.get(logList.size() - 1);
 
+        List<SysLog> logList = super.listByExample(example, 0, 2, false);
+        SysLog sysLog = logList.get(logList.size() - 1);
+
+        SysLogVO sysLogVO = sysLog.convertToVoModel();
         int count = this.sysLogMapper.selectCountByExample(example);
         sysLogVO.setLoginCount(count);
+
         return sysLogVO;
     }
 }

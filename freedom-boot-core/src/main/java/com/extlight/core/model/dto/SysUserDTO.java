@@ -1,6 +1,7 @@
 package com.extlight.core.model.dto;
 
 import com.extlight.common.base.BaseRequest;
+import com.extlight.core.model.SysUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 @ToString
-public class SysUserDTO extends BaseRequest {
+public class SysUserDTO extends BaseRequest<SysUser> {
 
     /**
      *  id

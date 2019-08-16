@@ -2,9 +2,12 @@ package com.extlight.common.base;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.Max;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * @Author MoonlightL
@@ -15,7 +18,8 @@ import javax.validation.constraints.Max;
  */
 @Setter
 @Getter
-public class BaseRequest {
+@Slf4j
+public class BaseRequest<T> {
 
     private static final Integer DEFAULT_PAGE_NUM = 1;
 
@@ -47,17 +51,32 @@ public class BaseRequest {
      */
     private String search;
 
+    private Class<T> doClass;
+
+    public BaseRequest() {
+        try {
+            Type[] actualTypeArguments = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
+            if (actualTypeArguments.length > 0) {
+                doClass = (Class<T>) actualTypeArguments[0];
+            }
+        } catch (Exception e) {
+            log.warn("==========BaseRequest 获取泛型参数异常：getClass: {}, error: {}==========", getClass(), e.getMessage());
+        }
+    }
+
     /**
      * 转成 DO 对象
-     * @param clazz
-     * @param <T>
      * @return
      */
-    public <T> T toDo(Class<T> clazz) {
+    public  T convertToDoModel() {
+        if (doClass == null) {
+            return null;
+        }
+
         try {
-            T bo = clazz.newInstance();
-            BeanUtils.copyProperties(this, bo);
-            return bo;
+            T doModel = doClass.newInstance();
+            BeanUtils.copyProperties(this, doModel);
+            return doModel;
         } catch (Exception e) {
             e.printStackTrace();
         }

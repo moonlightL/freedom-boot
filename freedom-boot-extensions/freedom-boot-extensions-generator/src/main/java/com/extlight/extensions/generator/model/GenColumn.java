@@ -1,6 +1,7 @@
 package com.extlight.extensions.generator.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.extensions.generator.model.vo.GenColumnVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Table(name = "information_schema.columns")
-public class GenColumn extends BaseResponse {
+public class GenColumn extends BaseResponse<GenColumnVO> {
 
     /**
      * 字段名称

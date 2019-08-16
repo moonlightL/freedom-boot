@@ -31,7 +31,7 @@ import java.util.Map;
  * @DateTime: 2019-08-02 00:04:21
  */
 @Service
-public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> implements FileDataService {
+public class FileDataServiceImpl extends BaseServiceImpl<FileData> implements FileDataService {
 
     @Autowired
     private FileDataMapper fileDataMapper;
@@ -95,15 +95,15 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
     @Override
     public byte[] downloadFile(Long id) throws GlobalException {
 
-        FileDataVO fileDataVO = super.getById(id);
-        if (fileDataVO == null) {
+        FileData fileData = super.getById(id);
+        if (fileData == null) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DELETED);
         }
 
         FileService fileService = this.getFileService();
 
         FileRequest fileRequest = new FileRequest();
-        BeanUtils.copyProperties(fileDataVO, fileRequest);
+        BeanUtils.copyProperties(fileData, fileRequest);
         FileResponse fileResponse = fileService.download(fileRequest);
 
         if (!fileResponse.isSuccess()) {
@@ -115,15 +115,15 @@ public class FileDataServiceImpl extends BaseServiceImpl<FileData, FileDataVO> i
 
     @Override
     public boolean removeFile(Long id) throws GlobalException {
-        FileDataVO fileDataVO = super.getById(id);
-        if (fileDataVO == null) {
+        FileData fileData = super.getById(id);
+        if (fileData == null) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_DELETED);
         }
 
         FileService fileService = this.getFileService();
 
         FileRequest fileRequest = new FileRequest();
-        BeanUtils.copyProperties(fileDataVO, fileRequest);
+        BeanUtils.copyProperties(fileData, fileRequest);
         FileResponse fileResponse = fileService.remove(fileRequest);
 
         boolean result = fileResponse.isSuccess();

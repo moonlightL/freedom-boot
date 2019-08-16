@@ -3,6 +3,7 @@ package com.extlight.core.model;
 import com.extlight.common.base.BaseResponse;
 import com.extlight.common.component.annotation.CreateTime;
 import com.extlight.common.component.annotation.UpdateTime;
+import com.extlight.core.model.vo.SysLogVO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 @ToString
 @Accessors(chain = true)
 @Table(name = "t_sys_log")
-public class SysLog extends BaseResponse {
+public class SysLog extends BaseResponse<SysLogVO> {
 
 	/**
 	 * 主键

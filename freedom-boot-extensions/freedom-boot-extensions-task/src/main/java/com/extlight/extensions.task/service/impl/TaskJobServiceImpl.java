@@ -10,12 +10,10 @@ import com.extlight.extensions.task.constant.TaskJobExceptionEnum;
 import com.extlight.extensions.task.mapper.TaskJobMapper;
 import com.extlight.extensions.task.model.TaskJob;
 import com.extlight.extensions.task.model.dto.TaskJobDTO;
-import com.extlight.extensions.task.model.vo.TaskJobVO;
 import com.extlight.extensions.task.service.TaskJobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.CronTrigger;
 import org.quartz.SchedulerException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +31,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> implements TaskJobService {
+public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob> implements TaskJobService {
 
     @Autowired
     private TaskJobMapper taskJobMapper;
@@ -65,13 +63,11 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
     @PostConstruct
     public void reloadTaskJob() {
 
-        List<TaskJobVO> taskJobList = super.listAll();
+        List<TaskJob> taskJobList = super.listAll();
         if (!taskJobList.isEmpty()) {
-            for (TaskJobVO jobVO : taskJobList) {
+            for (TaskJob taskJob : taskJobList) {
                 try {
-                    CronTrigger cronTrigger = this.scheduleJobService.getCronTrigger(jobVO.getId());
-                    TaskJob taskJob = new TaskJob();
-                    BeanUtils.copyProperties(jobVO, taskJob);
+                    CronTrigger cronTrigger = this.scheduleJobService.getCronTrigger(taskJob.getId());
                     if(cronTrigger == null) {
                         this.save(taskJob);
                     } else {
@@ -138,19 +134,42 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
     }
 
     @Override
+    @Transactional(rollbackFor = GlobalException.class)
     public int starJob(Long taskJobId) throws GlobalException {
-        TaskJobVO dbData = this.getById(taskJobId);
+        TaskJob dbData = this.getById(taskJobId);
         if (dbData == null) {
             ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        // TODO
-        return 0;
+        int num = 0;
+        if (dbData.getState() == 0) {
+            dbData.setState(1);
+            num = super.update(dbData);
+            if (num > 0) {
+                this.scheduleJobService.resumeTaskJob(dbData.getId());
+            }
+        }
+
+        return num;
     }
 
     @Override
+    @Transactional(rollbackFor = GlobalException.class)
     public int pauseJob(Long taskJobId) throws GlobalException {
-        // TODO
-        return 0;
+        TaskJob dbData = this.getById(taskJobId);
+        if (dbData == null) {
+            ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+        }
+
+        int num = 0;
+        if (dbData.getState() == 1) {
+            dbData.setState(0);
+            num = super.update(dbData);
+            if (num > 0) {
+                this.scheduleJobService.pauseTaskJob(dbData.getId());
+            }
+        }
+
+        return num;
     }
 }

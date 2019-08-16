@@ -3,9 +3,13 @@ package com.extlight.common.base;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * @Author MoonlightL
@@ -17,11 +21,31 @@ import java.io.Serializable;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class BaseResponse implements Serializable {
+@Slf4j
+public class BaseResponse<V> implements Serializable {
 
-    public <V> V toVO(Class<V> clazz) {
+    @Transient
+    private Class<V> voClass;
+
+    public BaseResponse() {
         try {
-            V vo = clazz.newInstance();
+            Type[] actualTypeArguments = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
+            if (actualTypeArguments.length > 0) {
+                voClass = (Class<V>) actualTypeArguments[0];
+            }
+        } catch (Exception e) {
+            log.warn("==========BaseResponse 获取泛型参数异常：getClass: {}, error: {}==========", getClass(), e.getMessage());
+        }
+    }
+
+    public V convertToVoModel() {
+
+        if (voClass == null) {
+            return null;
+        }
+
+        try {
+            V vo = voClass.newInstance();
             BeanUtils.copyProperties(this, vo);
             return vo;
         } catch (Exception e) {

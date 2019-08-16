@@ -9,17 +9,16 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @Author MoonlightL
  * @ClassName: BaseServiceImpl
  * @ProjectName freedom-boot
- * @Description:
+ * @Description: Service 基类实现
  * @Date 2019/5/31 11:12
  */
-public abstract class BaseServiceImpl<T extends BaseResponse, V> implements BaseService<T, V> {
+public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseService<T> {
 
     private static final String DEFAULT_SORT = "ASC";
 
@@ -31,11 +30,8 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
 
     private Class<T> doClass;
 
-    private Class<V> voClass;
-
     public BaseServiceImpl() {
         doClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        voClass = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     /**
@@ -73,30 +69,31 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
     }
 
     @Override
-    public V getById(Long id) throws GlobalException {
-        T bo = this.getBaseMapper().selectByPrimaryKey(id);
-        return bo != null ? bo.toVO(voClass) : null;
+    public T getById(Long id) throws GlobalException {
+        return this.getBaseMapper().selectByPrimaryKey(id);
     }
 
     @Override
-    public List<V> listAll() throws GlobalException {
-
-        List<T> list = this.getBaseMapper().selectAll();
-
-        List<V> result = new ArrayList<>();
-        list.forEach(i -> result.add(i.toVO(voClass)));
-
-        return result;
+    public List<T> listAll() throws GlobalException {
+        return this.getBaseMapper().selectAll();
     }
 
     @Override
-    public List<V> list(BaseRequest params) throws GlobalException {
-        Example example = this.getExample(params);
-        return this.getList(example);
+    public List<T> list(BaseRequest params) throws GlobalException {
+        return this.selectByExample(this.getExample(params));
     }
 
     @Override
-    public PageInfo<V> page(BaseRequest params) throws GlobalException {
+    public PageInfo<T> pageAll() throws GlobalException {
+        List<T> data = this.listAll();
+        Page<T> page = new Page<>(1, data.size(), false);
+        page.addAll(data);
+        page.setTotal(this.count(null));
+        return new PageInfo<>(page);
+    }
+
+    @Override
+    public PageInfo<T> page(BaseRequest params) throws GlobalException {
 
         Example example = this.getExample(params);
 
@@ -110,45 +107,26 @@ public abstract class BaseServiceImpl<T extends BaseResponse, V> implements Base
             example.orderBy(params.getSortName()).desc();
         }
 
-        List<V> list = this.listByExample(example, params.getPageNum(), params.getPageSize(), false);
-        // 必须通过 Page 封装集合，否则 PageInfo 属性设置会出错
-        Page<V> result = new Page<>(params.getPageNum(), params.getPageSize(), false);
-        result.addAll(list);
-        result.setTotal(this.getBaseMapper().selectCountByExample(example));
-        return new PageInfo<>(result);
+        List<T> list = this.listByExample(example, params.getPageNum(), params.getPageSize(), true);
+        return new PageInfo<>(list);
     }
 
     @Override
-    public PageInfo<V> pageAll() throws GlobalException {
-        List<V> data = this.listAll();
-        Page<V> page = new Page<>(1, data.size(), false);
-        page.addAll(data);
-        page.setTotal(this.count(null));
-        return new PageInfo<>(page);
-    }
+    public List<T> listByExample(Example example, int pageNum, int pageSize, boolean count) throws GlobalException {
 
-    @Override
-    public List<V> listByExample(Example example, int pageNum, int pageSize, boolean count) throws GlobalException {
-
-        if (pageNum != 0 && pageSize != 0) {
+        if (pageNum > 0 && pageSize > 0) {
             PageHelper.startPage(pageNum,pageSize, count);
         }
 
-        return this.getList(example);
+        return this.selectByExample(example);
     }
 
     @Override
     public int count(BaseRequest params) throws GlobalException {
-        Example example = this.getExample(params);
-        return this.getBaseMapper().selectCountByExample(example);
+        return this.getBaseMapper().selectCountByExample(this.getExample(params));
     }
 
-    private List<V> getList(Example example) {
-        List<T> list = this.getBaseMapper().selectByExample(example);
-
-        List<V> result = new ArrayList<>();
-        list.forEach(i -> result.add(i.toVO(voClass)));
-
-        return result;
+    private List<T> selectByExample(Example example) {
+        return this.getBaseMapper().selectByExample(example);
     }
 }

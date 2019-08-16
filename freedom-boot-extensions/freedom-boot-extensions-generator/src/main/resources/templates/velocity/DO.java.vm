@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @ToString
 @Accessors(chain = true)
 @Table(name = "${tableName}")
-public class ${className} extends BaseResponse {
+public class ${className} extends BaseResponse<${className}VO> {
 
 #foreach ($column in $columnList)
 

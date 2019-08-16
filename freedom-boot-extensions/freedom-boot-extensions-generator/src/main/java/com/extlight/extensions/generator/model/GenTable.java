@@ -1,6 +1,7 @@
 package com.extlight.extensions.generator.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.extensions.generator.model.vo.GenTableVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 @ToString
 @Accessors(chain = true)
 @Table(name = "information_schema.tables")
-public class GenTable extends BaseResponse {
+public class GenTable extends BaseResponse<GenTableVO> {
 
     /**
      * 库名

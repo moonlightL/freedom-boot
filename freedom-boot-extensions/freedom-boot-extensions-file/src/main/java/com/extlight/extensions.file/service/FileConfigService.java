@@ -14,7 +14,7 @@ import java.util.Map;
  * @Description: 文件配置 Service
  * @DateTime: 2019-08-02 00:04:21
  */
-public interface FileConfigService extends BaseService<FileConfig, FileConfigVO> {
+public interface FileConfigService extends BaseService<FileConfig> {
 
 	/**
 	 * 获取文件配置

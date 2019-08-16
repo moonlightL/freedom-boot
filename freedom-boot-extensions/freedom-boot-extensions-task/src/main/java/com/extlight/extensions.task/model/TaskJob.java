@@ -1,6 +1,7 @@
 package com.extlight.extensions.task.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.extensions.task.model.vo.TaskJobVO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 @ToString
 @Accessors(chain = true)
 @Table(name = "t_task_job")
-public class TaskJob extends BaseResponse {
+public class TaskJob extends BaseResponse<TaskJobVO> {
 
 
 	/**

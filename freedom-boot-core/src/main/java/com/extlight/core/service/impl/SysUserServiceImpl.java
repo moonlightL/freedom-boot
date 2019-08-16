@@ -14,7 +14,6 @@ import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.mapper.SysUserMapper;
 import com.extlight.core.model.SysUser;
 import com.extlight.core.model.dto.SysUserDTO;
-import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
 import com.extlight.core.web.config.CoreConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ import java.util.stream.Collectors;
  * @Date 2019/5/31 11:15
  */
 @Service
-public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
 
     @Autowired
     private CoreConfig coreConfig;
@@ -108,7 +107,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserVO> impl
     @Transactional(rollbackFor = GlobalException.class)
     public int asignRole(Long userId, String roleIdStr) throws GlobalException {
 
-        SysUserVO target = super.getById(userId);
+        SysUser target = super.getById(userId);
         if (target == null) {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }

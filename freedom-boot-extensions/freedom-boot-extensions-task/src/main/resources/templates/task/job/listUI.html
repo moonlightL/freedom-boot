@@ -113,26 +113,39 @@
         }
 
         if (permissions.indexOf("start") > -1) {
-            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-play-circle"></i> 运行</a> ');
+            var disabled = (row.state == 1 ? 'disabled' : '');
+            var event = (row.state == 1 ? 'style=\'pointer-events:none\'' : '');
+            btnArr.push('<a class="btn btn-success btn-xs" href="javascript:;;" onclick="start(\'' + row.id + '\')" '+ disabled +' '+event+'><i class="fa fa-play-circle"></i> 运行</a> ');
         }
 
         if (permissions.indexOf("pause") > -1) {
-            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="start(\'' + row.id + '\')"><i class="fa fa-stop-circle"></i> 暂停</a> ');
+            var disabled = (row.state == 0 ? 'disabled' : '');
+            var event = (row.state == 0 ? 'style=\'pointer-events:none\'' : '');
+            btnArr.push('<a class="btn btn-warning btn-xs" href="javascript:;;" onclick="pause(\'' + row + '\')" '+ disabled +' '+event+'><i class="fa fa-stop-circle"></i> 暂停</a> ');
         }
 
         if (permissions.indexOf("remove") > -1) {
-            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="pause(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
+            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
         }
 
         return btnArr.join('');
     }
 
     function start(id) {
-        $.freedom.action.request(prefix + "/starJob.json", {"taskJobId": id});
+        $.freedom.modal.confirm("确定要运行该任务吗?", function() {
+            $.freedom.action.request(prefix + "/starJob.json", {"taskJobId": id}, function() {
+                $.freedom.ui.table.refreshData();
+            });
+        });
     }
 
-    function pause(id) {
-        $.freedom.action.request(prefix + "/pauseJob.json", {"taskJobId": id});
+    function pause(row) {
+        console.log(row)
+        $.freedom.modal.confirm("确定要暂停该任务吗?", function() {
+            $.freedom.action.request(prefix + "/pauseJob.json", {"taskJobId": id}, function () {
+                $.freedom.ui.table.refreshData();
+            });
+        });
     }
 
     $(function() {

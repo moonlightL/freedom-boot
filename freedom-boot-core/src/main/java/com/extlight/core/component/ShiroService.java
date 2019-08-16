@@ -1,8 +1,8 @@
 package com.extlight.core.component;
 
 import com.extlight.core.constant.SystemContant;
-import com.extlight.core.model.vo.SysPermissionVO;
-import com.extlight.core.model.vo.SysRoleVO;
+import com.extlight.core.model.SysPermission;
+import com.extlight.core.model.SysRole;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
 import com.extlight.core.service.SysRoleService;
@@ -95,7 +95,7 @@ public class ShiroService {
 
 
     private void setRoles(SysUserVO sysUserVO) {
-        List<SysRoleVO> roleList;
+        List<SysRole> roleList;
         if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
             roleList = this.sysRoleService.listAll();
         } else {
@@ -107,7 +107,7 @@ public class ShiroService {
     }
 
     private void setPermissions(SysUserVO sysUserVO) {
-        List<SysPermissionVO> permissionList;
+        List<SysPermission> permissionList;
         if (SystemContant.SUPER_ADMIN.equals(sysUserVO.getUsername()) && sysUserVO.getSuperAdmin()) {
             permissionList = this.sysPermissionService.listAll();
         } else {

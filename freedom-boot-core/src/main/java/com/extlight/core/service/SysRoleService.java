@@ -14,7 +14,7 @@ import java.util.List;
  * @Description: 系统角色 Service
  * @Date 2019/7/1 15:47
  */
-public interface SysRoleService extends BaseService<SysRole, SysRoleVO> {
+public interface SysRoleService extends BaseService<SysRole> {
 
 
     /**
@@ -23,7 +23,7 @@ public interface SysRoleService extends BaseService<SysRole, SysRoleVO> {
      * @return
      * @throws GlobalException
      */
-    List<SysRoleVO> findRoleListByUserId(Long userId) throws GlobalException;
+    List<SysRole> findRoleListByUserId(Long userId) throws GlobalException;
 
     /**
      * 分配权限

@@ -2,7 +2,7 @@ package com.extlight.core.web.interceptor;
 
 import com.extlight.common.utils.HttpUtil;
 import com.extlight.core.constant.PermissionEnum;
-import com.extlight.core.model.vo.SysPermissionVO;
+import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
 import org.apache.shiro.SecurityUtils;
@@ -47,7 +47,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
                if (getMapping.value()[0].contains("listUI.html")) {
                    Subject subject = SecurityUtils.getSubject();
                    SysUserVO sysUserVO = (SysUserVO) subject.getPrincipal();
-                   List<SysPermissionVO> permissionList = sysUserVO.getPermissionList();
+                   List<SysPermission> permissionList = sysUserVO.getPermissionList();
                    if (permissionList != null && !permissionList.isEmpty()) {
                        StringBuilder sb = new StringBuilder();
                        permissionList.stream().forEach(i -> {
@@ -60,7 +60,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
                    }
 
                    // 获取通用按钮
-                   List<SysPermissionVO> buttonList = this.sysPermissionService.findCommonButtonList(request.getRequestURI());
+                   List<SysPermission> buttonList = this.sysPermissionService.findCommonButtonList(request.getRequestURI());
                    modelAndView.addObject("buttonList", buttonList);
                }
            }

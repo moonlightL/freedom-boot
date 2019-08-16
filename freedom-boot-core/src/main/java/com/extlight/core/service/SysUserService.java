@@ -12,7 +12,7 @@ import com.extlight.core.model.vo.SysUserVO;
  * @Description: 系统用户 Service
  * @Date 2019/5/31 11:15
  */
-public interface SysUserService extends BaseService<SysUser, SysUserVO> {
+public interface SysUserService extends BaseService<SysUser> {
 
     /**
      * 通过用户名获取用户信息

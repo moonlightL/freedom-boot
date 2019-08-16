@@ -12,7 +12,6 @@ import com.extlight.common.utils.JsonUtil;
 import com.extlight.core.constant.SysRoleExceptionEnum;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.dto.SysRoleDTO;
-import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.TreeNode;
 import com.extlight.core.service.SysPermissionService;
 import com.extlight.core.service.SysRoleService;
@@ -69,12 +68,12 @@ public class SysRoleController extends BaseController {
     @GetMapping("/updateUI/{id}.html")
     @RequiresPermissions("core:role:update")
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-        SysRoleVO vo = this.sysRoleService.getById(id);
-        if (vo == null) {
+        SysRole target = this.sysRoleService.getById(id);
+        if (target == null) {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        resultMap.put("vo", vo);
+        resultMap.put("vo", target);
         resultMap.put("readOnly", false);
         return render(UPDATE_PAGE, resultMap);
     }
@@ -102,12 +101,12 @@ public class SysRoleController extends BaseController {
     @GetMapping("/detailUI/{id}.html")
     @RequiresPermissions("core:role:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-        SysRoleVO vo = this.sysRoleService.getById(id);
-        if (vo == null) {
+        SysRole target = this.sysRoleService.getById(id);
+        if (target == null) {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        resultMap.put("vo", vo);
+        resultMap.put("vo", target);
         resultMap.put("readOnly", true);
         return render(DETAIL_PAGE, resultMap);
     }
@@ -119,7 +118,7 @@ public class SysRoleController extends BaseController {
     @ResponseBody
     @ActionLog(value="新增角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysRoleDTO sysRoleDTO) throws GlobalException {
-        SysRole sysRole = sysRoleDTO.toDo(SysRole.class);
+        SysRole sysRole = sysRoleDTO.convertToDoModel();
         return this.sysRoleService.save(sysRole) > 0 ? Result.success() : Result.fail();
     }
 
@@ -146,12 +145,12 @@ public class SysRoleController extends BaseController {
     @ResponseBody
     @ActionLog(value="编辑角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysRoleDTO sysRoleDTO) throws GlobalException {
-        SysRoleVO dbData = this.sysRoleService.getById(sysRoleDTO.getId());
-        if (dbData == null) {
+        SysRole target = this.sysRoleService.getById(sysRoleDTO.getId());
+        if (target == null) {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        SysRole sysRole = sysRoleDTO.toDo(SysRole.class);
+        SysRole sysRole = sysRoleDTO.convertToDoModel();
         return this.sysRoleService.update(sysRole) > 0 ? Result.success() : Result.fail();
     }
 
@@ -159,7 +158,7 @@ public class SysRoleController extends BaseController {
     @RequiresPermissions("core:role:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysRoleDTO params) throws GlobalException {
-        PageInfo<SysRoleVO> pageInfo = this.sysRoleService.page(params);
+        PageInfo<SysRole> pageInfo = this.sysRoleService.page(params);
         return Result.success(pageInfo);
     }
 
@@ -176,7 +175,7 @@ public class SysRoleController extends BaseController {
     @RequiresPermissions("core:role:assign:permission")
     public String assignPermissionUI(@PathVariable Long roleId, Map<String,Object> resultMap) throws GlobalException {
 
-        SysRoleVO target = this.sysRoleService.getById(roleId);
+        SysRole target = this.sysRoleService.getById(roleId);
         if (target == null) {
             return "404";
         }

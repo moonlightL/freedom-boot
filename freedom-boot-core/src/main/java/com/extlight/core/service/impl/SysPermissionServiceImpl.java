@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @Date 2019/7/1 17:23
  */
 @Service
-public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, SysPermissionVO> implements SysPermissionService {
+public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> implements SysPermissionService {
 
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
@@ -63,7 +63,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
                 ExceptionUtil.throwEx(GlobalExceptionEnum.ERROR_PARAM);
             }
 
-            SysPermissionVO parent = super.getById(sysPermission.getPid());
+            SysPermission parent = super.getById(sysPermission.getPid());
             if (parent == null) {
                 ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
             }
@@ -104,10 +104,8 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
     }
 
     @Override
-    public List<SysPermissionVO> findPermissionListByUserId(Long userId) throws GlobalException {
-
-        List<SysPermission> sysPermissionList = this.sysPermissionMapper.selectByUserId(userId);
-        return this.parseData(sysPermissionList);
+    public List<SysPermission> findPermissionListByUserId(Long userId) throws GlobalException {
+        return this.sysPermissionMapper.selectByUserId(userId);
     }
 
     @Override
@@ -135,20 +133,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
     }
 
     @Override
-    public List<SysPermissionVO> findCommonButtonList(String url) throws GlobalException {
-        List<SysPermission> commonButtonList = this.sysPermissionMapper.selectCommonButtonList(url);
-        return this.parseData(commonButtonList);
-    }
-
-
-    private List<SysPermissionVO> parseData(List<SysPermission> list) {
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<SysPermissionVO> result = new ArrayList<>(list.size());
-        list.forEach(i -> result.add(i.toVO(SysPermissionVO.class)));
-
-        return result;
+    public List<SysPermission> findCommonButtonList(String url) throws GlobalException {
+        return this.sysPermissionMapper.selectCommonButtonList(url);
     }
 }

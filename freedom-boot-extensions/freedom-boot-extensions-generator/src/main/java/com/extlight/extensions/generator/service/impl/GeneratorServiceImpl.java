@@ -31,7 +31,7 @@ import java.util.zip.ZipOutputStream;
  * @Date 2019/7/8 12:47
  */
 @Service
-public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> implements GeneratorService {
+public class GeneratorServiceImpl extends BaseServiceImpl<GenTable> implements GeneratorService {
 
     private static final String IGNORE_TABLE = "flyway_schema_history";
 
@@ -78,7 +78,7 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable, GenTableVO> 
         List<GenTableVO> result = new ArrayList<>(list.size());
         list.stream().forEach(i -> {
             if (!IGNORE_TABLE.equals(i.getTableName())) {
-                result.add(i.toVO(GenTableVO.class));
+                result.add(i.convertToVoModel());
             }
         });
 

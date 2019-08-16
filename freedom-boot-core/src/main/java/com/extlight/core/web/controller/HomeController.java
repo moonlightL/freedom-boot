@@ -1,10 +1,11 @@
 package com.extlight.core.web.controller;
 
 import com.extlight.common.base.BaseController;
+import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
-import com.extlight.core.component.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class HomeController extends BaseController {
         // 用户的权限可能会被修改，此处需要重新查询数据库设置权限
         this.shiroService.bindAuthorization(sysUserVO);
 
-        List<SysPermissionVO> permissionList = sysUserVO.getPermissionList();
+        List<SysPermission> permissionList = sysUserVO.getPermissionList();
 
         List<SysPermissionVO> result = new ArrayList<>();
 
@@ -77,16 +78,20 @@ public class HomeController extends BaseController {
         permissionList.stream()
                 .filter(i -> i.getType().equals(PermissionEnum.MODULE.getCode()))
                 .collect(Collectors.toList())
-                .forEach(i -> parentMap.put(i.getId(), i));
+                .forEach(i -> {
+                    SysPermissionVO parent = i.convertToVoModel();
+                    parentMap.put(i.getId(), parent);
+                });
 
         // 将子权限封装到父权限的 children 中
         permissionList.stream()
                 .filter(i -> i.getType().equals(PermissionEnum.MENU.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
-                    SysPermissionVO parent = parentMap.get(i.getPid());
-                    if (!parent.getChildren().contains(i)) {
-                        parent.getChildren().add(i);
+                    SysPermissionVO child = i.convertToVoModel();
+                    SysPermissionVO parent = parentMap.get(child.getPid());
+                    if (!parent.getChildren().contains(child)) {
+                        parent.getChildren().add(child);
                     }
 
                     if (!result.contains(parent)) {

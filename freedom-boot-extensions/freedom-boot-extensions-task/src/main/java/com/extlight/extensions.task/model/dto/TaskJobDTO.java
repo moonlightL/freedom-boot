@@ -1,12 +1,11 @@
 package com.extlight.extensions.task.model.dto;
 
 import com.extlight.common.base.BaseRequest;
+import com.extlight.extensions.task.model.TaskJob;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-public class TaskJobDTO extends BaseRequest {
+public class TaskJobDTO extends BaseRequest<TaskJob> {
 
 
 	/**

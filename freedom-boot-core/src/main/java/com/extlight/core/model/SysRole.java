@@ -3,6 +3,7 @@ package com.extlight.core.model;
 import com.extlight.common.base.BaseResponse;
 import com.extlight.common.component.annotation.CreateTime;
 import com.extlight.common.component.annotation.UpdateTime;
+import com.extlight.core.model.vo.SysRoleVO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 @ToString
 @Accessors(chain = true)
 @Table(name = "t_sys_role")
-public class SysRole extends BaseResponse {
+public class SysRole extends BaseResponse<SysRoleVO> {
 
     /**
      *  id

@@ -1,6 +1,7 @@
 package com.extlight.extensions.file.model.dto;
 
 import com.extlight.common.base.BaseRequest;
+import com.extlight.extensions.file.model.FileConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-public class FileConfigDTO extends BaseRequest {
+public class FileConfigDTO extends BaseRequest<FileConfig> {
 
 
 	/**

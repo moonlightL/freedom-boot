@@ -11,8 +11,8 @@ import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
+import com.extlight.extensions.file.model.FileData;
 import com.extlight.extensions.file.model.dto.FileDataDTO;
-import com.extlight.extensions.file.model.vo.FileDataVO;
 import com.extlight.extensions.file.service.FileConfigService;
 import com.extlight.extensions.file.service.FileDataService;
 import com.github.pagehelper.PageInfo;
@@ -86,13 +86,13 @@ public class FileDataController extends BaseController {
     @RequiresPermissions("file:data:download")
     @ActionLog(value = "文件下载", moduleName = ModuleEnum.FILE, actionType = ActionEnum.DOWNLOAD)
     public void download(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        FileDataVO vo = this.fileDataService.getById(id);
-        if (vo == null) {
+        FileData target = this.fileDataService.getById(id);
+        if (target == null) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_NOT_EXIST);
         }
 
         byte[] data = this.fileDataService.downloadFile(id);
-        super.download(data, vo.getOriginalFilename(), request, response);
+        super.download(data, target.getOriginalFilename(), request, response);
     }
 
     //#########################################【AJAX 请求】##################################################
@@ -144,7 +144,7 @@ public class FileDataController extends BaseController {
     @RequiresPermissions("file:data:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) FileDataDTO params) throws GlobalException {
-        PageInfo<FileDataVO> pageInfo = this.fileDataService.page(params);
+        PageInfo<FileData> pageInfo = this.fileDataService.page(params);
         return Result.success(pageInfo);
     }
 

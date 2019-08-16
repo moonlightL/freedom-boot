@@ -1,5 +1,7 @@
 package com.extlight.core.model.vo;
 
+import com.extlight.core.model.SysPermission;
+import com.extlight.core.model.SysRole;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -110,12 +112,12 @@ public class SysUserVO implements Serializable {
     /**
      * 角色集合
      */
-    private List<SysRoleVO> roleList;
+    private List<SysRole> roleList;
 
     /**
      * 权限集合
      */
-    private List<SysPermissionVO> permissionList;
+    private List<SysPermission> permissionList;
 
     /**
      * 登录次数

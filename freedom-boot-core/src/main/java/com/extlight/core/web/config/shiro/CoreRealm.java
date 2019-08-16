@@ -5,9 +5,9 @@ import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.constant.StateEnum;
 import com.extlight.core.constant.SystemContant;
+import com.extlight.core.model.SysPermission;
+import com.extlight.core.model.SysRole;
 import com.extlight.core.model.SysUser;
-import com.extlight.core.model.vo.SysPermissionVO;
-import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysUserService;
 import com.github.pagehelper.util.StringUtil;
@@ -58,7 +58,7 @@ public class CoreRealm extends AuthorizingRealm {
             throw new LockedAccountException(GlobalExceptionEnum.ERROR_STATE_WRONG.getMessage());
         }
 
-        SysUserVO userVO = sysUser.toVO(SysUserVO.class);
+        SysUserVO userVO = sysUser.convertToVoModel();
 
         return new SimpleAuthenticationInfo(userVO, sysUser.getPassword(), this.getName());
     }
@@ -83,8 +83,8 @@ public class CoreRealm extends AuthorizingRealm {
             // 授权-权限
             info.addStringPermission("*:*:*");
         } else {
-            List<SysRoleVO> roleList = userVO.getRoleList();
-            List<SysPermissionVO> permissionList = userVO.getPermissionList();
+            List<SysRole> roleList = userVO.getRoleList();
+            List<SysPermission> permissionList = userVO.getPermissionList();
             // 授权-角色
             info.addRoles(roleList.stream().map(i -> i.getCode()).collect(Collectors.toList()));
             // 授权-权限

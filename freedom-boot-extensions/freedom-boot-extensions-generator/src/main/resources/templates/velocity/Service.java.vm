@@ -3,7 +3,6 @@ package ${packageName}.${moduleName}.service;
 import com.extlight.common.base.BaseService;
 import com.extlight.common.exception.GlobalException;
 import ${packageName}.${moduleName}.model.${className};
-import ${packageName}.${moduleName}.model.vo.${className}VO;
 
 /**
  * @Author ${author}
@@ -12,7 +11,7 @@ import ${packageName}.${moduleName}.model.vo.${className}VO;
  * @Description: ${tableComment} Service
  * @DateTime: ${dateTime}
  */
-public interface ${className}Service extends BaseService<${className}, ${className}VO> {
+public interface ${className}Service extends BaseService<${className}> {
 
 }
 

@@ -11,7 +11,6 @@ import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.extensions.task.constant.TaskJobExceptionEnum;
 import com.extlight.extensions.task.model.TaskJob;
 import com.extlight.extensions.task.model.dto.TaskJobDTO;
-import com.extlight.extensions.task.model.vo.TaskJobVO;
 import com.extlight.extensions.task.service.TaskJobService;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,142 +36,141 @@ import java.util.Map;
 @RequestMapping("/task/job")
 public class TaskJobController extends BaseController {
 
-    @Autowired
-    private TaskJobService taskJobService;
+	@Autowired
+	private TaskJobService taskJobService;
 
-    /**
-     * 新增页面
-     * @param resultMap
-     * @return
-     * @throws GlobalException
-     */
-    @GetMapping("/saveUI.html")
-    @RequiresPermissions("task:job:save")
-    public String saveUI(Map<String,Object> resultMap) throws GlobalException {
-        return render(SAVE_PAGE, resultMap);
-    }
+	/**
+	 * 新增页面
+	 *
+	 * @param resultMap
+	 * @return
+	 * @throws GlobalException
+	 */
+	@GetMapping("/saveUI.html")
+	@RequiresPermissions("task:job:save")
+	public String saveUI(Map<String, Object> resultMap) throws GlobalException {
+		return render(SAVE_PAGE, resultMap);
+	}
 
-    /**
-     * 修改页面
-     * @param id
-     * @param resultMap
-     * @return
-     * @throws GlobalException
-     */
-    @GetMapping("/updateUI/{id}.html")
-    @RequiresPermissions("task:job:update")
-    public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            TaskJobVO vo = this.taskJobService.getById(id);
-        if (vo == null) {
-	        ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
-        }
+	/**
+	 * 修改页面
+	 *
+	 * @param id
+	 * @param resultMap
+	 * @return
+	 * @throws GlobalException
+	 */
+	@GetMapping("/updateUI/{id}.html")
+	@RequiresPermissions("task:job:update")
+	public String updateUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
+		TaskJob target = this.taskJobService.getById(id);
+		if (target == null) {
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+		}
 
-        resultMap.put("vo", vo);
-        resultMap.put("readOnly", false);
-        return render(UPDATE_PAGE, resultMap);
-    }
+		resultMap.put("vo", target);
+		resultMap.put("readOnly", false);
+		return render(UPDATE_PAGE, resultMap);
+	}
 
-    /**
-     * 列表页面
-     * @param resultMap
-     * @return
-     * @throws GlobalException
-     */
-    @GetMapping("/listUI.html")
-    @RequiresPermissions("task:job:listUI")
-    public String listUI(Map<String,Object> resultMap) throws GlobalException {
-        return render(LIST_PAGE, resultMap);
-    }
+	/**
+	 * 列表页面
+	 *
+	 * @param resultMap
+	 * @return
+	 * @throws GlobalException
+	 */
+	@GetMapping("/listUI.html")
+	@RequiresPermissions("task:job:listUI")
+	public String listUI(Map<String, Object> resultMap) throws GlobalException {
+		return render(LIST_PAGE, resultMap);
+	}
 
-    /**
-     * 详情页面
-     * @param id
-     * @param resultMap
-     * @return
-     * @throws GlobalException
-     */
-    @GetMapping("/detailUI/{id}.html")
-    @RequiresPermissions("task:job:query")
-    public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            TaskJobVO vo = this.taskJobService.getById(id);
-        if (vo == null) {
-	        ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
-        }
+	/**
+	 * 详情页面
+	 *
+	 * @param id
+	 * @param resultMap
+	 * @return
+	 * @throws GlobalException
+	 */
+	@GetMapping("/detailUI/{id}.html")
+	@RequiresPermissions("task:job:query")
+	public String detailUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
+		TaskJob target = this.taskJobService.getById(id);
+		if (target == null) {
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+		}
 
-        resultMap.put("vo", vo);
-        resultMap.put("readOnly", true);
-        return render(DETAIL_PAGE, resultMap);
-    }
+		resultMap.put("vo", target);
+		resultMap.put("readOnly", true);
+		return render(DETAIL_PAGE, resultMap);
+	}
 
-    //
-    @PostMapping("/save.json")
-    @RequiresPermissions("task:job:save")
-    @ResponseBody
-    @ActionLog(value="新增", moduleName = ModuleEnum.TASK, actionType = ActionEnum.SAVE)
-    public Result save(@Validated(BaseRequest.Save.class) TaskJobDTO taskJobDto) throws GlobalException {
-        TaskJob taskJob = taskJobDto.toDo(TaskJob.class);
-        return this.taskJobService.save(taskJob) > 0 ? Result.success() : Result.fail();
-    }
+	//
+	@PostMapping("/save.json")
+	@RequiresPermissions("task:job:save")
+	@ResponseBody
+	@ActionLog(value = "新增", moduleName = ModuleEnum.TASK, actionType = ActionEnum.SAVE)
+	public Result save(@Validated(BaseRequest.Save.class) TaskJobDTO taskJobDTO) throws GlobalException {
+		TaskJob taskJob = taskJobDTO.convertToDoModel();
+		return this.taskJobService.save(taskJob) > 0 ? Result.success() : Result.fail();
+	}
 
-    @PostMapping("/remove.json")
-    @RequiresPermissions("task:job:remove")
-    @ResponseBody
-    @ActionLog(value="删除", moduleName = ModuleEnum.TASK, actionType = ActionEnum.REMOVE)
-    public Result remove(@RequestParam String idStr) throws GlobalException {
-        String[] idArr = idStr.split(",");
-        int num;
-        if (idArr.length == 1) {
-            num = this.taskJobService.remove(Long.valueOf(idArr[0]));
-        } else {
-            String[] idStrArr = idStr.split(",");
-            List<Long> idList = new ArrayList<>(idStr.length());
-            Arrays.stream(idStrArr).forEach(i -> idList.add(Long.valueOf(i)));
-            num = this.taskJobService.removeBatch(idList);
-        }
-        return num > 0 ? Result.success() : Result.fail();
-    }
+	@PostMapping("/remove.json")
+	@RequiresPermissions("task:job:remove")
+	@ResponseBody
+	@ActionLog(value = "删除", moduleName = ModuleEnum.TASK, actionType = ActionEnum.REMOVE)
+	public Result remove(@RequestParam String idStr) throws GlobalException {
+		String[] idArr = idStr.split(",");
+		int num;
+		if (idArr.length == 1) {
+			num = this.taskJobService.remove(Long.valueOf(idArr[0]));
+		} else {
+			String[] idStrArr = idStr.split(",");
+			List<Long> idList = new ArrayList<>(idStr.length());
+			Arrays.stream(idStrArr).forEach(i -> idList.add(Long.valueOf(i)));
+			num = this.taskJobService.removeBatch(idList);
+		}
+		return num > 0 ? Result.success() : Result.fail();
+	}
 
-    @PostMapping("/update.json")
-    @RequiresPermissions("task:job:update")
-    @ResponseBody
-    @ActionLog(value="编辑", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
-    public Result update(@Validated(BaseRequest.Update.class) TaskJobDTO taskJobDTO) throws GlobalException {
-        TaskJobVO dbData = this.taskJobService.getById(taskJobDTO.getId());
-        if (dbData == null) {
-	        ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
-        }
+	@PostMapping("/update.json")
+	@RequiresPermissions("task:job:update")
+	@ResponseBody
+	@ActionLog(value = "编辑", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	public Result update(@Validated(BaseRequest.Update.class) TaskJobDTO taskJobDTO) throws GlobalException {
+		TaskJob target = this.taskJobService.getById(taskJobDTO.getId());
+		if (target == null) {
+			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+		}
 
-        TaskJob taskJob = taskJobDTO.toDo(TaskJob.class);
-        return this.taskJobService.update(taskJob) > 0 ? Result.success() : Result.fail();
-    }
+		TaskJob taskJob = taskJobDTO.convertToDoModel();
+		return this.taskJobService.update(taskJob) > 0 ? Result.success() : Result.fail();
+	}
 
-    @GetMapping("/list.json")
-    @RequiresPermissions("task:job:listUI")
-    @ResponseBody
-    public Result list(@Validated(BaseRequest.Query.class) TaskJobDTO params) throws GlobalException {
-        PageInfo<TaskJobVO> pageInfo = this.taskJobService.page(params);
-        return Result.success(pageInfo);
-    }
+	@GetMapping("/list.json")
+	@RequiresPermissions("task:job:listUI")
+	@ResponseBody
+	public Result list(@Validated(BaseRequest.Query.class) TaskJobDTO params) throws GlobalException {
+		PageInfo<TaskJob> pageInfo = this.taskJobService.page(params);
+		return Result.success(pageInfo);
+	}
 
-    @PostMapping("/starJob.json")
-    @RequiresPermissions("task:job:start")
-    @ResponseBody
-    @ActionLog(value="启动定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
-    public Result starJob(Long taskJobId) throws GlobalException {
-        return this.taskJobService.starJob(taskJobId) > 0 ? Result.success() : Result.fail();
-    }
+	@PostMapping("/starJob.json")
+	@RequiresPermissions("task:job:start")
+	@ResponseBody
+	@ActionLog(value = "启动定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	public Result starJob(Long taskJobId) throws GlobalException {
+		return this.taskJobService.starJob(taskJobId) > 0 ? Result.success() : Result.fail();
+	}
 
-    @PostMapping("/pauseJob.json")
-    @RequiresPermissions("task:job:pause")
-    @ResponseBody
-    @ActionLog(value="暂停定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
-    public Result pauseJob(Long taskJobId) throws GlobalException {
-        TaskJobVO dbData = this.taskJobService.getById(taskJobId);
-        if (dbData == null) {
-            ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
-        }
-
-        return this.taskJobService.pauseJob(taskJobId) > 0 ? Result.success() : Result.fail();
-    }
+	@PostMapping("/pauseJob.json")
+	@RequiresPermissions("task:job:pause")
+	@ResponseBody
+	@ActionLog(value = "暂停定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	public Result pauseJob(Long taskJobId) throws GlobalException {
+		return this.taskJobService.pauseJob(taskJobId) > 0 ? Result.success() : Result.fail();
+	}
 
 }

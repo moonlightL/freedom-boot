@@ -12,7 +12,7 @@ import com.extlight.extensions.task.model.vo.TaskJobVO;
  * @Description: 任务作业 Service
  * @DateTime: 2019-08-14 17:44:56
  */
-public interface TaskJobService extends BaseService<TaskJob, TaskJobVO> {
+public interface TaskJobService extends BaseService<TaskJob> {
 
 	/**
 	 * 启动定时器

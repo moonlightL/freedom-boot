@@ -62,12 +62,12 @@ public class ${className}Controller extends BaseController {
     @GetMapping("/updateUI/{id}.html")
     @RequiresPermissions("${permission}:update")
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            ${className}VO vo = this.${variableName}Service.getById(id);
-        if (vo == null) {
+        ${className} target = this.${variableName}Service.getById(id);
+        if (target == null) {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        resultMap.put("vo", vo);
+        resultMap.put("vo", target);
         resultMap.put("readOnly", false);
         return render(UPDATE_PAGE, resultMap);
     }
@@ -94,12 +94,12 @@ public class ${className}Controller extends BaseController {
     @GetMapping("/detailUI/{id}.html")
     @RequiresPermissions("${permission}:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-            ${className}VO vo = this.${variableName}Service.getById(id);
-        if (vo == null) {
+        ${className} target = this.${variableName}Service.getById(id);
+        if (target == null) {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        resultMap.put("vo", vo);
+        resultMap.put("vo", target);
         resultMap.put("readOnly", true);
         return render(DETAIL_PAGE, resultMap);
     }
@@ -138,8 +138,8 @@ public class ${className}Controller extends BaseController {
     @ResponseBody
     @ActionLog(value="编辑", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) ${className}DTO ${variableName}DTO) throws GlobalException {
-        ${className}VO dbData = this.${variableName}Service.getById(${variableName}DTO.getId());
-        if (dbData == null) {
+        ${className} target = this.${variableName}Service.getById(${variableName}DTO.getId());
+        if (target == null) {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
@@ -151,7 +151,7 @@ public class ${className}Controller extends BaseController {
     @RequiresPermissions("${permission}:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) ${className}DTO params) throws GlobalException {
-        PageInfo<${className}VO> pageInfo = this.${variableName}Service.page(params);
+        PageInfo<${className}> pageInfo = this.${variableName}Service.page(params);
         return Result.success(pageInfo);
     }
 

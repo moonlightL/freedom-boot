@@ -1,6 +1,7 @@
 package com.extlight.extensions.generator.model.dto;
 
 import com.extlight.common.base.BaseRequest;
+import com.extlight.extensions.generator.model.GenTable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class GenTableDTO extends BaseRequest {
+public class GenTableDTO extends BaseRequest<GenTable> {
 
     /**
      * 表名称

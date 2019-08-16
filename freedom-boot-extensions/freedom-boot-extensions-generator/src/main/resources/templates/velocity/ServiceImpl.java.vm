@@ -6,7 +6,6 @@ import com.extlight.common.base.BaseServiceImpl;
 import ${packageName}.${moduleName}.mapper.${className}Mapper;
 import ${packageName}.${moduleName}.model.${className};
 import ${packageName}.${moduleName}.model.dto.${className}DTO;
-import ${packageName}.${moduleName}.model.vo.${className}VO;
 import ${packageName}.${moduleName}.service.${className}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import tk.mybatis.mapper.entity.Example;
  * @DateTime: ${dateTime}
  */
 @Service
-public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${className}VO> implements ${className}Service {
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}> implements ${className}Service {
 
     @Autowired
     private ${className}Mapper ${variableName}Mapper;

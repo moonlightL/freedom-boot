@@ -15,7 +15,7 @@ import java.util.List;
  * @Description: 系统权限 Service
  * @Date 2019/7/1 17:22
  */
-public interface SysPermissionService extends BaseService<SysPermission, SysPermissionVO> {
+public interface SysPermissionService extends BaseService<SysPermission> {
 
     /**
      * 查询层次关系的权限列表
@@ -30,7 +30,7 @@ public interface SysPermissionService extends BaseService<SysPermission, SysPerm
      * @return
      * @throws GlobalException
      */
-    List<SysPermissionVO> findPermissionListByUserId(Long userId) throws GlobalException;
+    List<SysPermission> findPermissionListByUserId(Long userId) throws GlobalException;
 
     /**
      * 通过角色 id 获取权限节点
@@ -46,5 +46,5 @@ public interface SysPermissionService extends BaseService<SysPermission, SysPerm
      * @return
      * @throws GlobalException
      */
-    List<SysPermissionVO> findCommonButtonList(String url) throws GlobalException;
+    List<SysPermission> findCommonButtonList(String url) throws GlobalException;
 }

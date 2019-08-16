@@ -29,7 +29,7 @@ import java.util.Map;
  * @DateTime: 2019-08-02 00:04:21
  */
 @Service
-public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfigVO> implements FileConfigService {
+public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig> implements FileConfigService {
 
     private static final String CONFIG_KEY = "fileConfigMap";
 
@@ -64,7 +64,7 @@ public class FileConfigServiceImpl extends BaseServiceImpl<FileConfig, FileConfi
         Map<String, String> result = CacheUtil.get(CONFIG_KEY);
 
         if (result == null) {
-            List<FileConfigVO> list = super.listAll();
+            List<FileConfig> list = super.listAll();
             result = new HashMap<>(list.size());
             Map<String, String> finalResult = result;
             list.stream().forEach(i -> finalResult.put(i.getConfigName(), i.getConfigValue()));

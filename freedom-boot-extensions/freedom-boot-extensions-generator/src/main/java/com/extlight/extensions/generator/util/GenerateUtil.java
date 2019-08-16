@@ -184,7 +184,7 @@ public class GenerateUtil {
 
         boolean hasBigDecimal = false;
         //表信息
-        GenTableVO tableVO = table.toVO(GenTableVO.class);
+        GenTableVO tableVO = table.convertToVoModel();
         //表名转换成Java类名
         String className = tableToJava(tableVO.getTableName(), generatorParam.getTablePrefix());
         tableVO.setClassName(className);
@@ -194,7 +194,7 @@ public class GenerateUtil {
         List<GenColumnVO> columnList = new ArrayList<>();
         for (GenColumn genColumn : columns) {
 
-            GenColumnVO genColumnVO = genColumn.toVO(GenColumnVO.class);
+            GenColumnVO genColumnVO = genColumn.convertToVoModel();
 
             //列名转换成Java属性名
             String attrName = columnToJava(genColumn.getColumnName());

@@ -9,7 +9,6 @@ import com.extlight.core.constant.SysRoleExceptionEnum;
 import com.extlight.core.mapper.SysRoleMapper;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.dto.SysRoleDTO;
-import com.extlight.core.model.vo.SysRoleVO;
 import com.extlight.core.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ import java.util.*;
  * @Date 2019/7/1 15:48
  */
 @Service
-public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleVO> implements SysRoleService {
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysRoleService {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
@@ -54,24 +53,21 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleVO> impl
     }
 
     @Override
-    public List<SysRoleVO> findRoleListByUserId(Long userId) throws GlobalException {
+    public List<SysRole> findRoleListByUserId(Long userId) throws GlobalException {
 
         List<SysRole> roleList = this.sysRoleMapper.selectByUserId(userId);
         if (roleList.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<SysRoleVO> result = new ArrayList<>(roleList.size());
-        roleList.stream().forEach(i -> result.add(i.toVO(SysRoleVO.class)));
-
-        return result;
+        return roleList;
     }
 
     @Override
     @Transactional(rollbackFor = GlobalException.class)
     public int asignPermission(Long roleId, String permissionIdStr) throws GlobalException {
 
-        SysRoleVO target = super.getById(roleId);
+        SysRole target = super.getById(roleId);
         if (target == null) {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }

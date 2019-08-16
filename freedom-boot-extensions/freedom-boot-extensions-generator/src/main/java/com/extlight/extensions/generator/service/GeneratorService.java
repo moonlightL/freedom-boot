@@ -16,7 +16,7 @@ import java.util.List;
  * @Description: 代码生成器 Service
  * @Date 2019/7/8 12:39
  */
-public interface GeneratorService extends BaseService<GenTable, GenTableVO> {
+public interface GeneratorService extends BaseService<GenTable> {
 
     /**
      * 查询当前数据库的所有表

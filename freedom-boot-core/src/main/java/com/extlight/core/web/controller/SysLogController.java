@@ -6,8 +6,8 @@ import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.core.constant.SysLogExceptionEnum;
+import com.extlight.core.model.SysLog;
 import com.extlight.core.model.dto.SysLogDTO;
-import com.extlight.core.model.vo.SysLogVO;
 import com.extlight.core.service.SysLogService;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -60,7 +60,7 @@ public class SysLogController extends BaseController {
     @GetMapping("/detailUI/{id}.html")
     @RequiresPermissions("core:log:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-        SysLogVO vo = this.sysLogService.getById(id);
+        SysLog vo = this.sysLogService.getById(id);
         if (vo == null) {
             ExceptionUtil.throwEx(SysLogExceptionEnum.ERROR_LOG_NOT_EXIST);
         }
@@ -76,7 +76,7 @@ public class SysLogController extends BaseController {
     @RequiresPermissions("core:log:listUI")
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysLogDTO params) throws GlobalException {
-        PageInfo<SysLogVO> pageInfo = this.sysLogService.page(params);
+        PageInfo<SysLog> pageInfo = this.sysLogService.page(params);
         return Result.success(pageInfo);
     }
 }
