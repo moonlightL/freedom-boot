@@ -61,16 +61,15 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
 
     /**
      * 加载定时器
-     * @param taskJobVO
      */
     @PostConstruct
-    public void reloadTaskJob(TaskJobVO taskJobVO) {
+    public void reloadTaskJob() {
 
         List<TaskJobVO> taskJobList = super.listAll();
         if (!taskJobList.isEmpty()) {
             for (TaskJobVO jobVO : taskJobList) {
                 try {
-                    CronTrigger cronTrigger = this.scheduleJobService.getCronTrigger(taskJobVO.getId());
+                    CronTrigger cronTrigger = this.scheduleJobService.getCronTrigger(jobVO.getId());
                     TaskJob taskJob = new TaskJob();
                     BeanUtils.copyProperties(jobVO, taskJob);
                     if(cronTrigger == null) {
@@ -122,7 +121,7 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
 
         TaskJob dbJob = this.taskJobMapper.findByJobName(taskJob.getJobName());
         // 不是修改同一条记录
-        if (dbJob != null && dbJob.getId().equals(dbJob.getId())) {
+        if (dbJob != null && !dbJob.getId().equals(dbJob.getId())) {
             ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_REPEAT_JOB_NAME);
         }
 
@@ -136,5 +135,22 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob, TaskJobVO> impl
         }
 
         return num;
+    }
+
+    @Override
+    public int starJob(Long taskJobId) throws GlobalException {
+        TaskJobVO dbData = this.getById(taskJobId);
+        if (dbData == null) {
+            ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+        }
+
+        // TODO
+        return 0;
+    }
+
+    @Override
+    public int pauseJob(Long taskJobId) throws GlobalException {
+        // TODO
+        return 0;
     }
 }

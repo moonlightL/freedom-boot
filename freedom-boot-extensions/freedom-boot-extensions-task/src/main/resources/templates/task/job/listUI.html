@@ -91,6 +91,8 @@
 <div th:include="common :: script"></div>
 <script type="text/javascript" th:inline="javascript" >
 
+    var prefix = [[${prefix}]];
+
     function numFormatter(value, row, index) {
         return index + 1;
     }
@@ -110,11 +112,27 @@
             btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
         }
 
+        if (permissions.indexOf("start") > -1) {
+            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-play-circle"></i> 运行</a> ');
+        }
+
+        if (permissions.indexOf("pause") > -1) {
+            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="start(\'' + row.id + '\')"><i class="fa fa-stop-circle"></i> 暂停</a> ');
+        }
+
         if (permissions.indexOf("remove") > -1) {
-            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
+            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="pause(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
         }
 
         return btnArr.join('');
+    }
+
+    function start(id) {
+        $.freedom.action.request(prefix + "/starJob.json", {"taskJobId": id});
+    }
+
+    function pause(id) {
+        $.freedom.action.request(prefix + "/pauseJob.json", {"taskJobId": id});
     }
 
     $(function() {
@@ -131,7 +149,6 @@
          *    columns：[],                  // bootstrap-table cell 参数，页面默认使用内嵌方式设置数据
          *    pagination：true              // 是否分页
          */
-        var prefix = [[${prefix}]];
         $.freedom.ui.table.init({
             baseUrl: prefix
         });

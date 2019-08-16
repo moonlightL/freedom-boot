@@ -14,5 +14,20 @@ import com.extlight.extensions.task.model.vo.TaskJobVO;
  */
 public interface TaskJobService extends BaseService<TaskJob, TaskJobVO> {
 
+	/**
+	 * 启动定时器
+	 * @param taskJobId
+	 * @return
+	 * @throws GlobalException
+	 */
+	int starJob(Long taskJobId) throws GlobalException;
+
+	/**
+	 * 暂停定时器
+	 * @param taskJobId
+	 * @return
+	 * @throws GlobalException
+	 */
+	int pauseJob(Long taskJobId) throws GlobalException;
 }
 
