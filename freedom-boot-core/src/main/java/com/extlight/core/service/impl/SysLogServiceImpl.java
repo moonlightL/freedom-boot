@@ -65,7 +65,7 @@ public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLog
         List<SysLog> logList = super.listByExample(example, 0, 2, false);
         SysLog sysLog = logList.get(logList.size() - 1);
 
-        SysLogVO sysLogVO = sysLog.convertToVoModel();
+        SysLogVO sysLogVO = sysLog.toVoModel();
         int count = this.sysLogMapper.selectCountByExample(example);
         sysLogVO.setLoginCount(count);
 

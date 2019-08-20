@@ -65,10 +65,10 @@ public class BaseRequest<T> {
     }
 
     /**
-     * 转成 DO 对象
+     * 转成 DO 模型
      * @return
      */
-    public  T convertToDoModel() {
+    public  T toDoModel() {
         if (doClass == null) {
             return null;
         }
@@ -80,6 +80,7 @@ public class BaseRequest<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

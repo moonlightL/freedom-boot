@@ -85,7 +85,7 @@ public class SysPermissionController extends BaseController {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", false);
 
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
@@ -120,7 +120,7 @@ public class SysPermissionController extends BaseController {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", true);
 
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
@@ -136,7 +136,7 @@ public class SysPermissionController extends BaseController {
     @ResponseBody
     @ActionLog(value="新增权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
-        SysPermission sysPermission = sysPermissionDTO.convertToDoModel();
+        SysPermission sysPermission = sysPermissionDTO.toDoModel();
         return this.sysPermissionService.save(sysPermission) > 0 ? Result.success() : Result.fail();
     }
 
@@ -168,7 +168,7 @@ public class SysPermissionController extends BaseController {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        SysPermission sysPermission = sysPermissionDTO.convertToDoModel();
+        SysPermission sysPermission = sysPermissionDTO.toDoModel();
         return this.sysPermissionService.update(sysPermission) > 0 ? Result.success() : Result.fail();
     }
 

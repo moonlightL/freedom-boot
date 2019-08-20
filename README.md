@@ -71,6 +71,7 @@ thymeleaf 3.0.11 | web 开发模板引擎 | [前往](https://www.thymeleaf.org/)
 oshi 3.13.2| 搜集服务器信息 | [前往](https://github.com/oshi/oshi)
 EasyCaptcha 1.5.0 | 图形验证码 | [前往](https://github.com/whvcse/EasyCaptcha)
 ip2region 1.7.2| 最自由的ip地址查询库 | [前往](https://github.com/lionsoul2014/ip2region)
+quartz 2.3.1 | 作业调度框架 | [前往](http://www.quartz-scheduler.org/)
 
 ### 前端
 

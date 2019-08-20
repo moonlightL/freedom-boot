@@ -79,7 +79,7 @@ public class HomeController extends BaseController {
                 .filter(i -> i.getType().equals(PermissionEnum.MODULE.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
-                    SysPermissionVO parent = i.convertToVoModel();
+                    SysPermissionVO parent = i.toVoModel();
                     parentMap.put(i.getId(), parent);
                 });
 
@@ -88,7 +88,7 @@ public class HomeController extends BaseController {
                 .filter(i -> i.getType().equals(PermissionEnum.MENU.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
-                    SysPermissionVO child = i.convertToVoModel();
+                    SysPermissionVO child = i.toVoModel();
                     SysPermissionVO parent = parentMap.get(child.getPid());
                     if (!parent.getChildren().contains(child)) {
                         parent.getChildren().add(child);

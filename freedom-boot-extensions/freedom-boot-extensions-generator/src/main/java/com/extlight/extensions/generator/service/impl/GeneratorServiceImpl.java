@@ -78,7 +78,7 @@ public class GeneratorServiceImpl extends BaseServiceImpl<GenTable> implements G
         List<GenTableVO> result = new ArrayList<>(list.size());
         list.stream().forEach(i -> {
             if (!IGNORE_TABLE.equals(i.getTableName())) {
-                result.add(i.convertToVoModel());
+                result.add(i.toVoModel());
             }
         });
 

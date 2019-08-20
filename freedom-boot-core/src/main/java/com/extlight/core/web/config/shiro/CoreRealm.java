@@ -58,7 +58,7 @@ public class CoreRealm extends AuthorizingRealm {
             throw new LockedAccountException(GlobalExceptionEnum.ERROR_STATE_WRONG.getMessage());
         }
 
-        SysUserVO userVO = sysUser.convertToVoModel();
+        SysUserVO userVO = sysUser.toVoModel();
 
         return new SimpleAuthenticationInfo(userVO, sysUser.getPassword(), this.getName());
     }

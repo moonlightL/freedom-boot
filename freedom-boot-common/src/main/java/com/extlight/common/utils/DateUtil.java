@@ -107,6 +107,24 @@ public class DateUtil {
     }
 
     /**
+     * 字符串转 LocalDate
+     * @param dateStr
+     * @return
+     */
+    public static LocalDate strToLocalDate(String dateStr) {
+        return LocalDate.parse(dateStr, DATE_FORMATTER);
+    }
+
+    /**
+     * 字符串转 LocalDateTime
+     * @param dateStr
+     * @return
+     */
+    public static LocalDateTime strToLocalDateTime(String dateStr) {
+        return LocalDateTime.parse(dateStr, DATETIME_FORMATTER);
+    }
+
+    /**
      * 获取当月的第一天日期
      * @return
      */

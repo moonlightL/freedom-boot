@@ -73,7 +73,7 @@ public class SysRoleController extends BaseController {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", false);
         return render(UPDATE_PAGE, resultMap);
     }
@@ -106,7 +106,7 @@ public class SysRoleController extends BaseController {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", true);
         return render(DETAIL_PAGE, resultMap);
     }
@@ -118,7 +118,7 @@ public class SysRoleController extends BaseController {
     @ResponseBody
     @ActionLog(value="新增角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysRoleDTO sysRoleDTO) throws GlobalException {
-        SysRole sysRole = sysRoleDTO.convertToDoModel();
+        SysRole sysRole = sysRoleDTO.toDoModel();
         return this.sysRoleService.save(sysRole) > 0 ? Result.success() : Result.fail();
     }
 
@@ -150,7 +150,7 @@ public class SysRoleController extends BaseController {
             ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
-        SysRole sysRole = sysRoleDTO.convertToDoModel();
+        SysRole sysRole = sysRoleDTO.toDoModel();
         return this.sysRoleService.update(sysRole) > 0 ? Result.success() : Result.fail();
     }
 
@@ -180,7 +180,7 @@ public class SysRoleController extends BaseController {
             return "404";
         }
 
-        resultMap.put("target", target);
+        resultMap.put("target", target.toVoModel());
         resultMap.put("action", super.getPrefix() + "/assignPermission.json");
 
         List<TreeNode> permissionList = this.sysPermissionService.findPermissionNodesByRoleId(roleId);

@@ -8,6 +8,7 @@ import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.common.utils.PageUtil;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.SysUser;
@@ -85,7 +86,7 @@ public class SysUserController extends BaseController {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", false);
         return render(UPDATE_PAGE, resultMap);
     }
@@ -118,7 +119,7 @@ public class SysUserController extends BaseController {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", true);
         return render(DETAIL_PAGE, resultMap);
     }
@@ -130,7 +131,7 @@ public class SysUserController extends BaseController {
     @ResponseBody
     @ActionLog(value="新增用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysUserDTO sysUserDTO) throws GlobalException {
-        SysUser sysUser = sysUserDTO.convertToDoModel();
+        SysUser sysUser = sysUserDTO.toDoModel();
         return this.sysUserService.save(sysUser) > 0 ? Result.success() : Result.fail();
     }
 
@@ -164,7 +165,7 @@ public class SysUserController extends BaseController {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
-        SysUser sysUser = sysUserDTO.convertToDoModel();
+        SysUser sysUser = sysUserDTO.toDoModel();
         return this.sysUserService.update(sysUser) > 0 ? Result.success() : Result.fail();
     }
 
@@ -174,7 +175,8 @@ public class SysUserController extends BaseController {
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysUserDTO params) throws GlobalException {
         PageInfo<SysUser> pageInfo = this.sysUserService.page(params);
-        return Result.success(pageInfo);
+        // SysUser 包含密码，因此需要转成 VO 过滤该字段
+        return Result.success(PageUtil.toVO(pageInfo));
     }
 
 
@@ -212,7 +214,7 @@ public class SysUserController extends BaseController {
             return "404";
         }
 
-        resultMap.put("target", target);
+        resultMap.put("target", target.toVoModel());
 
         List<SysRole> allRoleList = this.sysRoleService.listAll();
         if (allRoleList.isEmpty()) {
@@ -223,7 +225,7 @@ public class SysUserController extends BaseController {
             List<SysRole> roleList = this.sysRoleService.findRoleListByUserId(userId);
             List<Long> checkIdList = roleList.stream().map(i -> i.getId()).collect(Collectors.toList());
             allRoleList.stream().forEach(i -> {
-                SysRoleVO sysRoleVO = i.convertToVoModel();
+                SysRoleVO sysRoleVO = i.toVoModel();
                 if (checkIdList.contains(sysRoleVO.getId())) {
                     sysRoleVO.setChecked(true);
                 }
@@ -287,7 +289,7 @@ public class SysUserController extends BaseController {
     @ActionLog(value="修改个人资料", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
     public Result updateBasicInfo(@Validated(BaseRequest.Update.class) SysUserDTO sysUserDTO) throws GlobalException {
         SysUserVO sysUserVO = (SysUserVO) SecurityUtils.getSubject().getPrincipal();
-        SysUser sysUser = sysUserDTO.convertToDoModel();
+        SysUser sysUser = sysUserDTO.toDoModel();
         sysUser.setId(sysUserVO.getId());
         return this.sysUserService.update(sysUser) > 0 ? Result.success() : Result.fail();
     }

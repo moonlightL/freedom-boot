@@ -67,7 +67,7 @@ public class ${className}Controller extends BaseController {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", false);
         return render(UPDATE_PAGE, resultMap);
     }
@@ -99,7 +99,7 @@ public class ${className}Controller extends BaseController {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        resultMap.put("vo", target);
+        resultMap.put("vo", target.toVoModel());
         resultMap.put("readOnly", true);
         return render(DETAIL_PAGE, resultMap);
     }

@@ -113,7 +113,7 @@ public class TaskJobController extends BaseController {
 	@ResponseBody
 	@ActionLog(value = "新增", moduleName = ModuleEnum.TASK, actionType = ActionEnum.SAVE)
 	public Result save(@Validated(BaseRequest.Save.class) TaskJobDTO taskJobDTO) throws GlobalException {
-		TaskJob taskJob = taskJobDTO.convertToDoModel();
+		TaskJob taskJob = taskJobDTO.toDoModel();
 		return this.taskJobService.save(taskJob) > 0 ? Result.success() : Result.fail();
 	}
 
@@ -145,7 +145,7 @@ public class TaskJobController extends BaseController {
 			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
 		}
 
-		TaskJob taskJob = taskJobDTO.convertToDoModel();
+		TaskJob taskJob = taskJobDTO.toDoModel();
 		return this.taskJobService.update(taskJob) > 0 ? Result.success() : Result.fail();
 	}
 

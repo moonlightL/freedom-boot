@@ -38,7 +38,11 @@ public class BaseResponse<V> implements Serializable {
         }
     }
 
-    public V convertToVoModel() {
+    /**
+     * 转换成 VO 模型
+     * @return
+     */
+    public V toVoModel() {
 
         if (voClass == null) {
             return null;
@@ -51,6 +55,7 @@ public class BaseResponse<V> implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 }
