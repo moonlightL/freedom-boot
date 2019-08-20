@@ -2,7 +2,7 @@ package com.extlight.extensions.file.web.controller;
 
 import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
-import com.extlight.common.component.annotation.ActionLog;
+import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.component.file.FileManageEnum;
 import com.extlight.common.component.file.GlobalFileConstant;
 import com.extlight.common.constant.ActionEnum;

@@ -1,6 +1,6 @@
 package com.extlight.core.web.listener;
 
-import com.extlight.common.event.SysLogEvent;
+import com.extlight.common.component.log.SysLogEvent;
 import com.extlight.core.model.SysLog;
 import com.extlight.core.service.SysLogService;
 import org.springframework.beans.BeanUtils;

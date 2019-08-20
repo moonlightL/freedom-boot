@@ -1,7 +1,7 @@
 package com.extlight.extensions.generator.web.controller;
 
 import com.extlight.common.base.BaseController;
-import com.extlight.common.component.annotation.ActionLog;
+import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;

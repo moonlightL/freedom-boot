@@ -1,7 +1,5 @@
 package com.extlight.common.component.mybatis;
 
-import com.extlight.common.component.annotation.CreateTime;
-import com.extlight.common.component.annotation.UpdateTime;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
