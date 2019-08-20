@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Author MoonlightL
  * @ClassName: CacheUtil
  * @ProjectName: freedom-boot
- * @Description: 缓存工具类
+ * @Description: 缓存工具类（本地内存，如果使用第三方缓存：redis，可以忽略该类）
  * @DateTime: 2019/8/9 14:11
  */
 public class CacheUtil {
@@ -79,6 +79,28 @@ public class CacheUtil {
 	 */
 	public static Set<String> keySet() {
 		return CACHE_MAP.keySet();
+	}
+
+	/**
+	 * 是否过期
+	 * @param key
+	 * @return
+	 */
+	public static <T> boolean isExpire(String key) {
+		Cache<T> cache = CACHE_MAP.get(key);
+		if (cache == null) {
+			return false;
+		}
+
+		if (!cache.hasTime) {
+			return false;
+		}
+
+		if (System.currentTimeMillis() < cache.getTimeout()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Getter
