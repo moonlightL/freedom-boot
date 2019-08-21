@@ -11,6 +11,30 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="panel">
+                <div class="panel-body">
+                    <form action="" class="form-inline" method="post">
+                        <div class="form-group">
+                            <label for="hostname">主机名</label>
+                            <input type="text" class="form-control" id="hostname" placeholder="主机名">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">用户名</label>
+                            <input type="text" class="form-control" id="username" placeholder="用户名">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码</label>
+                            <input type="password" class="form-control" id="password" placeholder="密码">
+                        </div>
+                        <button id="connect-btn" type="button" class="btn btn-success">连接</button>
+                        <button id="disconnect-btn" type="button" class="btn btn-danger" disabled>断开</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">终端控制台</h3>
                 </div>
@@ -31,44 +55,71 @@
 <script th:src="@{/plugins/xterm/xterm.js}"></script>
 <script type="text/javascript" th:inline="javascript" >
     $(function() {
-        connection();
+
+        terminalManager.term = new Terminal();
+        terminalManager.term.open(document.getElementById('terminal'));
+
+        $("#connect-btn").on("click", function () {
+            terminalManager.connect();
+            $(this).prop("disabled", true);
+            $("#disconnect-btn").prop("disabled", false);
+        });
+
+        $("#disconnect-btn").on("click", function () {
+            terminalManager.disconnect();
+            $(this).prop("disabled", true);
+            $("#connect-btn").prop("disabled", false);
+        });
+
     });
 
-    function connection() {
-        var websocket;
-        var term;
+    var terminalManager = {
+        websocket: null,
+        term: null,
+        connect: function() {
 
-        var host = window.location.host;
-        if ('WebSocket' in window) {
-            websocket = new WebSocket("ws://" + host +
-                "/webSocketServer/");
-        } else if ('MozWebSocket' in window) {
-            websocket = new MozWebSocket("ws://" + host +
-                "/webSocketServer/");
-        }
+            if (terminalManager.websocket != null) {
+                return;
+            }
 
-        websocket.onopen = function(evnt) {
-            $("#result").html("连接服务器成功!<br/>")
-            term = new Terminal();
-            term.open(document.getElementById('terminal'));
+            var host = window.location.host;
+            if ('WebSocket' in window) {
+                terminalManager.websocket = new WebSocket("ws://" + host + "/webSocketServer/");
+            } else if ('MozWebSocket' in window) {
+                terminalManager.websocket = new MozWebSocket("ws://" + host + "/webSocketServer/");
+            }
 
-            term.on('data', function(data) {
-                websocket.send(data);
-            });
-        };
+            terminalManager.websocket.onopen = function(evnt) {
+                $("#result").html("连接服务器成功!<br/>")
 
-        websocket.onmessage = function(evnt) {
-            term.write(evnt.data);
-        };
+                terminalManager.term.on('data', function(data) {
+                    terminalManager.websocket.send(data);
+                });
+            };
 
-        websocket.onerror = function(evnt) {
-            $("#result").html($("#result").html() + "报错!<br/>")
-        };
+            terminalManager.websocket.onmessage = function(evnt) {
+                terminalManager.term.write(evnt.data);
+            };
 
-        websocket.onclose = function(evnt) {
-            $("#result").html($("#result").html() + "与服务器断开连接!<br/>");
+            terminalManager.websocket.onerror = function(evnt) {
+                $("#result").html($("#result").html() + "报错!<br/>")
+            };
+
+            terminalManager.websocket.onclose = function(evnt) {
+                $("#result").html($("#result").html() + "与服务器断开连接!<br/>");
+            }
+
+        },
+        disconnect: function () {
+            if (terminalManager.websocket == null) {
+                return;
+            }
+
+            terminalManager.websocket.close();
+            terminalManager.term.reset();
         }
     }
+
 </script>
 </body>
 </html>
