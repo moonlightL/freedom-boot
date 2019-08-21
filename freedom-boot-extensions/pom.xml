@@ -17,6 +17,7 @@
         <module>freedom-boot-extensions-generator</module>
         <module>freedom-boot-extensions-file</module>
         <module>freedom-boot-extensions-task</module>
+        <module>freedom-boot-extensions-terminal</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="common :: header"></head>
+    <link th:href="@{/plugins/xterm/xterm.css}" rel="stylesheet">
+</head>
+
+<body>
+<!--Page content-->
+<div id="page-content" class=" animated fadeIn">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">终端控制台</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="terminal"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div id="result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End page content-->
+<div th:include="common :: script"></div>
+<script th:src="@{/plugins/xterm/xterm.js}"></script>
+<script type="text/javascript" th:inline="javascript" >
+    $(function() {
+        connection();
+    });
+
+    function connection() {
+        var websocket;
+        var term;
+
+        var host = window.location.host;
+        if ('WebSocket' in window) {
+            websocket = new WebSocket("ws://" + host +
+                "/webSocketServer/");
+        } else if ('MozWebSocket' in window) {
+            websocket = new MozWebSocket("ws://" + host +
+                "/webSocketServer/");
+        }
+
+        websocket.onopen = function(evnt) {
+            $("#result").html("连接服务器成功!<br/>")
+            term = new Terminal();
+            term.open(document.getElementById('terminal'));
+
+            term.on('data', function(data) {
+                websocket.send(data);
+            });
+        };
+
+        websocket.onmessage = function(evnt) {
+            term.write(evnt.data);
+        };
+
+        websocket.onerror = function(evnt) {
+            $("#result").html($("#result").html() + "报错!<br/>")
+        };
+
+        websocket.onclose = function(evnt) {
+            $("#result").html($("#result").html() + "与服务器断开连接!<br/>");
+        }
+    }
+</script>
+</body>
+</html>

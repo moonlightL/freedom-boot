@@ -23,6 +23,7 @@ spring:
           - monitor
           - file
           - task
+          - terminal
     thymeleaf:
         mode: HTML5
         encoding: UTF-8
