@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Author MoonlightL
  * @ClassName: CacheUtil
  * @ProjectName: freedom-boot
- * @Description: 缓存工具类（本地内存，如果使用第三方缓存：redis，可以忽略该类）
+ * @Description: 缓存工具类（使用本地内存，如果使用第三方缓存，如 redis，可以忽略该类）
  * @DateTime: 2019/8/9 14:11
  */
 public class CacheUtil {

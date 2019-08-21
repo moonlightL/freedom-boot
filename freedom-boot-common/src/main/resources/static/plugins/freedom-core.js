@@ -332,7 +332,6 @@
                         data: data,
                         dataType: "JSON",
                         success: function(resp) {
-                            console.log(resp)
                             if (typeof fn == "function") {
                                 fn(resp);
                             } else {
@@ -381,7 +380,7 @@
                 confirm: function(content, fn) {
                     layer.confirm(content, function(index){
                         if (typeof fn == 'function') {
-                            fn();
+                            fn(index);
                         }
                     });
                 },

@@ -27,6 +27,8 @@ import java.time.LocalDateTime;
 @Table(name = "t_sys_permission")
 public class SysPermission extends BaseResponse<SysPermissionVO> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      *  id
      */

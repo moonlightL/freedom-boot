@@ -21,7 +21,7 @@ public class CacheListener {
 	/**
 	 *  清除 CacheUtil 中过期的 key
 	 */
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void clearCache() {
 
 		Set<String> keys = CacheUtil.keySet();

@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 @Table(name = "${tableName}")
 public class ${className} extends BaseResponse<${className}VO> {
 
+	private static final long serialVersionUID = 1L;
+
 #foreach ($column in $columnList)
 
 	/**

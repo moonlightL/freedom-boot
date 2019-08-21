@@ -21,6 +21,8 @@ import javax.persistence.Table;
 @Table(name = "information_schema.columns")
 public class GenColumn extends BaseResponse<GenColumnVO> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 字段名称
      */

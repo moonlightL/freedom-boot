@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 @Table(name = "t_file_data")
 public class FileData extends BaseResponse {
 
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键

@@ -121,7 +121,7 @@
         if (permissions.indexOf("pause") > -1) {
             var disabled = (row.state == 0 ? 'disabled' : '');
             var event = (row.state == 0 ? 'style=\'pointer-events:none\'' : '');
-            btnArr.push('<a class="btn btn-warning btn-xs" href="javascript:;;" onclick="pause(\'' + row + '\')" '+ disabled +' '+event+'><i class="fa fa-stop-circle"></i> 暂停</a> ');
+            btnArr.push('<a class="btn btn-warning btn-xs" href="javascript:;;" onclick="pause(\'' + row.id + '\')" '+ disabled +' '+event+'><i class="fa fa-stop-circle"></i> 暂停</a> ');
         }
 
         if (permissions.indexOf("remove") > -1) {
@@ -132,18 +132,20 @@
     }
 
     function start(id) {
-        $.freedom.modal.confirm("确定要运行该任务吗?", function() {
+        $.freedom.modal.confirm("确定要运行该任务吗?", function(index) {
             $.freedom.action.request(prefix + "/starJob.json", {"taskJobId": id}, function() {
                 $.freedom.ui.table.refreshData();
+                $.freedom.modal.close(index);
             });
+
         });
     }
 
-    function pause(row) {
-        console.log(row)
-        $.freedom.modal.confirm("确定要暂停该任务吗?", function() {
+    function pause(id) {
+        $.freedom.modal.confirm("确定要暂停该任务吗?", function(index) {
             $.freedom.action.request(prefix + "/pauseJob.json", {"taskJobId": id}, function () {
                 $.freedom.ui.table.refreshData();
+                $.freedom.modal.close(index);
             });
         });
     }

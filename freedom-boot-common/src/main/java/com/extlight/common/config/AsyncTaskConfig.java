@@ -22,16 +22,13 @@ import java.util.concurrent.Executor;
 @EnableScheduling
 public class AsyncTaskConfig implements SchedulingConfigurer, AsyncConfigurer {
 
-	/**
-	 * 线程池线程数量
-	 */
-	private static final int CORE_POOL_SIZE = 20;
-
 	@Bean
 	public ThreadPoolTaskScheduler taskScheduler() {
 		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+		// 线程池线程数量
+		scheduler.setPoolSize(10);
+		scheduler.setThreadNamePrefix("freedom-boot-async-task");
 		scheduler.initialize();
-		scheduler.setPoolSize(CORE_POOL_SIZE);
 		return scheduler;
 	}
 

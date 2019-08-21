@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 @Table(name = "t_task_job")
 public class TaskJob extends BaseResponse<TaskJobVO> {
 
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键

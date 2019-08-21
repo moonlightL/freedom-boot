@@ -27,6 +27,8 @@ import java.time.LocalDateTime;
 @Table(name = "t_sys_user")
 public class SysUser extends BaseResponse<SysUserVO> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      *  id
      */

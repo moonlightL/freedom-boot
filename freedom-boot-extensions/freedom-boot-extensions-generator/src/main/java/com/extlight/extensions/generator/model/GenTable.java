@@ -23,6 +23,8 @@ import javax.persistence.Table;
 @Table(name = "information_schema.tables")
 public class GenTable extends BaseResponse<GenTableVO> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 库名
      */

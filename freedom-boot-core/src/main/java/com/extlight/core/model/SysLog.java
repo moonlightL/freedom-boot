@@ -28,6 +28,8 @@ import java.time.LocalDateTime;
 @Table(name = "t_sys_log")
 public class SysLog extends BaseResponse<SysLogVO> {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 主键
 	 */

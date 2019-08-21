@@ -35,16 +35,33 @@ import java.util.Properties;
 @ToString
 public class Server implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final Integer SIZE = 1024;
 
+	/**
+	 * 基本信息
+	 */
 	private Basic basic;
 
+	/**
+	 * cpu 信息
+	 */
 	private Cpu cpu;
 
+	/**
+	 * 硬盘信息
+	 */
 	private List<Hardware> hardwareList;
 
+	/**
+	 * 内存信息
+	 */
 	private Memory memory;
 
+	/**
+	 * jvm 信息
+	 */
 	private Jvm jvm;
 
 	public void collectInfo() {
