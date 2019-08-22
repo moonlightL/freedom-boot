@@ -42,7 +42,14 @@
                     <div id="terminal"></div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
             <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">操作结果</h3>
+                </div>
                 <div class="panel-body">
                     <div id="result"></div>
                 </div>
@@ -53,6 +60,8 @@
 <!--End page content-->
 <div th:include="common :: script"></div>
 <script th:src="@{/plugins/xterm/xterm.js}"></script>
+<script th:src="@{/plugins/crypto/crypto-js.js}"></script>
+<script th:src="@{/plugins/cryptoUtil.js}"></script>
 <script type="text/javascript" th:inline="javascript" >
     $(function() {
 
@@ -60,62 +69,80 @@
         terminalManager.term.open(document.getElementById('terminal'));
 
         $("#connect-btn").on("click", function () {
-            terminalManager.connect();
-            $(this).prop("disabled", true);
-            $("#disconnect-btn").prop("disabled", false);
+
+            var $hostname = $("#hostname").val();
+            var $username = $("#username").val();
+            var $password = $("#password").val();
+
+            if ($hostname == "" || $username == "" || $password == "") {
+                $.freedom.modal.msg("连接信息不能为空", 2);
+                return;
+            }
+
+            terminalManager.connect($hostname, $username, $password);
         });
 
         $("#disconnect-btn").on("click", function () {
             terminalManager.disconnect();
-            $(this).prop("disabled", true);
-            $("#connect-btn").prop("disabled", false);
         });
 
     });
 
     var terminalManager = {
-        websocket: null,
+        webSocket: null,
         term: null,
-        connect: function() {
+        connect: function(hostname, username, password) {
 
-            if (terminalManager.websocket != null) {
-                return;
+            if (terminalManager.webSocket != null) {
+                $.freedom.modal.msg("webSocket 已连接", 1);
+                return false;
             }
 
             var host = window.location.host;
+            var url = "ws://" + host + "/webSocketServer?hostname=" + hostname + "&username=" + username + "&password=" +  Crypto.AES.enc(password);
             if ('WebSocket' in window) {
-                terminalManager.websocket = new WebSocket("ws://" + host + "/webSocketServer/");
+                terminalManager.webSocket = new WebSocket(url);
             } else if ('MozWebSocket' in window) {
-                terminalManager.websocket = new MozWebSocket("ws://" + host + "/webSocketServer/");
+                terminalManager.webSocket = new MozWebSocket(url);
             }
 
-            terminalManager.websocket.onopen = function(evnt) {
+            terminalManager.webSocket.onopen = function(evnt) {
                 $("#result").html("连接服务器成功!<br/>")
 
                 terminalManager.term.on('data', function(data) {
-                    terminalManager.websocket.send(data);
+                    terminalManager.webSocket.send(data);
                 });
             };
 
-            terminalManager.websocket.onmessage = function(evnt) {
+            terminalManager.webSocket.onmessage = function(evnt) {
                 terminalManager.term.write(evnt.data);
             };
 
-            terminalManager.websocket.onerror = function(evnt) {
+            terminalManager.webSocket.onerror = function(evnt) {
+                terminalManager.webSocket = null;
                 $("#result").html($("#result").html() + "报错!<br/>")
+                $("#connect-btn").prop("disabled", false);
+                $("#disconnect-btn").prop("disabled", true);
             };
 
-            terminalManager.websocket.onclose = function(evnt) {
+            terminalManager.webSocket.onclose = function(evnt) {
+                terminalManager.webSocket = null;
                 $("#result").html($("#result").html() + "与服务器断开连接!<br/>");
+                $("#connect-btn").prop("disabled", false);
+                $("#disconnect-btn").prop("disabled", true);
             }
 
+            $("#connect-btn").prop("disabled", true);
+            $("#disconnect-btn").prop("disabled", false);
         },
         disconnect: function () {
-            if (terminalManager.websocket == null) {
+            if (terminalManager.webSocket == null) {
+                $.freedom.modal.msg("webSocket 连接已断开", 2);
                 return;
             }
-
-            terminalManager.websocket.close();
+            $("#connect-btn").prop("disabled", false);
+            $("#disconnect-btn").prop("disabled", true);
+            terminalManager.webSocket.close();
             terminalManager.term.reset();
         }
     }

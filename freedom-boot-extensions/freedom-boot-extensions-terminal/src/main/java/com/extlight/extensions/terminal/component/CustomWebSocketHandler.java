@@ -1,8 +1,9 @@
 package com.extlight.extensions.terminal.component;
 
+import com.extlight.common.utils.AesUtil;
 import com.extlight.extensions.terminal.model.SshClient;
-import com.extlight.extensions.terminal.web.config.SshConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.extlight.extensions.terminal.model.SshConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
@@ -18,14 +19,14 @@ import java.util.Arrays;
  * @Description: websocket 处理器
  * @DateTime: 2019/8/21 16:24
  */
+@Slf4j
 public class CustomWebSocketHandler extends TextWebSocketHandler {
 
-	@Autowired
-	private SshConfig sshConfig;
+	private static final String EXIT = "exit";
+
+	private static final String CHARSET = "UTF-8";
 
 	private SshClient sshClient;
-
-	private static final String EXIT = "exit";
 
 	/**
 	 * 建立连接
@@ -34,8 +35,19 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		super.afterConnectionEstablished(session);
 
-		this.sshClient = new SshClient(this.sshConfig.getHostname(), this.sshConfig.getUsername(), this.sshConfig.getPassword(), session);
-		this.sshClient.connect();
+		String hostname = (String) session.getAttributes().get("hostname");
+		String username = (String) session.getAttributes().get("username");
+		String encrypt = (String) session.getAttributes().get("password");
+		String password = AesUtil.decrypt(encrypt);
+
+		SshConfig sshConfig = new SshConfig(hostname, username, password);
+
+		this.sshClient = new SshClient(sshConfig.getHostname(), sshConfig.getUsername(), sshConfig.getPassword(), session);
+		boolean isSuccess = this.sshClient.connect();
+		if (!isSuccess) {
+			session.sendMessage(new TextMessage(new String("连接服务器失败，请核对连接信息")));
+			session.close();
+		}
 	}
 
 	/**
@@ -72,11 +84,11 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 				}
 
 				// 前端传递过来的命令，发送到目标服务器上
-				this.sshClient.sendCommand(new String(msg.asBytes(), "UTF-8"));
+				this.sshClient.sendCommand(new String(msg.asBytes(), CHARSET));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.sendMessage(new TextMessage("An error occured, websocket is closed."));
+			session.sendMessage(new TextMessage(new String("WebSocket 发生异常，中断连接")));
 			session.close();
 		}
 	}

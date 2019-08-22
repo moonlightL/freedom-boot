@@ -90,7 +90,7 @@ public class HomeController extends BaseController {
                 .forEach(i -> {
                     SysPermissionVO child = i.toVoModel();
                     SysPermissionVO parent = parentMap.get(child.getPid());
-                    if (!parent.getChildren().contains(child)) {
+                    if (parent != null && !parent.getChildren().contains(child)) {
                         parent.getChildren().add(child);
                     }
 

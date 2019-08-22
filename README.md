@@ -33,6 +33,7 @@ Freedom Boot 是一款基于 Spring Boot 2.0 + MySQL 开发的后台管理系统
 8.文件上传：提供文件管理功能
 9.文件配置：提供管理文件配置功能
 10.任务管理：提供动态添加和管理定时器任务功能
+11.终端管理：提供 SSH2 连接服务终端功能
 ```
 
 ## 项目结构
@@ -47,6 +48,7 @@ freedom-boot
 │  ├─freedom-boot-extensions-generator   -- 扩展模块-代码生成器
 │  ├─freedom-boot-extensions-monitor     -- 扩展模块-系统监控
 │  └─freedom-boot-extensions-task        -- 扩展模块-定时器任务
+│  └─freedom-boot-extensions-terminal    -- 扩展模块-终端管理
 └─freedom-boot-web                       -- 启动模块（管理总配置文件和启动类）
 ```
 
@@ -124,10 +126,13 @@ zTree | 多功能的“树”插件 | [前往](http://www.treejs.cn/v3/api.php)
 
 ![](http://images.extlight.com/freedom-boot-08.jpg)
 
+![](http://images.extlight.com/freedom-boot-09.jpg)
+
 
 ## 日志
 
 ```
 2019-08-13 正式开源
 2019-08-14 新增定时器任务模块
+2019-08-22 新增终端管理模块
 ```
