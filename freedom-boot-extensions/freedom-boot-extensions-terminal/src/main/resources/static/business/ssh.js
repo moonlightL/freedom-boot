@@ -1,10 +1,13 @@
 $(function() {
 
+    Terminal.applyAddon(fit);
+
     terminalManager.term = new Terminal({
         cols: 120,
         rows: 24,
         cursorBlink: true
     });
+
     terminalManager.term.open(document.getElementById('terminal'));
 
     $("#connect-btn").on("click", function () {
@@ -24,6 +27,11 @@ $(function() {
     $("#disconnect-btn").on("click", function () {
         terminalManager.disconnect();
     });
+
+    window.onresize = function() {
+        terminalManager.term.fit();
+        terminalManager.term.scrollToBottom();
+    };
 
 });
 
