@@ -20,6 +20,13 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
+        <!-- business -->
+        <dependency>
+            <groupId>com.extlight</groupId>
+            <artifactId>freedom-boot-business</artifactId>
+            <version>${freedom.boot.version}</version>
+        </dependency>
+
         <!-- 引入 extensions-generator -->
         <dependency>
             <groupId>com.extlight</groupId>
@@ -52,13 +59,6 @@
         <dependency>
             <groupId>com.extlight</groupId>
             <artifactId>freedom-boot-extensions-terminal</artifactId>
-            <version>${freedom.boot.version}</version>
-        </dependency>
-
-        <!--businessness  -->
-        <dependency>
-            <groupId>com.extlight</groupId>
-            <artifactId>freedom-boot-business</artifactId>
             <version>${freedom.boot.version}</version>
         </dependency>
 

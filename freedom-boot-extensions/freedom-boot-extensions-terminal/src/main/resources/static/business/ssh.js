@@ -1,6 +1,10 @@
 $(function() {
 
-    terminalManager.term = new Terminal();
+    terminalManager.term = new Terminal({
+        cols: 120,
+        rows: 24,
+        cursorBlink: true
+    });
     terminalManager.term.open(document.getElementById('terminal'));
 
     $("#connect-btn").on("click", function () {
@@ -28,7 +32,6 @@ var terminalManager = {
     term: null,
     bindStatus: false,
     connect: function(hostname, username, password) {
-
         if (terminalManager.webSocket != null) {
             $.freedom.modal.msg("webSocket 已连接", 1);
             return false;
@@ -74,8 +77,10 @@ var terminalManager = {
             $.freedom.modal.msg("webSocket 连接已断开");
             return;
         }
+
         $("#connect-btn").prop("disabled", false);
         $("#disconnect-btn").prop("disabled", true);
+
         terminalManager.webSocket.close();
         terminalManager.term.reset();
         terminalManager.webSocket = null;
