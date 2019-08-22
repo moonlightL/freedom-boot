@@ -55,7 +55,7 @@
             <version>${freedom.boot.version}</version>
         </dependency>
 
-        <!-- 引入 bussiness  -->
+        <!--businessness  -->
         <dependency>
             <groupId>com.extlight</groupId>
             <artifactId>freedom-boot-business</artifactId>

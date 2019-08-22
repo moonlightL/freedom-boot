@@ -40,9 +40,7 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 		String encrypt = (String) session.getAttributes().get("password");
 		String password = AesUtil.decrypt(encrypt);
 
-		SshConfig sshConfig = new SshConfig(hostname, username, password);
-
-		this.sshClient = new SshClient(sshConfig.getHostname(), sshConfig.getUsername(), sshConfig.getPassword(), session);
+		this.sshClient = new SshClient(new SshConfig(hostname, username, password), session);
 		boolean isSuccess = this.sshClient.connect();
 		if (!isSuccess) {
 			session.sendMessage(new TextMessage(new String("连接服务器失败，请核对连接信息")));

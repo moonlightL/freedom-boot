@@ -27,22 +27,12 @@ public class SshClient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主机名/ip
+	 * SSH 配置
 	 */
-	private String hostname;
+	private SshConfig sshConfig;
 
 	/**
-	 * 用户名
-	 */
-	private String username;
-
-	/**
-	 * 密码
-	 */
-	private String password;
-
-	/**
-	 * websocket 客户端
+	 * WebSocket 客户端
 	 */
 	private WebSocketSession webSocketSession;
 
@@ -52,7 +42,7 @@ public class SshClient implements Serializable {
 	private Connection connection;
 
 	/**
-	 *  ssh 连接会话
+	 *  SSH 连接会话
 	 */
 	private Session session;
 
@@ -66,12 +56,10 @@ public class SshClient implements Serializable {
 	 */
 	private OutputTask outputTask;
 
-	private ExecutorService executorService = Executors.newSingleThreadExecutor();
+	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-	public SshClient(String hostname, String username, String password, WebSocketSession webSocketSession) {
-		this.hostname = hostname;
-		this.username = username;
-		this.password = password;
+	public SshClient(SshConfig sshConfig, WebSocketSession webSocketSession) {
+		this.sshConfig = sshConfig;
 		this.webSocketSession = webSocketSession;
 	}
 
@@ -81,15 +69,15 @@ public class SshClient implements Serializable {
 	 */
 	public boolean connect() {
 		try {
-			this.connection = new Connection(this.hostname, 22);
+			this.connection = new Connection(this.sshConfig.getHostname(), 22);
 			// 连接
 			this.connection.connect();
 
 			// 认证
-			boolean isSuccess = this.connection.authenticateWithPassword(this.username, this.password);
+			boolean isSuccess = this.connection.authenticateWithPassword(this.sshConfig.getUsername(), this.sshConfig.getPassword());
 			if (isSuccess) {
 				this.session = this.connection.openSession();
-				this.session.requestPTY("xterm", 120, 30, 0, 0, null);
+				this.session.requestPTY("xterm", 240, 30, 0, 0, null);
 				// 启动 shell
 				this.session.startShell();
 
@@ -98,7 +86,7 @@ public class SshClient implements Serializable {
 
 				// 启动输出任务
 				this.outputTask = new OutputTask(this.session.getStdout(), this.webSocketSession);
-				this.executorService.submit(this.outputTask);
+				executorService.submit(this.outputTask);
 
 				return true;
 			}
@@ -131,16 +119,17 @@ public class SshClient implements Serializable {
 	 */
 	public void disconnect() {
 		try {
-			if (this.connection != null) {
-				this.connection.close();
+
+			if (this.outputTask != null) {
+				this.outputTask.stop();
 			}
 
 			if (this.session != null) {
 				this.session.close();
 			}
 
-			if (this.outputTask != null) {
-				this.outputTask.stop();
+			if (this.connection != null) {
+				this.connection.close();
 			}
 
 		} catch (Exception e) {
@@ -166,6 +155,7 @@ public class SshClient implements Serializable {
 		@Override
 		public void run() {
 			try {
+
 				while (!this.isStop && this.webSocketSession != null && this.webSocketSession.isOpen()) {
 					this.writeToWeb(this.in);
 				}
@@ -197,6 +187,7 @@ public class SshClient implements Serializable {
 					}
 
 					//写数据到服务器端
+					System.out.println(new String(sb.toString().getBytes("ISO-8859-1"), ENCODING));
 					this.webSocketSession.sendMessage(new TextMessage(new String(sb.toString().getBytes("ISO-8859-1"), ENCODING)));
 				}
 			} catch (IOException e) {

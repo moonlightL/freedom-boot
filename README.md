@@ -17,6 +17,7 @@ Freedom Boot 是一款基于 Spring Boot 2.0 + MySQL 开发的后台管理系统
     - 系统监控功能，方便用户查看和监控服务器相关信息
     - 文件管理功能，集成七牛云、OSS 对象管理工具
     - 任务管理功能，动态添加和管理定时器任务
+    - 终端管理功能，在浏览器中模拟终端访问服务器
 6.前端封装 freedom-core 工具，方便灵活易用，是不熟练前端技术的开发者的福音
 ```
 
@@ -47,7 +48,7 @@ freedom-boot
 │  ├─freedom-boot-extensions-file        -- 扩展模块-文件
 │  ├─freedom-boot-extensions-generator   -- 扩展模块-代码生成器
 │  ├─freedom-boot-extensions-monitor     -- 扩展模块-系统监控
-│  └─freedom-boot-extensions-task        -- 扩展模块-定时器任务
+│  ├─freedom-boot-extensions-task        -- 扩展模块-定时器任务
 │  └─freedom-boot-extensions-terminal    -- 扩展模块-终端管理
 └─freedom-boot-web                       -- 启动模块（管理总配置文件和启动类）
 ```
@@ -74,6 +75,7 @@ oshi 3.13.2| 搜集服务器信息 | [前往](https://github.com/oshi/oshi)
 EasyCaptcha 1.5.0 | 图形验证码 | [前往](https://github.com/whvcse/EasyCaptcha)
 ip2region 1.7.2| 最自由的ip地址查询库 | [前往](https://github.com/lionsoul2014/ip2region)
 quartz 2.3.1 | 作业调度框架 | [前往](http://www.quartz-scheduler.org/)
+ganymed-ssh2 | Java 版的 SSH2 工具 | [前往](https://github.com/northern-bites/ganymed-ssh2)
 
 ### 前端
 
@@ -89,8 +91,10 @@ BootstrapMenu| bootstrap 风格的右键菜单 | [前往](http://www.jq22.com/jq
 jquery-treegrid | 表格树工具 | [前往](http://maxazan.github.io/jquery-treegrid/)
 bootstrap-validator| 前端数据校验工具 | [前往](http://bootstrapvalidator.votintsev.ru/getting-started/)
 jquery-tab | 自定义的页面列表 Tab 插件 | [前往](https://github.com/moonlightL/jquery-tab)
-jsencrypt | 加密工具 | [前往](http://travistidwell.com/jsencrypt/)
+jsencrypt | RSA 加密工具 | [前往](http://travistidwell.com/jsencrypt/)
 zTree | 多功能的“树”插件 | [前往](http://www.treejs.cn/v3/api.php)
+crypto-js | 加解密工具 | [前往](https://github.com/brix/crypto-js)
+xterm | 模拟终端界面工具 | [前往](https://github.com/xtermjs/xterm.js)
 
 ## 安装
 
