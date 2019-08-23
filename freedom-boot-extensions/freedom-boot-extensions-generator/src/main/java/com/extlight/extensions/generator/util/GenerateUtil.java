@@ -67,6 +67,7 @@ public class GenerateUtil {
         TEMPLATE_LIST.add("templates/velocity/DTO.java.vm");
         TEMPLATE_LIST.add("templates/velocity/VO.java.vm");
         TEMPLATE_LIST.add("templates/velocity/ExceptionEnum.java.vm");
+        TEMPLATE_LIST.add("templates/velocity/Module.java.vm");
         TEMPLATE_LIST.add("templates/velocity/Mapper.java.vm");
         TEMPLATE_LIST.add("templates/velocity/Mapper.xml.vm");
         TEMPLATE_LIST.add("templates/velocity/Service.java.vm");
@@ -96,7 +97,7 @@ public class GenerateUtil {
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, String className, String packageName, String moduleName, String requestMapping) {
+    public static String getFileName(String template, String className, String packageName, String moduleName, String requestMapping, String moduleClassName) {
         String packagePath = "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
@@ -132,6 +133,10 @@ public class GenerateUtil {
 
         if (template.contains("ExceptionEnum.java.vm")) {
             return packagePath + "constant" + File.separator + className + "ExceptionEnum.java";
+        }
+
+        if (template.contains("Module.java.vm")) {
+            return packagePath + "component" + File.separator + moduleClassName + "Module.java";
         }
 
         String[] split = requestMapping.split("/");
@@ -245,6 +250,9 @@ public class GenerateUtil {
         map.put("permission", getPermission(tableVO.getTableName(), generatorParam.getTablePrefix()));
         String requestMapping = getRequestMapping(tableVO.getTableName(), generatorParam.getTablePrefix());
         map.put("requestMapping", requestMapping);
+        String moduleClassName = WordUtils.capitalizeFully(generatorParam.getModuleName());
+        map.put("moduleClassName", moduleClassName);
+        map.put("moduleCode", generatorParam.getModuleName().toUpperCase());
 
         VelocityContext context = new VelocityContext(map);
 
@@ -256,13 +264,12 @@ public class GenerateUtil {
                 Template tpl = Velocity.getTemplate(template, "UTF-8");
                 tpl.merge(context, sw);
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName(), requestMapping)));
+                zip.putNextEntry(new ZipEntry(getFileName(template, tableVO.getClassName(), generatorParam.getPackageName(), generatorParam.getModuleName(), requestMapping, moduleClassName)));
                 IOUtils.write(sw.toString(), zip, "UTF-8");
                 zip.closeEntry();
             } catch (IOException e) {
                 ExceptionUtil.throwEx(500, "渲染模板失败，表名：" + tableVO.getTableName());
             }
         }
-
     }
 }

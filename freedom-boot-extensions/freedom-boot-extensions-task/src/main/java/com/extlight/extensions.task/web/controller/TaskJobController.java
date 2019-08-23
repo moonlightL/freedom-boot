@@ -4,10 +4,10 @@ import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.extensions.task.component.TaskModule;
 import com.extlight.extensions.task.constant.TaskJobExceptionEnum;
 import com.extlight.extensions.task.model.TaskJob;
 import com.extlight.extensions.task.model.dto.TaskJobDTO;
@@ -111,7 +111,7 @@ public class TaskJobController extends BaseController {
 	@PostMapping("/save.json")
 	@RequiresPermissions("task:job:save")
 	@ResponseBody
-	@ActionLog(value = "新增", moduleName = ModuleEnum.TASK, actionType = ActionEnum.SAVE)
+	@ActionLog(value = "新增", module = TaskModule.class, actionType = ActionEnum.SAVE)
 	public Result save(@Validated(BaseRequest.Save.class) TaskJobDTO taskJobDTO) throws GlobalException {
 		TaskJob taskJob = taskJobDTO.toDoModel();
 		return this.taskJobService.save(taskJob) > 0 ? Result.success() : Result.fail();
@@ -120,7 +120,7 @@ public class TaskJobController extends BaseController {
 	@PostMapping("/remove.json")
 	@RequiresPermissions("task:job:remove")
 	@ResponseBody
-	@ActionLog(value = "删除", moduleName = ModuleEnum.TASK, actionType = ActionEnum.REMOVE)
+	@ActionLog(value = "删除", module = TaskModule.class, actionType = ActionEnum.REMOVE)
 	public Result remove(@RequestParam String idStr) throws GlobalException {
 		String[] idArr = idStr.split(",");
 		int num;
@@ -138,7 +138,7 @@ public class TaskJobController extends BaseController {
 	@PostMapping("/update.json")
 	@RequiresPermissions("task:job:update")
 	@ResponseBody
-	@ActionLog(value = "编辑", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	@ActionLog(value = "编辑", module = TaskModule.class, actionType = ActionEnum.UPDATE)
 	public Result update(@Validated(BaseRequest.Update.class) TaskJobDTO taskJobDTO) throws GlobalException {
 		TaskJob target = this.taskJobService.getById(taskJobDTO.getId());
 		if (target == null) {
@@ -160,7 +160,7 @@ public class TaskJobController extends BaseController {
 	@PostMapping("/starJob.json")
 	@RequiresPermissions("task:job:start")
 	@ResponseBody
-	@ActionLog(value = "启动定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	@ActionLog(value = "启动定时器", module = TaskModule.class, actionType = ActionEnum.UPDATE)
 	public Result starJob(Long taskJobId) throws GlobalException {
 		return this.taskJobService.starJob(taskJobId) > 0 ? Result.success() : Result.fail();
 	}
@@ -168,7 +168,7 @@ public class TaskJobController extends BaseController {
 	@PostMapping("/pauseJob.json")
 	@RequiresPermissions("task:job:pause")
 	@ResponseBody
-	@ActionLog(value = "暂停定时器", moduleName = ModuleEnum.TASK, actionType = ActionEnum.UPDATE)
+	@ActionLog(value = "暂停定时器", module = TaskModule.class, actionType = ActionEnum.UPDATE)
 	public Result pauseJob(Long taskJobId) throws GlobalException {
 		return this.taskJobService.pauseJob(taskJobId) > 0 ? Result.success() : Result.fail();
 	}

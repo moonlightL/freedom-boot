@@ -4,11 +4,11 @@ import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.PageUtil;
+import com.extlight.core.component.CoreModule;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.SysUser;
@@ -47,6 +47,9 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/core/user")
 public class SysUserController extends BaseController {
+
+    @Autowired
+    private CoreModule coreModule;
 
     @Autowired
     private SysUserService sysUserService;
@@ -129,7 +132,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("core:user:save")
     @ResponseBody
-    @ActionLog(value="新增用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value="新增用户", module = CoreModule.class, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysUserDTO sysUserDTO) throws GlobalException {
         SysUser sysUser = sysUserDTO.toDoModel();
         return this.sysUserService.save(sysUser) > 0 ? Result.success() : Result.fail();
@@ -138,7 +141,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/remove.json")
     @RequiresPermissions("core:user:remove")
     @ResponseBody
-    @ActionLog(value="删除用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除用户", module = CoreModule.class, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         int num;
@@ -158,7 +161,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/update.json")
     @RequiresPermissions("core:user:update")
     @ResponseBody
-    @ActionLog(value="编辑用户", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="编辑用户", module = CoreModule.class, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysUserDTO sysUserDTO) throws GlobalException {
         SysUser target = this.sysUserService.getById(sysUserDTO.getId());
         if (target == null) {
@@ -248,7 +251,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/assignRole.json")
     @RequiresPermissions("core:user:assign:role")
     @ResponseBody
-    @ActionLog(value="分配角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.OTHER)
+    @ActionLog(value="分配角色", module = CoreModule.class, actionType = ActionEnum.OTHER)
     public Result assignRole(Long userId, String roleIdStr) throws GlobalException {
         return this.sysUserService.asignRole(userId, roleIdStr) > 0 ? Result.success() : Result.fail();
     }
@@ -261,7 +264,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/updateAvatar.json")
     @ResponseBody
-    @ActionLog(value="修改个人头像", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="修改个人头像", module = CoreModule.class, actionType = ActionEnum.UPDATE)
     public Result updateAvatar(MultipartFile avatar) throws GlobalException {
         if (avatar == null || avatar.isEmpty()) {
             ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_UPLOAD_AVATAR_IS_EMPTY);
@@ -286,7 +289,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/updateBasicInfo.json")
     @ResponseBody
-    @ActionLog(value="修改个人资料", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="修改个人资料", module = CoreModule.class, actionType = ActionEnum.UPDATE)
     public Result updateBasicInfo(@Validated(BaseRequest.Update.class) SysUserDTO sysUserDTO) throws GlobalException {
         SysUserVO sysUserVO = (SysUserVO) SecurityUtils.getSubject().getPrincipal();
         SysUser sysUser = sysUserDTO.toDoModel();
@@ -303,7 +306,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/updatePassword.json")
     @ResponseBody
-    @ActionLog(value="修改密码", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.OTHER)
+    @ActionLog(value="修改密码", module = CoreModule.class, actionType = ActionEnum.OTHER)
     public Result updatePassword(String oldPassword, String newPassword) throws GlobalException {
 
         SysUserVO sysUserVO = (SysUserVO) SecurityUtils.getSubject().getPrincipal();

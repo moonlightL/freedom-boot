@@ -1,6 +1,8 @@
 package com.extlight.extensions.file.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.common.component.mybatis.CreateTime;
+import com.extlight.common.component.mybatis.UpdateTime;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -51,11 +53,13 @@ public class FileConfig extends BaseResponse {
 	/**
 	 * 创建时间
 	 */
+	@CreateTime
 	private LocalDateTime createTime;
 
 	/**
 	 * 修改时间
 	 */
+	@UpdateTime
 	private LocalDateTime updateTime;
 
 }

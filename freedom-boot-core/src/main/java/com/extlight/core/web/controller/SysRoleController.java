@@ -4,11 +4,11 @@ import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.JsonUtil;
+import com.extlight.core.component.CoreModule;
 import com.extlight.core.constant.SysRoleExceptionEnum;
 import com.extlight.core.model.SysRole;
 import com.extlight.core.model.dto.SysRoleDTO;
@@ -116,7 +116,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("core:role:save")
     @ResponseBody
-    @ActionLog(value="新增角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value="新增角色", module = CoreModule.class, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysRoleDTO sysRoleDTO) throws GlobalException {
         SysRole sysRole = sysRoleDTO.toDoModel();
         return this.sysRoleService.save(sysRole) > 0 ? Result.success() : Result.fail();
@@ -125,7 +125,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/remove.json")
     @RequiresPermissions("core:role:remove")
     @ResponseBody
-    @ActionLog(value="删除角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除角色", module = CoreModule.class, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         int num;
@@ -143,7 +143,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/update.json")
     @RequiresPermissions("core:role:update")
     @ResponseBody
-    @ActionLog(value="编辑角色", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="编辑角色", module = CoreModule.class, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysRoleDTO sysRoleDTO) throws GlobalException {
         SysRole target = this.sysRoleService.getById(sysRoleDTO.getId());
         if (target == null) {
@@ -197,7 +197,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("/assignPermission.json")
     @RequiresPermissions("core:role:assign:permission")
     @ResponseBody
-    @ActionLog(value="分配权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.OTHER)
+    @ActionLog(value="分配权限", module = CoreModule.class, actionType = ActionEnum.OTHER)
     public Result assignPermission(Long roleId, String permissionIdStr) {
         return this.sysRoleService.asignPermission(roleId, permissionIdStr) > 0 ? Result.success() : Result.fail();
     }

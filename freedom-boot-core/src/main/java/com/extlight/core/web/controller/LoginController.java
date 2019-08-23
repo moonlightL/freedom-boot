@@ -3,13 +3,13 @@ package com.extlight.core.web.controller;
 import com.extlight.common.base.BaseController;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IpUtil;
 import com.extlight.common.utils.RsaUtil;
+import com.extlight.core.component.CoreModule;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.dto.LoginDTO;
@@ -97,7 +97,7 @@ public class LoginController extends BaseController {
      */
     @PostMapping("/login.json")
     @ResponseBody
-    @ActionLog(value="用户登录", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.LOGIN)
+    @ActionLog(value="用户登录", module = CoreModule.class, actionType = ActionEnum.LOGIN)
     public Result login(@Validated LoginDTO loginDTO, HttpServletRequest request) throws GlobalException {
 
         HttpSession session = request.getSession();

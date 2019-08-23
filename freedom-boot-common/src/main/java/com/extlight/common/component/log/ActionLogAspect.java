@@ -44,16 +44,18 @@ public class ActionLogAspect {
     @Around("logPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
 
-        //执行方法
         Object result = point.proceed();
-
-        //保存日志
         this.saveActionLog(point);
 
         return result;
     }
 
-    private void saveActionLog(ProceedingJoinPoint joinPoint) {
+    /**
+     * 保存日志
+     * @param joinPoint
+     * @throws Exception
+     */
+    private void saveActionLog(ProceedingJoinPoint joinPoint) throws Exception {
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
         HttpServletRequest request = sra.getRequest();
@@ -68,9 +70,8 @@ public class ActionLogAspect {
 
         ActionLog syslog = method.getAnnotation(ActionLog.class);
         if (syslog != null) {
-
             SysLogEvent event = new SysLogEvent(this);
-            event.setModuleName(syslog.moduleName().getMessage())
+            event.setModuleName(syslog.module().newInstance().getName())
                  .setActionType(syslog.actionType().getCode())
                  .setMethodName(method.getDeclaringClass().getName() + "." + method.getName())
                  .setMethodParam(this.getParameter(parameterNames, args))

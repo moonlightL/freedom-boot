@@ -2,14 +2,14 @@ package com.extlight.extensions.file.web.controller;
 
 import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
-import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.component.file.FileManageEnum;
 import com.extlight.common.component.file.GlobalFileConstant;
+import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.extensions.file.component.FileModule;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.model.FileData;
 import com.extlight.extensions.file.model.dto.FileDataDTO;
@@ -84,7 +84,7 @@ public class FileDataController extends BaseController {
      */
     @GetMapping("/download/{id}.html")
     @RequiresPermissions("file:data:download")
-    @ActionLog(value = "文件下载", moduleName = ModuleEnum.FILE, actionType = ActionEnum.DOWNLOAD)
+    @ActionLog(value = "文件下载", module = FileModule.class, actionType = ActionEnum.DOWNLOAD)
     public void download(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         FileData target = this.fileDataService.getById(id);
         if (target == null) {
@@ -100,7 +100,7 @@ public class FileDataController extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("file:data:save")
     @ResponseBody
-    @ActionLog(value="文件上传", moduleName = ModuleEnum.FILE, actionType = ActionEnum.SAVE)
+    @ActionLog(value="文件上传", module = FileModule.class, actionType = ActionEnum.SAVE)
     public Result save(MultipartFile[] files) throws GlobalException {
         if (files.length == 0) {
             ExceptionUtil.throwEx(FileDataExceptionEnum.ERROR_FILE_NOT_EXIST);
@@ -125,7 +125,7 @@ public class FileDataController extends BaseController {
     @PostMapping("/remove.json")
     @RequiresPermissions("file:data:remove")
     @ResponseBody
-    @ActionLog(value="删除", moduleName = ModuleEnum.FILE, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除", module = FileModule.class, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         boolean flag;

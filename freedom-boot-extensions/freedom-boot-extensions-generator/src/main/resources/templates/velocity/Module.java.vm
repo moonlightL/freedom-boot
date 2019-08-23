@@ -1,0 +1,25 @@
+package ${packageName}.${moduleName}.component;
+
+import com.extlight.common.component.module.Module;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Author ${author}
+ * @ClassName: ${moduleClassName}Module
+ * @ProjectName: ${projectName}
+ * @Description: ${tableComment}模块
+ * @DateTime: ${dateTime}
+ */
+@Component
+public class ${moduleClassName}Module implements Module {
+
+	@Override
+	public String getCode() {
+		return "${moduleCode}";
+	}
+
+	@Override
+	public String getName() {
+		return "${tableComment}模块";
+	}
+}

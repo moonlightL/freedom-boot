@@ -3,9 +3,9 @@ package com.extlight.extensions.generator.web.controller;
 import com.extlight.common.base.BaseController;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
+import com.extlight.extensions.generator.component.GeneratorModule;
 import com.extlight.extensions.generator.model.dto.GenTableDTO;
 import com.extlight.extensions.generator.model.dto.GeneratorParam;
 import com.extlight.extensions.generator.model.vo.GenTableVO;
@@ -70,7 +70,7 @@ public class GeneratorController extends BaseController {
     }
 
     @GetMapping("/generate.html")
-    @ActionLog(value = "生成代码", moduleName = ModuleEnum.GENERATOR, actionType = ActionEnum.OTHER)
+    @ActionLog(value = "生成代码", module = GeneratorModule.class, actionType = ActionEnum.OTHER)
     public void generate(GeneratorParam generatorParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String[] tableNameArr = generatorParam.getTableName().split(",");
         byte[] data = this.genTableService.generateCode(tableNameArr, generatorParam);

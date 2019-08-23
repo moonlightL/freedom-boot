@@ -4,10 +4,10 @@ import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.log.ActionLog;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.core.component.CoreModule;
 import com.extlight.core.constant.SysPermissionExceptionEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.dto.SysPermissionDTO;
@@ -134,7 +134,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("core:permission:save")
     @ResponseBody
-    @ActionLog(value="新增权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value="新增权限", module = CoreModule.class, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
         SysPermission sysPermission = sysPermissionDTO.toDoModel();
         return this.sysPermissionService.save(sysPermission) > 0 ? Result.success() : Result.fail();
@@ -143,7 +143,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/remove.json")
     @RequiresPermissions("core:permission:remove")
     @ResponseBody
-    @ActionLog(value="删除权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除权限", module = CoreModule.class, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         int num;
@@ -161,7 +161,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/update.json")
     @RequiresPermissions("core:permission:update")
     @ResponseBody
-    @ActionLog(value="编辑权限", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="编辑权限", module = CoreModule.class, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) SysPermissionDTO sysPermissionDTO) throws GlobalException {
         SysPermission target = this.sysPermissionService.getById(sysPermissionDTO.getId());
         if (target == null) {

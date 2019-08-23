@@ -1,7 +1,7 @@
 package com.extlight.common.component.log;
 
+import com.extlight.common.component.module.Module;
 import com.extlight.common.constant.ActionEnum;
-import com.extlight.common.constant.ModuleEnum;
 
 import java.lang.annotation.*;
 
@@ -20,10 +20,10 @@ public @interface ActionLog {
     String value() default "";
 
     /**
-     * 模块名称
+     * 模块类型
      * @return
      */
-    ModuleEnum moduleName();
+    Class<? extends Module> module();
 
     /**
      * 操作类型

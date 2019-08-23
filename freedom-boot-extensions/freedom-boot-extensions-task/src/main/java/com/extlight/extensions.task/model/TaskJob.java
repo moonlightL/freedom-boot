@@ -1,6 +1,8 @@
 package com.extlight.extensions.task.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.common.component.mybatis.CreateTime;
+import com.extlight.common.component.mybatis.UpdateTime;
 import com.extlight.extensions.task.model.vo.TaskJobVO;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -77,11 +79,13 @@ public class TaskJob extends BaseResponse<TaskJobVO> {
 	/**
 	 * 创建时间
 	 */
+	@CreateTime
 	private LocalDateTime createTime;
 
 	/**
 	 * 修改时间
 	 */
+	@UpdateTime
 	private LocalDateTime updateTime;
 
 }

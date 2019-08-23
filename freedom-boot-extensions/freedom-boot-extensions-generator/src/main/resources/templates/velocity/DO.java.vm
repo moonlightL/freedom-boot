@@ -1,6 +1,9 @@
-package ${packageName}.${moduleName}.model;
+package
+
+import com.extlight.common.component.mybatis.CreateTime;${packageName}.${moduleName}.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.common.component.mybatis.UpdateTime;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -37,6 +40,10 @@ public class ${className} extends BaseResponse<${className}VO> {
 	 */
 	#if($column.columnName == $pk.columnName)
 	@Id
+	#elseif($column.attrName == "createTime")
+	@CreateTime
+	#elseif($column.attrName == "updateTime")
+	@UpdateTime
 	#end
 	private $column.attrType $column.attrName;
 #end
