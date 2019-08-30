@@ -9,10 +9,13 @@
         p.`name`,
         p.`code`,
         p.icon,
-        p.type,
+        p.resource_type,
+        p.business_type,
         p.pid,
         p.url,
-        p.common
+        p.common,
+        p.create_time,
+        p.update_time
       FROM
         t_sys_permission p
       INNER JOIN t_sys_role_permission rp ON p.id = rp.permission_id
@@ -28,10 +31,13 @@
         p.`name`,
         p.`code`,
         p.icon,
-        p.type,
+        p.resource_type,
+        p.business_type,
         p.pid,
         p.url,
-        p.common
+        p.common,
+        p.create_time,
+        p.update_time
     FROM
         t_sys_permission p
     INNER JOIN t_sys_role_permission rp ON p.id = rp.permission_id
@@ -56,7 +62,7 @@
                 url = #{url}
         ) a ON p.pid = a.id
         WHERE
-            p.type = 3
+            p.resource_type = 3
         AND p.common = 1
         AND p.state = 1
     </select>
@@ -66,24 +72,45 @@
         <result property="name" column="name"/>
         <result property="icon" column="icon"/>
         <result property="code" column="code"/>
+        <result property="resourceType" column="resource_type"/>
+        <result property="businessType" column="business_ype"/>
+        <result property="pid" column="pid"/>
+        <result property="url" column="url"/>
+        <result property="common" column="common"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
         <collection property="children" column="id" select="com.extlight.core.mapper.SysPermissionMapper.selectByPid">
             <id property="id" column="id"/>
             <result property="name" column="name"/>
             <result property="icon" column="icon"/>
             <result property="code" column="code"/>
+            <result property="resourceType" column="resource_type"/>
+            <result property="businessType" column="business_ype"/>
+            <result property="pid" column="pid"/>
+            <result property="url" column="url"/>
+            <result property="common" column="common"/>
+            <result property="createTime" column="create_time"/>
+            <result property="updateTime" column="update_time"/>
         </collection>
     </resultMap>
 
     <select id="selectHierarchyPermissionList" resultMap="permissionMap">
         SELECT
             p.id,
-            p.name,
+            p.`name`,
+            p.`code`,
             p.icon,
-            p.code
+            p.resource_type,
+            p.business_type,
+            p.pid,
+            p.url,
+            p.common,
+            p.create_time,
+            p.update_time
         FROM
             t_sys_permission p
         WHERE
-            p.type = 1
+            p.resource_type = 1
         AND p.state = 1
         ORDER BY p.sort
     </select>
@@ -92,9 +119,16 @@
     <select id="selectByPid" parameterType="java.lang.Long" resultType="com.extlight.core.model.vo.SysPermissionVO">
         SELECT
             p.id,
-            p.name,
+            p.`name`,
+            p.`code`,
             p.icon,
-            p.code
+            p.resource_type,
+            p.business_type,
+            p.pid,
+            p.url,
+            p.common,
+            p.create_time,
+            p.update_time
         FROM
             t_sys_permission p
         WHERE

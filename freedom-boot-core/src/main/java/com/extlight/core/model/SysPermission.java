@@ -51,9 +51,14 @@ public class SysPermission extends BaseResponse<SysPermissionVO> {
     private String url;
 
     /**
-     * 类型 1：模块 2：菜单 3：按钮
+     * 资源类型 参考：PermissionEnum
      */
-    private Integer type;
+    private Integer resourceType;
+
+    /**
+     * 业务类型 1：核心 2：扩展 3：业务
+     */
+    private Integer businessType;
 
     /**
      * 权限编码

@@ -4,13 +4,13 @@ package com.extlight.common.component.module;
  * @Author MoonlightL
  * @Title: Module
  * @ProjectName: freedom-boot
- * @Description:
+ * @Description: 模块
  * @DateTime: 2019/8/23 10:33
  */
 public interface Module {
 
 	/**
-	 * 模块代号
+	 * 模块编码
 	 * @return
 	 */
 	String getCode();

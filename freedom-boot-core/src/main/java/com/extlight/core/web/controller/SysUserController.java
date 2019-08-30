@@ -49,9 +49,6 @@ import java.util.stream.Collectors;
 public class SysUserController extends BaseController {
 
     @Autowired
-    private CoreModule coreModule;
-
-    @Autowired
     private SysUserService sysUserService;
 
     @Autowired

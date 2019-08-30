@@ -84,8 +84,8 @@ public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseSer
     }
 
     @Override
-    public PageInfo<T> pageAll() throws GlobalException {
-        List<T> data = this.listAll();
+    public PageInfo<T> pageAll(BaseRequest params) throws GlobalException {
+        List<T> data = this.list(params);
         Page<T> page = new Page<>(1, data.size(), false);
         page.addAll(data);
         page.setTotal(this.count(null));

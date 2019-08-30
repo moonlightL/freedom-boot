@@ -14,6 +14,8 @@ import com.extlight.core.model.dto.SysPermissionDTO;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.TreeNode;
 import com.extlight.core.service.SysPermissionService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,12 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
         Example example = new Example(SysPermission.class);
         if (params != null) {
             Example.Criteria criteria = example.createCriteria();
+
             SysPermissionDTO sysPermissionDTO = (SysPermissionDTO) params;
+
+            if (sysPermissionDTO.getPid() != null) {
+                criteria.andEqualTo("pid", sysPermissionDTO.getPid());
+            }
         }
 
         return example;
@@ -58,7 +65,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     @Transactional(rollbackFor = GlobalException.class)
     public int save(SysPermission sysPermission) throws GlobalException {
-        if (!sysPermission.getType().equals(PermissionEnum.MODULE.getCode())) {
+        if (!sysPermission.getResourceType().equals(PermissionEnum.MODULE.getCode())) {
             if (sysPermission.getPid() == null || sysPermission.getPid() == 0) {
                 ExceptionUtil.throwEx(GlobalExceptionEnum.ERROR_PARAM);
             }
@@ -78,6 +85,15 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     @Transactional(rollbackFor = GlobalException.class)
     public int remove(Long id) throws GlobalException {
+        SysPermission sysPermission = super.getById(id);
+        if (sysPermission == null) {
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+        }
+
+        if (!sysPermission.getBusinessType().equals(3)) {
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_CANNOT_REMOVE);
+        }
+
         int result = super.remove(id);
         return result;
     }
@@ -85,7 +101,20 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     @Transactional(rollbackFor = GlobalException.class)
     public int removeBatch(List<Long> idList) throws GlobalException {
-        int result = super.removeBatch(idList);
+
+        List<Long> data = new ArrayList<>(idList.size());
+        for (Long permissionId : idList) {
+            SysPermission sysPermission = super.getById(permissionId);
+            if (sysPermission != null && sysPermission.getBusinessType().equals(3)) {
+                data.add(permissionId);
+            }
+        }
+
+        if (data.isEmpty()) {
+            return 0;
+        }
+        
+        int result = super.removeBatch(data);
         return result;
     }
 
@@ -95,6 +124,17 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     public int update(SysPermission sysPermission) throws GlobalException {
         int result = super.update(sysPermission);
         return result;
+    }
+
+
+    @Override
+    public PageInfo<SysPermission> pageAll(BaseRequest params) throws GlobalException {
+        SysPermissionDTO sysPermissionDTO = (SysPermissionDTO) params;
+        if (sysPermissionDTO.getPid() == null) {
+            return super.pageAll(null);
+        }
+
+        return this.getPermissionListByModuleId(sysPermissionDTO);
     }
 
     @Override
@@ -135,5 +175,40 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     public List<SysPermission> findCommonButtonList(String url) throws GlobalException {
         return this.sysPermissionMapper.selectCommonButtonList(url);
+    }
+
+    private PageInfo<SysPermission> getPermissionListByModuleId(SysPermissionDTO sysPermissionDTO) throws GlobalException {
+
+        SysPermission module = super.getById(sysPermissionDTO.getPid());
+        if (module == null) {
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+        }
+
+        if (!module.getResourceType().equals(PermissionEnum.MODULE.getCode())) {
+            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_MODULE_TYPE);
+        }
+
+        // 获取菜单列表
+        List<SysPermission> list = super.list(sysPermissionDTO);
+        List<SysPermission> permissionList = new ArrayList<>();
+        permissionList.add(module);
+
+        list.forEach(i -> {
+            permissionList.add(i);
+            // 获取按钮列表
+            List<SysPermissionVO> btnList = sysPermissionMapper.selectByPid(i.getId());
+            if (!btnList.isEmpty()) {
+                btnList.forEach(j -> {
+                    SysPermission btn = new SysPermission();
+                    BeanUtils.copyProperties(j, btn);
+                    permissionList.add(btn);
+                });
+            }
+        });
+
+        Page<SysPermission> page = new Page<>(1, permissionList.size(), false);
+        page.addAll(permissionList);
+        page.setTotal(permissionList.size());
+        return new PageInfo<>(page);
     }
 }

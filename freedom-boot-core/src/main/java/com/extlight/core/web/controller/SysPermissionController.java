@@ -175,8 +175,8 @@ public class SysPermissionController extends BaseController {
     @GetMapping("/list.json")
     @RequiresPermissions("core:permission:listUI")
     @ResponseBody
-    public Result list() throws GlobalException {
-        PageInfo<SysPermission> pageInfo = this.sysPermissionService.pageAll();
+    public Result list(SysPermissionDTO sysPermissionDTO) throws GlobalException {
+        PageInfo<SysPermission> pageInfo = this.sysPermissionService.pageAll(sysPermissionDTO);
         return Result.success(pageInfo);
     }
 

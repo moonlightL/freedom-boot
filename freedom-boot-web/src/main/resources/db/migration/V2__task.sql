@@ -173,10 +173,10 @@ CREATE INDEX IDX_QRTZ_FT_JG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,JOB_GROUP);
 CREATE INDEX IDX_QRTZ_FT_T_G ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
 CREATE INDEX IDX_QRTZ_FT_TG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_GROUP);
 
-INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `type`, `code`, `pid`, `state`, `sort`, `common`) VALUES
-  (33, '任务模块', 'fa fa-clock-o', '', 1, '', 0, 1, 5, 1),
-	(34, '任务列表', 'fa fa-task', '/task/job/listUI.html', 2, 'task:job:listUI', 33, 1, 1, 1),
-	(35, '新增', 'fa fa-plus-circle', '', 3, 'task:job:save', 34, 1, 1, 1),
-	(36, '编辑', 'fa fa-edit', '', 3, 'task:job:update', 34, 1, 2, 1),
-	(37, '删除', 'fa fa-trash', '', 3, 'task:job:remove', 34, 1, 3, 1),
-	(38, '查询', 'fa fa-search', '', 3, 'task:job:query', 34, 1, 4, 1);
+INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`, `resource_type`, `business_type`, `code`, `pid`, `state`, `sort`, `common`, `create_time`, `update_time`) VALUES
+  (33, '任务模块', 'fa fa-clock-o', '', 1, 2, '', 0, 1, 5, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47'),
+	(34, '任务列表', 'fa fa-task', '/task/job/listUI.html', 2, 2, 'task:job:listUI', 33, 1, 1, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47'),
+	(35, '新增', 'fa fa-plus-circle', '', 3, 2, 'task:job:save', 34, 1, 1, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47'),
+	(36, '编辑', 'fa fa-edit', '', 3, 2, 'task:job:update', 34, 1, 2, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47'),
+	(37, '删除', 'fa fa-trash', '', 3, 2, 'task:job:remove', 34, 1, 3, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47'),
+	(38, '查询', 'fa fa-search', '', 3, 2, 'task:job:query', 34, 1, 4, 1, '2019-08-26 10:16:47', '2019-08-26 10:16:47');

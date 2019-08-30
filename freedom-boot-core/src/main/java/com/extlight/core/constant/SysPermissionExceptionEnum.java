@@ -13,7 +13,8 @@ public enum SysPermissionExceptionEnum implements GlobalExceptionMap {
 
     /*  菜单相关： 3000~3999   */
     ERROR_PERMISSION_NOT_EXIST(3001, "权限不存在"),
-
+    ERROR_PERMISSION_CANNOT_REMOVE(3002, "该权限不能删除"),
+    ERROR_PERMISSION_NOT_MODULE_TYPE(3003, "非模块类型 ID")
     ;
 
     private int code;

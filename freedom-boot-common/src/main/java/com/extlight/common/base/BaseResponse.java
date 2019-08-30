@@ -1,5 +1,6 @@
 package com.extlight.common.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -25,6 +26,7 @@ import java.lang.reflect.Type;
 public class BaseResponse<V> implements Serializable {
 
     @Transient
+    @JsonIgnore
     private Class<V> voClass;
 
     public BaseResponse() {

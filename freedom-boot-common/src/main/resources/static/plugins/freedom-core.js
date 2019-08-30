@@ -6,7 +6,6 @@
              */
             ui: {
                 table: {
-                    instance: null,
                     options: {
                         id: "listTable", // table id
                         baseUrl: "",
@@ -16,10 +15,104 @@
                         listUrl: "list.json", // 列表数据地址
                         deleteUrl: "remove.json", // 删除地址
                         queryFormId: "queryForm", // 搜索框表单 id
-                        treeGrid: false,
-                        treeGridState: "close", // 节点展开状态 open/close
                         pagination: true, // 是否分页
-                        fixedNumber: 7
+                        toolbar: "#toolbar",
+                        type: "table", // 类型 table/tree-table
+                        expandColumn: 1,
+                        parentId: ""
+                    },
+                    init: function(options) {
+                        $.extend($.freedom.ui.table.options, options || {});
+                        var $table = $("#" + $.freedom.ui.table.options.id);
+                        if ($.freedom.ui.table.options.type == "table") {
+                            $table.bootstrapTable('destroy').bootstrapTable({
+                                url: $.freedom.ui.table.getListUrl(),
+                                columns: options.columns,
+                                height: $(window.parent).height() - 320,
+                                idField : 'id',
+                                fixedColumns: true,
+                                fixedNumber: $.freedom.ui.table.options.fixedNumber,
+                                toolbar: $.freedom.ui.table.options.toolbar,
+                                detailView : false,
+                                cache: false,
+                                minimumCountColumns : 2,
+                                clickToSelect : true,
+                                pagination: $.freedom.ui.table.options.pagination,
+                                sidePagination : 'server',
+                                paginationLoop : true,
+                                silentSort : false,
+                                smartDisplay : false,
+                                escape : true,
+                                maintainSelected : true,
+                                showRefresh: true,
+                                showExport: true,
+                                showFooter: true,
+                                showToggle: false, // 切换视图
+                                showFullscreen: false,
+                                showColumns: true,
+                                pageList: [10, 25, 50, 100],
+                                queryParams: function(params) {
+                                    return {
+                                        pageNum: (params.offset / params.limit + 1) || 1, // 当前页
+                                        pageSize: params.limit || 10,    // 页面大小
+                                        searchData: params.searchData, // 查询内容
+                                        sortName: params.sort,     // 排序字段名
+                                        sortOrder: params.order,    // 排序方式 asc/desc
+                                        search: params.search
+                                    };
+                                },
+                                responseHandler : function(resp) {
+                                    if (resp.success) {
+                                        return {
+                                            "total" : resp.data.total || 0, // 总页数
+                                            "rows" : resp.data.list || [] // 数据
+                                        };
+                                    } else {
+                                        return {
+                                            "total" : 0, // 总页数
+                                            "rows" : [] // 数据
+                                        };
+                                    }
+                                },
+                                detailFormatter: function(index, row) {
+                                    var html = [];
+                                    $.each(row, function(key, value) {
+                                        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+                                    });
+                                    return html.join('');
+                                },
+                                onLoadSuccess: function(data) {
+                                    // 控制按鈕失效状态
+                                    $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+                                        $(".freedom-edit, .freedom-delete").each(function(index,domEle) {
+                                            $(domEle).prop('disabled', !$table.bootstrapTable('getSelections').length);
+                                        });
+                                    });
+                                    return false;
+                                }
+                            });
+                        } else {
+                            $table.bootstrapTreeTable('destroy').bootstrapTreeTable({
+                                url: $.freedom.ui.table.getListUrl(),
+                                toolbar: $.freedom.ui.table.options.toolbar,
+                                expandColumn: $.freedom.ui.table.options.expandColumn,
+                                columns: $.freedom.ui.table.options.columns,
+                                height: $(window.parent).height() - 320,
+                                parentId: $.freedom.ui.table.options.parentId,
+                                responseHandler : function(resp) {
+                                    return resp.success ? resp.data.list : [];
+                                },
+                                onClickRow: function(data) {
+                                    // 控制按鈕失效状态
+                                    $(".freedom-edit, .freedom-delete").each(function(index,domEle) {
+                                        $(domEle).prop('disabled', false);
+                                    });
+                                }
+                            });
+                        }
+
+                        // 绑定工具栏按钮事件
+                        $.freedom.action.bindEvent();
                     },
                     getListUrl: function() {
                         return $.freedom.ui.table.formatUrl($.freedom.ui.table.options.listUrl);
@@ -39,91 +132,26 @@
                     formatUrl: function(url) {
                         return $.freedom.ui.table.options.baseUrl + "/" + url;
                     },
-                    init: function(options) {
-                        $.extend($.freedom.ui.table.options, options || {});
-                        var $table = $("#" + $.freedom.ui.table.options.id);
-                        $table.bootstrapTable('destroy').bootstrapTable({
-                            url: $.freedom.ui.table.getListUrl(),
-                            columns: options.columns,
-                            idField : 'id',
-                            parentIdField: options.parentIdField, // 指定父id列
-                            treeShowField: options.treeShowField, // 在哪一列展开树形
-                            fixedColumns: true,
-                            fixedNumber: $.freedom.ui.table.options.fixedNumber,
-                            height: $(window.parent).height() - 320,
-                            detailView : false,
-                            cache: false,
-                            minimumCountColumns : 2,
-                            clickToSelect : true,
-                            pagination: $.freedom.ui.table.options.pagination,
-                            sidePagination : 'server',
-                            paginationLoop : true,
-                            silentSort : false,
-                            smartDisplay : false,
-                            escape : true,
-                            maintainSelected : true,
-                            showRefresh: true,
-                            showExport: true,
-                            showFooter: true,
-                            showToggle: false, // 切换视图
-                            showFullscreen: false,
-                            showColumns: true,
-                            pageList: [10, 25, 50, 100],
-                            queryParams: function(params) {
-                                return {
-                                    pageNum: (params.offset / params.limit + 1) || 1, // 当前页
-                                    pageSize: params.limit || 10,    // 页面大小
-                                    searchData: params.searchData, // 查询内容
-                                    sortName: params.sort,     // 排序字段名
-                                    sortOrder: params.order,    // 排序方式 asc/desc
-                                    search: params.search
-                                };
-                            },
-                            responseHandler : function(resp) {
-                                if (resp.success) {
-                                    return {
-                                        "total" : resp.data.total || 0, // 总页数
-                                        "rows" : resp.data.list || [] // 数据
-                                    };
-                                } else {
-                                    return {
-                                        "total" : 0, // 总页数
-                                        "rows" : [] // 数据
-                                    };
-                                }
-                            },
-                            detailFormatter: function(index, row) {
-                                var html = [];
-                                $.each(row, function(key, value) {
-                                    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-                                });
-                                return html.join('');
-                            },
-                            onLoadSuccess: function(data) {
-
-                            },
-                            onResetView: function() {
-                                if ($.freedom.ui.table.options.treeGrid) {
-                                    var state = ($.freedom.ui.table.options.treeGridState == "close" ? "collapsed" : "expanded");
-                                    $table.treegrid({
-                                        treeColumn: 1,
-                                        initialState: state,
-                                        onChange: function() {
-                                            $table.bootstrapTable('resetWidth')
-                                        }
-                                    });
-                                }
-                            }
-                        });
-
-                        // 绑定工具栏按钮事件
-                        $.freedom.action.bindEvent();
+                    getSelections: function() {
+                        if ($.freedom.ui.table.options.type == "table") {
+                            return $("#" + $.freedom.ui.table.options.id).bootstrapTable('getSelections');
+                        } else if ($.freedom.ui.table.options.type == "tree-table") {
+                            return $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable('getSelections');
+                        }
                     },
                     refreshData: function() {
-                        $("#" + $.freedom.ui.table.options.id).bootstrapTable('refresh');
+                        if ($.freedom.ui.table.options.type == "table") {
+                            $("#" + $.freedom.ui.table.options.id).bootstrapTable('refresh');
+                        } else if ($.freedom.ui.table.options.type == "tree-table") {
+                            $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable('refresh');
+                        }
                     },
                     refreshOption: function(options) {
-                        $("#" + $.freedom.ui.table.options.id).bootstrapTable('refreshOptions', options);
+                        if ($.freedom.ui.table.options.type == "table") {
+                            $("#" + $.freedom.ui.table.options.id).bootstrapTable('refreshOptions', options);
+                        } else if ($.freedom.ui.table.options.type == "tree-table") {
+                            $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable('refreshOptions', options);
+                        }
                     }
                 },
                 tree: {
@@ -157,8 +185,7 @@
              */
             action: {
                 bindEvent: function() {
-                    var options = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getOptions");
-                    $(options.toolbar).on("click", function(e) {
+                    $($.freedom.ui.table.options.toolbar).on("click", function(e) {
                         var $target = $(e.target);
                         if ($target.hasClass("freedom-add")) {
                             $.freedom.action.showAddUI();
@@ -169,14 +196,6 @@
                         } else if ($target.hasClass("freedom-query")) {
                             $.freedom.action.query();
                         }
-                    });
-
-                    // 控制按鈕失效状态
-                    var $table = $("#" + $.freedom.ui.table.options.id);
-                    $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-                        $(".freedom-edit, .freedom-delete").each(function(index,domEle) {
-                            $(domEle).prop('disabled', !$table.bootstrapTable('getSelections').length);
-                        });
                     });
                 },
                 showAddUI: function() {
@@ -193,7 +212,7 @@
                         return;
                     }
 
-                    var selections = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getSelections");
+                    var selections = $.freedom.ui.table.getSelections();
                     var rowNum = selections.length;
                     if (rowNum == 0 || rowNum > 1) {
                         $.freedom.modal.msg("请选择一条记录进行编辑操作");
@@ -240,7 +259,7 @@
                     }
                     var idArr = [];
                     if (!id) {
-                        var selections = $("#" + $.freedom.ui.table.options.id).bootstrapTable("getSelections");
+                        var selections = $.freedom.ui.table.getSelections();
                         var rowNum = selections.length;
                         if (rowNum == 0) {
                             $.freedom.modal.msg("请选择记录进行删除操作");

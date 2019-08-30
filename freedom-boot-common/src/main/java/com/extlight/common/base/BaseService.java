@@ -76,7 +76,7 @@ public interface BaseService<T extends BaseResponse> {
      * @return
      * @throws GlobalException
      */
-    PageInfo<T> pageAll() throws GlobalException;
+    PageInfo<T> pageAll(BaseRequest params) throws GlobalException;
 
     /**
      * 获取分页数据

@@ -8,7 +8,42 @@
 <!--Page content-->
 <div id="page-content" class=" animated fadeIn">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-2">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">模块列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group bg-trans pad-btm bord-btm" id="moduleList">
+                        <a href="#" class="list-group-item text-semibold text-main" data-id="1">
+                            <span class="badge badge-success pull-right">已加载</span>
+                            <span><i class="fa fa-cogs"></i> 系统模块</span>
+                        </a>
+                        <a href="#" class="list-group-item text-semibold" data-id="20">
+                            <span class="badge badge-danger pull-right">未加载</span>
+                            <span><i class="fa fa-code"></i> 生成器模块</span>
+                        </a>
+                        <a href="#" class="list-group-item text-semibold" data-id="22">
+                            <span class="badge badge-danger pull-right">未加载</span>
+                            <span><i class="fa fa-eye"></i> 监控模块</span>
+                        </a>
+                        <a href="#" class="list-group-item text-semibold" data-id="25">
+                            <span class="badge badge-danger pull-right">未加载</span>
+                            <span><i class="fa fa-file"></i> 文件模块</span>
+                        </a>
+                        <a href="#" class="list-group-item text-semibold" data-id="33">
+                            <span class="badge badge-danger pull-right">未加载</span>
+                            <span><i class="fa fa-clock-o"></i> 任务模块</span>
+                        </a>
+                        <a href="#" class="list-group-item text-semibold" data-id="39">
+                            <span class="badge badge-danger pull-right">未加载</span>
+                            <span><i class="fa fa-dashboard"></i> 终端模块</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10">
             <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">权限列表</h3>
@@ -22,31 +57,12 @@
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'remove')}" class="btn btn-danger freedom-delete" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                  </span>
-                                <button id="oc-btn" class="btn btn-success"><i class=""></i> 开展/折叠</button>
+                                <button id="oc-btn" class="btn btn-success"><i class="fa fa-folder-open-o"></i> 开展/折叠</button>
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="listTable"
-                               data-toolbar="#toolbar"
-                               data-minimum-count-columns="2"
-                               data-classes="table table-hover table-borderless"
-                               data-sort-order="asc">
-                            <thead>
-                                <tr>
-                                    <th data-align="" data-radio="true"></th>
-                                    <th data-align="" data-field="name">名称</th>
-                                    <th data-align="center" data-field="icon">图标</th>
-                                    <th data-align="center" data-field="url">地址</th>
-                                    <th data-align="center" data-field="type" data-formatter="typeFormatter">类型</th>
-                                    <th data-align="center" data-field="code">权限编码</th>
-                                    <th data-align="center" data-field="state" data-formatter="stateFormatter">状态</th>
-                                    <th data-align="center" data-field="createTime">创建时间</th>
-                                    <th data-align="center" data-field="updateTime">修改时间</th>
-                                    <th data-align="center" data-formatter="actionFormatter">操作</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <table id="listTable"></table>
                     </div>
                 </div>
 
@@ -57,46 +73,6 @@
 <!--End page content-->
 <div th:include="common :: script"></div>
 <script type="text/javascript" th:inline="javascript" >
-
-    function typeFormatter(value, row) {
-        var labelColor;
-        var info;
-        if (value == "1") {
-            info = "模块";
-            labelColor = "primary";
-        } else if(value == "2"){
-            info = "菜单";
-            labelColor = "success";
-        }else if(value == "3"){
-            info = "按钮";
-            labelColor = "warning";
-        }
-        return '<div class="label label-table label-'+ labelColor+'"> ' + info + '</div>';
-    }
-
-    function stateFormatter(value, row) {
-        var labelColor;
-        var info;
-        if (value == "0") {
-            info = "禁用";
-            labelColor = "danger";
-        } else if(value == "1"){
-            info = "正常";
-            labelColor = "success";
-        }
-        return '<div class="label label-table label-'+ labelColor+'"> ' + info + '</div>';
-    }
-
-    function actionFormatter(value, row) {
-        var btnArr = [];
-        var permissions = [[${permissions}]];
-
-        if (permissions.indexOf("core:permission:remove") > -1) {
-            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
-        }
-
-        return btnArr.join('');
-    }
 
     $(function() {
         /**
@@ -115,18 +91,110 @@
         var prefix = [[${prefix}]];
         $.freedom.ui.table.init({
             baseUrl: prefix,
-            parentIdField: "pid", // 指定父id列
-            treeShowField: "name", // 在哪一列展开树形
-            treeGrid: true,     // 表格树
-            pagination: false  // 分页
+            type: "tree-table",
+            parentId: "pid",
+            expandColumn : 1,
+            columns: [
+                {
+                    radio: true
+                },
+                {
+                  title: "名称",
+                  field: "name"
+                },
+                {
+                    title: "图标",
+                    field: "icon"
+                },
+                {
+                    title: "请求地址",
+                    field: "url"
+                },
+                {
+                    title: "类型",
+                    field: "resourceType",
+                    formatter: function(value,item, index) {
+                        var labelColor;
+                        var info;
+                        if (value == "1") {
+                            info = "模块";
+                            labelColor = "primary";
+                        } else if(value == "2"){
+                            info = "菜单";
+                            labelColor = "success";
+                        }else if(value == "3"){
+                            info = "按钮";
+                            labelColor = "warning";
+                        }
+                        return '<div class="label label-table label-'+ labelColor+'"> ' + info + '</div>';
+                    }
+                },
+                {
+                    title: "权限编码",
+                    field: "code"
+                },
+                {
+                    title: "状态",
+                    field: "state",
+                    formatter: function (value,item, index) {
+                        var labelColor;
+                        var info;
+                        if (value == "0") {
+                            info = "禁用";
+                            labelColor = "danger";
+                        } else if(value == "1"){
+                            info = "正常";
+                            labelColor = "success";
+                        }
+                        return '<div class="label label-table label-'+ labelColor+'"> ' + info + '</div>';
+                    }
+                },
+                {
+                    title: "创建时间",
+                    field: "createTime"
+                },
+                {
+                    title: "修改时间",
+                    field: "createTime"
+                },
+                {
+                    title: "操作",
+                    formatter: function(value, row) {
+                        var btnArr = [];
+                        var permissions = [[${permissions}]];
+
+                        if (permissions.indexOf("core:permission:remove") > -1) {
+                            btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
+                        }
+
+                        return btnArr.join('');
+                    }
+                }
+            ]
         });
 
-        var state = ($.freedom.ui.table.options.treeGridState == "close");
+        var state = false;
         $("#oc-btn").on("click", function () {
-            var action = (state ? "expandAll"  : "collapseAll");
-            $("#" + $.freedom.ui.table.options.id).treegrid(action);
+            if (state) {
+                $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable("expandAll");
+            } else {
+                $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable("collapseAll");
+            }
             state = !state;
         });
+
+        $("#moduleList").find("a").on("click", function () {
+
+            $(this).siblings().removeClass("active");
+            $(this).addClass("active");
+
+            var moduleId = $(this).data("id");
+            var options =  $("#" + $.freedom.ui.table.options.id).bootstrapTreeTable('getOptions');
+            options.queryParams = {pid: moduleId};
+
+            $.freedom.ui.table.refreshOption(options);
+        });
+
     });
 
 </script>

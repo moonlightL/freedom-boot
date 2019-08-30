@@ -41,4 +41,11 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      */
     List<SysPermissionVO> selectHierarchyPermissionList();
+
+    /**
+     * 获取指定 pid 下的权限列表
+     * @param id
+     * @return
+     */
+    List<SysPermissionVO> selectByPid(Long id);
 }

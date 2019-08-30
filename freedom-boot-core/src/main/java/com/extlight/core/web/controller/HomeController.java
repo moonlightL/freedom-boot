@@ -76,7 +76,7 @@ public class HomeController extends BaseController {
         // 过滤出父权限
         Map<Long, SysPermissionVO> parentMap = new HashMap<>(50);
         permissionList.stream()
-                .filter(i -> i.getType().equals(PermissionEnum.MODULE.getCode()))
+                .filter(i -> i.getResourceType().equals(PermissionEnum.MODULE.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
                     SysPermissionVO parent = i.toVoModel();
@@ -85,7 +85,7 @@ public class HomeController extends BaseController {
 
         // 将子权限封装到父权限的 children 中
         permissionList.stream()
-                .filter(i -> i.getType().equals(PermissionEnum.MENU.getCode()))
+                .filter(i -> i.getResourceType().equals(PermissionEnum.MENU.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
                     SysPermissionVO child = i.toVoModel();
