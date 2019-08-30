@@ -6,7 +6,7 @@
 
 <body>
 <!--Page content-->
-<div id="page-content" class=" animated fadeIn">
+<div id="page-content">
     <div class="row">
         <div class="col-xs-2">
             <div class="panel">
@@ -51,7 +51,7 @@
                 <div class="panel-body">
                     <div class="pad-btm form-inline">
                         <div class="row">
-                            <div class="col-sm-12 table-toolbar-left" id="toolbar">
+                            <div id="toolbar">
                                  <span th:each="button: ${buttonList}">
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'save')}" class="btn btn-primary freedom-add" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                     <button th:if="${#strings.containsIgnoreCase(button.code,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
