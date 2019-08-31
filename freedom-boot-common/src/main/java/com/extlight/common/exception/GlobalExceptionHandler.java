@@ -37,9 +37,19 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    @ResponseBody
-    public Result handleException(GlobalException e) {
-        return Result.fail(e.getCode(),e.getMessage());
+    public ModelAndView handleException(GlobalException e) {
+
+        ModelAndView mv;
+        Map<String, Object> resultMap = Result.fail(e.getCode(), e.getMessage()).toMap();
+
+        if (e.getIsJson()) {
+            mv = new ModelAndView("jsonView", resultMap);
+
+        } else {
+            mv = new ModelAndView("error", resultMap);
+        }
+
+        return mv;
     }
 
     /**
@@ -71,17 +81,21 @@ public class GlobalExceptionHandler {
             if (e instanceof UnauthorizedException) {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_UNAUTHORIZED).toMap();
                 mv = new ModelAndView("jsonView", resultMap);
+
             } else if (e instanceof LockedAccountException) {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG).toMap();
                 mv = new ModelAndView("jsonView", resultMap);
+
             }
         } else if (url.endsWith(SUFFIX_HTML)) {
             if (e instanceof UnauthorizedException) {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_UNAUTHORIZED).toMap();
                 mv = new ModelAndView("error", resultMap);
+
             } else if (e instanceof LockedAccountException) {
                 Map<String, Object> resultMap = Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG).toMap();
                 mv = new ModelAndView("error", resultMap);
+
             }
         }
 

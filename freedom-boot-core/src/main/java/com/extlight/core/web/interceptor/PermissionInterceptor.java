@@ -1,7 +1,9 @@
 package com.extlight.core.web.interceptor;
 
+import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.HttpUtil;
 import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.StateEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
@@ -29,8 +31,35 @@ import java.util.List;
 @Component
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 
+    private static final String LIST_HTML = "listUI.html";
+
     @Autowired
     private SysPermissionService sysPermissionService;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (HttpUtil.isAjax(request))  {
+            return true;
+        }
+
+        String requestURI = request.getRequestURI();
+        if (!requestURI.contains(LIST_HTML)) {
+            return true;
+        }
+
+        SysPermission sysPermission = this.sysPermissionService.findPermissionByUrl(requestURI);
+        if (sysPermission == null) {
+            return true;
+        }
+
+        if (sysPermission.getState().equals(StateEnum.NORMAL.getCode())) {
+            return true;
+        }
+
+        ExceptionUtil.throwEx("该资源被禁止访问");
+
+        return false;
+    }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) {
@@ -44,7 +73,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
            // 针对 listUI 页面返回所需的数据
            if (handlerMethod.hasMethodAnnotation(GetMapping.class)) {
                GetMapping getMapping = handlerMethod.getMethodAnnotation(GetMapping.class);
-               if (getMapping.value()[0].contains("listUI.html")) {
+               if (getMapping.value()[0].contains(LIST_HTML)) {
                    Subject subject = SecurityUtils.getSubject();
                    SysUserVO sysUserVO = (SysUserVO) subject.getPrincipal();
                    List<SysPermission> permissionList = sysUserVO.getPermissionList();

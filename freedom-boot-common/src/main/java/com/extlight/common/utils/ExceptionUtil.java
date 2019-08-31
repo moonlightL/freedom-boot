@@ -30,4 +30,12 @@ public class ExceptionUtil {
 	public static void throwEx(int code, String message) {
 		throw new GlobalException(code, message);
 	}
+
+	/**
+	 * 抛异常，转向 html 页面
+	 * @param message
+	 */
+	public static void throwEx(String message) {
+		throw new GlobalException(message);
+	}
 }

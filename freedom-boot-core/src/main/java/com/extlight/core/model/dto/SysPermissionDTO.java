@@ -57,7 +57,7 @@ public class SysPermissionDTO extends BaseRequest<SysPermission> {
     /**
      * 业务类型 1：核心 2：扩展 3：业务
      */
-    @NotNull(message="业务类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
+    //@NotNull(message="业务类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
     private Integer businessType;
 
     /**

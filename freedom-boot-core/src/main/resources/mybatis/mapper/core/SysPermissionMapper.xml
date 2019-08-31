@@ -167,5 +167,26 @@
             p.resource_type = #{resourceType}
         ORDER BY p.sort
     </select>
+
+    <select id="selectByUrl" parameterType="java.lang.String" resultType="com.extlight.core.model.SysPermission">
+        SELECT
+            p.id,
+            p.`name`,
+            p.per_code,
+            p.state,
+            p.icon,
+            p.resource_type,
+            p.business_type,
+            p.pid,
+            p.url,
+            p.module_code,
+            p.common,
+            p.create_time,
+            p.update_time
+        FROM
+            t_sys_permission p
+        WHERE
+            p.url = #{url}
+    </select>
     
 </mapper>

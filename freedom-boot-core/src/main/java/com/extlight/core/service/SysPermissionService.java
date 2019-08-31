@@ -41,7 +41,7 @@ public interface SysPermissionService extends BaseService<SysPermission> {
     List<TreeNode> findPermissionNodesByRoleId(Long roleId) throws GlobalException;
 
     /**
-     * 获取通用按钮集合（增删改查）
+     * 根据 url 获取通用按钮集合（增删改查）
      * @param url
      * @return
      * @throws GlobalException
@@ -54,4 +54,12 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @throws GlobalException
      */
 	List<SysPermissionVO> findModuleList() throws GlobalException;
+
+    /**
+     * 根据 url 获取权限信息
+     * @param url
+     * @return
+     * @throws GlobalException
+     */
+	SysPermission findPermissionByUrl(String url) throws GlobalException;
 }

@@ -1,5 +1,8 @@
 package com.extlight.common.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @Author MoonlightL
  * @ClassName: GlobalException
@@ -7,38 +10,35 @@ package com.extlight.common.exception;
  * @Description: 全局异常
  * @Date 2019/5/30 19:38
  */
+@Setter
+@Getter
 public class GlobalException extends RuntimeException {
 
     private int code;
 
     private String message;
 
+    private Boolean isJson;
+
     public GlobalException(GlobalExceptionMap globalExceptionMap) {
         super(globalExceptionMap.getMessage());
         this.code = globalExceptionMap.getCode();
         this.message = globalExceptionMap.getMessage();
+        this.isJson = true;
     }
 
     public GlobalException(int code, String message) {
         super(message);
         this.code = code;
         this.message = message;
+        this.isJson = true;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
+    public GlobalException(String message) {
+        super(message);
+        this.code = 500;
         this.message = message;
+        this.isJson = false;
     }
+
 }

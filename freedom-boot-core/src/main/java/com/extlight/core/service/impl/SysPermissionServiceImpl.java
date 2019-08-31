@@ -199,6 +199,11 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
         return result;
     }
 
+    @Override
+    public SysPermission findPermissionByUrl(String url) throws GlobalException {
+        return this.sysPermissionMapper.selectByUrl(url);
+    }
+
     private PageInfo<SysPermission> getPermissionListByModuleId(SysPermissionDTO sysPermissionDTO) throws GlobalException {
 
         SysPermission module = super.getById(sysPermissionDTO.getPid());

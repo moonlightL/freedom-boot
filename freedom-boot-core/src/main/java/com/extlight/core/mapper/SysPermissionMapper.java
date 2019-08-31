@@ -55,4 +55,11 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      */
     List<SysPermission> selectListByResourceType(int resourceType);
+
+    /**
+     * 根据 url 查询权限信息
+     * @param url
+     * @return
+     */
+	SysPermission selectByUrl(String url);
 }
