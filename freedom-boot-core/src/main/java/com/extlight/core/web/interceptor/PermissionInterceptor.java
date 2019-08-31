@@ -52,7 +52,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
                        StringBuilder sb = new StringBuilder();
                        permissionList.stream().forEach(i -> {
                            if (!i.getResourceType().equals(PermissionEnum.MODULE)) {
-                               sb.append(i.getCode()).append(";");
+                               sb.append(i.getPerCode()).append(";");
                            }
                        });
 

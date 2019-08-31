@@ -51,6 +51,11 @@ public class SysPermission extends BaseResponse<SysPermissionVO> {
     private String url;
 
     /**
+     * 模块编码
+     */
+    private String moduleCode;
+
+    /**
      * 资源类型 参考：PermissionEnum
      */
     private Integer resourceType;
@@ -63,7 +68,7 @@ public class SysPermission extends BaseResponse<SysPermissionVO> {
     /**
      * 权限编码
      */
-    private String code;
+    private String perCode;
 
     /**
      * 父级 id

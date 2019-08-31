@@ -7,12 +7,13 @@
       SELECT
         p.id,
         p.`name`,
-        p.`code`,
+        p.per_code,
         p.icon,
         p.resource_type,
         p.business_type,
         p.pid,
         p.url,
+        p.module_code,
         p.common,
         p.create_time,
         p.update_time
@@ -29,12 +30,13 @@
     SELECT
         p.id,
         p.`name`,
-        p.`code`,
+        p.per_code,
         p.icon,
         p.resource_type,
         p.business_type,
         p.pid,
         p.url,
+        p.module_code,
         p.common,
         p.create_time,
         p.update_time
@@ -50,7 +52,7 @@
         SELECT
             p.name,
             p.icon,
-            p.code
+            p.per_code
         FROM
             t_sys_permission p
         INNER JOIN (
@@ -71,11 +73,13 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="icon" column="icon"/>
-        <result property="code" column="code"/>
+        <result property="perCode" column="per_code"/>
+        <result property="state" column="state"/>
         <result property="resourceType" column="resource_type"/>
         <result property="businessType" column="business_ype"/>
         <result property="pid" column="pid"/>
         <result property="url" column="url"/>
+        <result property="moduleCode" column="module_code"/>
         <result property="common" column="common"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -83,11 +87,13 @@
             <id property="id" column="id"/>
             <result property="name" column="name"/>
             <result property="icon" column="icon"/>
-            <result property="code" column="code"/>
+            <result property="perCode" column="per_code"/>
+            <result property="state" column="state"/>
             <result property="resourceType" column="resource_type"/>
             <result property="businessType" column="business_ype"/>
             <result property="pid" column="pid"/>
             <result property="url" column="url"/>
+            <result property="moduleCode" column="module_code"/>
             <result property="common" column="common"/>
             <result property="createTime" column="create_time"/>
             <result property="updateTime" column="update_time"/>
@@ -98,12 +104,14 @@
         SELECT
             p.id,
             p.`name`,
-            p.`code`,
+            p.per_code,
+            p.state,
             p.icon,
             p.resource_type,
             p.business_type,
             p.pid,
             p.url,
+            p.module_code,
             p.common,
             p.create_time,
             p.update_time
@@ -111,7 +119,6 @@
             t_sys_permission p
         WHERE
             p.resource_type = 1
-        AND p.state = 1
         ORDER BY p.sort
     </select>
 
@@ -120,12 +127,14 @@
         SELECT
             p.id,
             p.`name`,
-            p.`code`,
+            p.per_code,
+            p.state,
             p.icon,
             p.resource_type,
             p.business_type,
             p.pid,
             p.url,
+            p.module_code,
             p.common,
             p.create_time,
             p.update_time
@@ -133,7 +142,29 @@
             t_sys_permission p
         WHERE
             p.pid = #{id}
-        AND p.state = 1
+        ORDER BY p.sort
+    </select>
+
+
+    <select id="selectListByResourceType" parameterType="java.lang.Integer" resultType="com.extlight.core.model.SysPermission">
+        SELECT
+            p.id,
+            p.`name`,
+            p.per_code,
+            p.state,
+            p.icon,
+            p.resource_type,
+            p.business_type,
+            p.pid,
+            p.url,
+            p.module_code,
+            p.common,
+            p.create_time,
+            p.update_time
+        FROM
+            t_sys_permission p
+        WHERE
+            p.resource_type = #{resourceType}
         ORDER BY p.sort
     </select>
     

@@ -23,39 +23,13 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-sm-2 control-label">名称</label>
                             <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="name" placeholder="名称" th:field="*{name}"
+                                <input type="text" class="form-control" name="name" placeholder="权限名称" th:field="*{name}"
                                        data-bv-notempty="true"
                                        data-bv-notempty-message="权限名称不能为空"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">图标</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="icon" placeholder="图标" th:field="*{icon}"
-                                       data-bv-notempty="true"
-                                       data-bv-notempty-message="图标不能为空"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">地址</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="url" placeholder="地址" th:field="*{url}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">权限编码</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="code" placeholder="权限编码" th:field="*{code}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">序号</label>
-                            <div class="col-lg-7 col-sm-9">
-                                <input type="text" class="form-control" name="sort" placeholder="序号" th:field="*{sort}"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 col-sm-2 control-label">类型</label>
+                            <label class="col-lg-3 col-sm-2 control-label">资源类型</label>
                             <div class="col-lg-3 col-sm-2">
                                 <select class="selectpicker" name="type" id="resourceType" th:field="*{resourceType}">
                                     <option value="1">模块</option>
@@ -69,6 +43,38 @@
                                     <option value="0">无</option>
                                     <option th:each="parent:${parentList}" th:value="${parent.id}" th:text="${parent.name}"></option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">图标</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="icon" placeholder="模块类型必填" th:field="*{icon}"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="图标不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">访问地址</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="url" placeholder="菜单类型必填，/ 开头" th:field="*{url}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">模块编码</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="moduleCode" placeholder="模块类型必填，其值对应 Module 的 code" th:field="*{moduleCode}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">权限编码</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="perCode" placeholder="菜单和按钮类型必填，其值对应 @RequiresPermissions 值" th:field="*{perCode}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">序号</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="sort" placeholder="权限排序" th:field="*{sort}"/>
                             </div>
                         </div>
                         <div class="form-group">

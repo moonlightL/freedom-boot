@@ -47,4 +47,11 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @throws GlobalException
      */
     List<SysPermission> findCommonButtonList(String url) throws GlobalException;
+
+    /**
+     * 获取模块列表
+     * @return
+     * @throws GlobalException
+     */
+	List<SysPermissionVO> findModuleList() throws GlobalException;
 }

@@ -3,6 +3,8 @@ package com.extlight.core.service.impl;
 import com.extlight.common.base.BaseMapper;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.base.BaseServiceImpl;
+import com.extlight.common.component.module.Module;
+import com.extlight.common.component.module.ModuleFactory;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.utils.ExceptionUtil;
@@ -76,7 +78,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
             }
 
         } else {
-            sysPermission.setCode("");
+            sysPermission.setPerCode("");
         }
 
         return super.save(sysPermission);
@@ -175,6 +177,26 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     public List<SysPermission> findCommonButtonList(String url) throws GlobalException {
         return this.sysPermissionMapper.selectCommonButtonList(url);
+    }
+
+    @Override
+    public List<SysPermissionVO> findModuleList() throws GlobalException {
+        // 所有模块列表
+        List<SysPermission> sysPermissionList = this.sysPermissionMapper.selectListByResourceType(PermissionEnum.MODULE.getCode());
+        // 已加载的模块列表
+        List<Module> moduleList = ModuleFactory.getModuleList();
+        List<String> moduleCodeList = moduleList.stream().map(i -> i.getCode()).collect(Collectors.toList());
+
+        List<SysPermissionVO> result = new ArrayList<>(sysPermissionList.size());
+        // 判断加载状态
+        sysPermissionList.forEach(i -> {
+            SysPermissionVO sysPermissionVO = i.toVoModel();
+            sysPermissionVO.setIsLoad(moduleCodeList.contains(i.getModuleCode()));
+            result.add(sysPermissionVO);
+
+        });
+
+        return result;
     }
 
     private PageInfo<SysPermission> getPermissionListByModuleId(SysPermissionDTO sysPermissionDTO) throws GlobalException {

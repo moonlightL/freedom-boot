@@ -43,6 +43,12 @@ public class SysPermissionDTO extends BaseRequest<SysPermission> {
     private String url;
 
     /**
+     * 模块编码
+     */
+    private String moduleCode;
+
+
+    /**
      * 资源类型 参考：PermissionEnum
      */
     @NotNull(message="资源类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
@@ -57,7 +63,7 @@ public class SysPermissionDTO extends BaseRequest<SysPermission> {
     /**
      * 权限编码
      */
-    private String code;
+    private String perCode;
 
     /**
      * 父级 id

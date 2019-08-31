@@ -46,6 +46,12 @@ public class SysPermissionVO implements Serializable {
     private String url;
 
     /**
+     * 模块编码
+     */
+    private String moduleCode;
+
+
+    /**
      * 资源类型 参考：PermissionEnum
      */
     private Integer resourceType;
@@ -58,7 +64,7 @@ public class SysPermissionVO implements Serializable {
     /**
      * 权限编码
      */
-    private String code;
+    private String perCode;
 
     /**
      * 父级 id
@@ -94,5 +100,10 @@ public class SysPermissionVO implements Serializable {
      *  子权限
      */
     private List<SysPermissionVO> children = new ArrayList<>();
+
+    /**
+     * 是否加载
+     */
+    private Boolean isLoad;
 
 }

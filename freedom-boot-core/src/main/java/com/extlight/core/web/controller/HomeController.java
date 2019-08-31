@@ -1,6 +1,8 @@
 package com.extlight.core.web.controller;
 
 import com.extlight.common.base.BaseController;
+import com.extlight.common.component.module.Module;
+import com.extlight.common.component.module.ModuleFactory;
 import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PermissionEnum;
 import com.extlight.core.model.SysPermission;
@@ -32,6 +34,8 @@ public class HomeController extends BaseController {
 
     @Autowired
     private ShiroService shiroService;
+
+    private static final Integer parentSize = 10;
 
     /**
      * 首页
@@ -71,12 +75,17 @@ public class HomeController extends BaseController {
 
         List<SysPermission> permissionList = sysUserVO.getPermissionList();
 
-        List<SysPermissionVO> result = new ArrayList<>();
+        List<SysPermissionVO> result = new ArrayList<>(permissionList.size());
+
+        // 已加载模块列表
+        List<Module> moduleList = ModuleFactory.getModuleList();
+        List<String> moduleCodeList = moduleList.stream().map(i -> i.getCode()).collect(Collectors.toList());
 
         // 过滤出父权限
-        Map<Long, SysPermissionVO> parentMap = new HashMap<>(50);
+        Map<Long, SysPermissionVO> parentMap = new HashMap<>(parentSize);
         permissionList.stream()
-                .filter(i -> i.getResourceType().equals(PermissionEnum.MODULE.getCode()))
+                .filter(i -> (i.getResourceType().equals(PermissionEnum.MODULE.getCode())
+                && moduleCodeList.contains(i.getModuleCode())))
                 .collect(Collectors.toList())
                 .forEach(i -> {
                     SysPermissionVO parent = i.toVoModel();

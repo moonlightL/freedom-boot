@@ -60,12 +60,12 @@ public class SysLogController extends BaseController {
     @GetMapping("/detailUI/{id}.html")
     @RequiresPermissions("core:log:query")
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
-        SysLog vo = this.sysLogService.getById(id);
-        if (vo == null) {
+        SysLog target = this.sysLogService.getById(id);
+        if (target == null) {
             ExceptionUtil.throwEx(SysLogExceptionEnum.ERROR_LOG_NOT_EXIST);
         }
 
-        resultMap.put("vo", vo);
+        resultMap.put("vo", target.toVoModel());
         return render("detailUI", resultMap);
     }
 

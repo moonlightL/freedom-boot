@@ -89,8 +89,8 @@ public class CoreRealm extends AuthorizingRealm {
             info.addRoles(roleList.stream().map(i -> i.getCode()).collect(Collectors.toList()));
             // 授权-权限
             info.addStringPermissions(
-                    permissionList.stream().filter(i -> !i.getResourceType().equals(PermissionEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getCode()))
-                            .map(i -> i.getCode()).collect(Collectors.toList())
+                    permissionList.stream().filter(i -> !i.getResourceType().equals(PermissionEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getPerCode()))
+                            .map(i -> i.getPerCode()).collect(Collectors.toList())
             );
         }
 

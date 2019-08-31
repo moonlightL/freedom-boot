@@ -20,10 +20,10 @@
                         <div class="row">
                             <div class="col-sm-12 table-toolbar-left" id="toolbar">
                                 <span th:each="button: ${buttonList}">
-                                    <button th:if="${#strings.containsIgnoreCase(button.code,'save')}" class="btn btn-primary freedom-add" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
-                                    <button th:if="${#strings.containsIgnoreCase(button.code,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
-                                    <button th:if="${#strings.containsIgnoreCase(button.code,'remove')}" class="btn btn-danger freedom-delete" disabled th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
-                                    <button th:if="${#strings.containsIgnoreCase(button.code,'query')}" class="btn btn-success freedom-query" data-target="#query-modal" data-toggle="modal" th:shiro:hasPermission="${button.code}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.perCode,'save')}" class="btn btn-primary freedom-add" th:shiro:hasPermission="${button.perCode}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.perCode,'update')}" class="btn btn-warning freedom-edit" disabled th:shiro:hasPermission="${button.perCode}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.perCode,'remove')}" class="btn btn-danger freedom-delete" disabled th:shiro:hasPermission="${button.perCode}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
+                                    <button th:if="${#strings.containsIgnoreCase(button.perCode,'query')}" class="btn btn-success freedom-query" data-target="#query-modal" data-toggle="modal" th:shiro:hasPermission="${button.perCode}"><i th:class="${button.icon}"></i> [[${button.name}]]</button>
                                 </span>
                             </div>
                         </div>

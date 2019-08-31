@@ -93,7 +93,7 @@
                     <div class="panel-footer">
                         <div class="row">
                             <span th:each="button: ${buttonList}" >
-                                <div class="col-sm-12" th:if="${#strings.containsIgnoreCase(button.code,'save')}" th:shiro:hasPermission="${button.code}">
+                                <div class="col-sm-12" th:if="${#strings.containsIgnoreCase(button.perCode,'save')}" th:shiro:hasPermission="${button.perCode}">
                                     <button class="btn btn-primary" type="button" id="submitBtn">保存</button>
                                     <button class="btn btn-default" type="reset">重置</button>
                                 </div>

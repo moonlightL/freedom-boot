@@ -180,4 +180,13 @@ public class SysPermissionController extends BaseController {
         return Result.success(pageInfo);
     }
 
+
+    @PostMapping("/moduleList.json")
+    @RequiresPermissions("core:permission:listUI")
+    @ResponseBody
+    public Result moduleList() throws GlobalException {
+        List<SysPermissionVO> moduleList = this.sysPermissionService.findModuleList();
+        return Result.success(moduleList);
+    }
+
 }
