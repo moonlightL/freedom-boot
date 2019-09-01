@@ -5,6 +5,7 @@ import com.extlight.common.base.BaseRequest;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.model.Result;
 import com.extlight.common.utils.ExceptionUtil;
+import com.extlight.common.utils.PageUtil;
 import com.extlight.core.constant.SysLogExceptionEnum;
 import com.extlight.core.model.SysLog;
 import com.extlight.core.model.dto.SysLogDTO;
@@ -77,6 +78,6 @@ public class SysLogController extends BaseController {
     @ResponseBody
     public Result list(@Validated(BaseRequest.Query.class) SysLogDTO params) throws GlobalException {
         PageInfo<SysLog> pageInfo = this.sysLogService.page(params);
-        return Result.success(pageInfo);
+        return Result.success(PageUtil.toVO(pageInfo));
     }
 }
