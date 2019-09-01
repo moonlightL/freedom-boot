@@ -4,7 +4,7 @@ import com.extlight.common.base.BaseController;
 import com.extlight.common.component.module.Module;
 import com.extlight.common.component.module.ModuleFactory;
 import com.extlight.core.component.ShiroService;
-import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.PerTypeEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysPermissionVO;
 import com.extlight.core.model.vo.SysUserVO;
@@ -84,7 +84,7 @@ public class HomeController extends BaseController {
         // 过滤出父权限
         Map<Long, SysPermissionVO> parentMap = new HashMap<>(parentSize);
         permissionList.stream()
-                .filter(i -> (i.getResourceType().equals(PermissionEnum.MODULE.getCode())
+                .filter(i -> (i.getPerType().equals(PerTypeEnum.MODULE.getCode())
                 && moduleCodeList.contains(i.getModuleCode())))
                 .collect(Collectors.toList())
                 .forEach(i -> {
@@ -94,7 +94,7 @@ public class HomeController extends BaseController {
 
         // 将子权限封装到父权限的 children 中
         permissionList.stream()
-                .filter(i -> i.getResourceType().equals(PermissionEnum.MENU.getCode()))
+                .filter(i -> i.getPerType().equals(PerTypeEnum.MENU.getCode()))
                 .collect(Collectors.toList())
                 .forEach(i -> {
                     SysPermissionVO child = i.toVoModel();

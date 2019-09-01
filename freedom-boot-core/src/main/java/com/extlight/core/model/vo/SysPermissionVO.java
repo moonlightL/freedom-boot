@@ -50,21 +50,20 @@ public class SysPermissionVO implements Serializable {
      */
     private String moduleCode;
 
-
     /**
-     * 资源类型 参考：PermissionEnum
+     * 权限类型 参考：PerTypeEnum
      */
-    private Integer resourceType;
-
-    /**
-     * 业务类型 1：核心 2：扩展 3：业务
-     */
-    private Integer businessType;
+    private Integer perType;
 
     /**
      * 权限编码
      */
     private String perCode;
+
+    /**
+     * 资源类型 参考：ResourceTypeEnum
+     */
+    private Integer resourceType;
 
     /**
      * 父级 id

@@ -2,6 +2,7 @@ package com.extlight.common.exception;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @Author MoonlightL
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ToString
 public class GlobalException extends RuntimeException {
 
     private int code;

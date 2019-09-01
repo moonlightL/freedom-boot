@@ -51,7 +51,7 @@ public class SysPermissionController extends BaseController {
     @RequiresPermissions("core:permission:save")
     public String saveUI(Map<String,Object> resultMap) throws GlobalException {
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
-        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
+        resultMap.put("parentList", this.decorateName(parentList, "┣"));
         return render(SAVE_PAGE, resultMap);
     }
 
@@ -61,8 +61,16 @@ public class SysPermissionController extends BaseController {
         List<SysPermissionVO> result = new ArrayList<>();
         for (SysPermissionVO sysPermissionVO : list) {
             result.add(sysPermissionVO);
+            int index = 0;
+            int size = sysPermissionVO.getChildren().size();
             for (SysPermissionVO child : sysPermissionVO.getChildren()) {
-                child.setName(" " + prefix + child.getName());
+                index++;
+                if (index == size) {
+                    child.setName("┗" + " " + child.getName());
+                } else {
+                    child.setName(prefix + " " + child.getName());
+                }
+
                 result.add(child);
             }
         }
@@ -89,7 +97,7 @@ public class SysPermissionController extends BaseController {
         resultMap.put("readOnly", false);
 
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
-        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
+        resultMap.put("parentList", this.decorateName(parentList, "┣"));
         return render(UPDATE_PAGE, resultMap);
     }
 
@@ -124,7 +132,7 @@ public class SysPermissionController extends BaseController {
         resultMap.put("readOnly", true);
 
         List<SysPermissionVO> parentList = this.sysPermissionService.findHierarchyPermissionList();
-        resultMap.put("parentList", this.decorateName(parentList, "┣─"));
+        resultMap.put("parentList", this.decorateName(parentList, "┣"));
 
         return render(DETAIL_PAGE, resultMap);
     }

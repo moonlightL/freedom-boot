@@ -50,11 +50,11 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
     List<SysPermissionVO> selectByPid(Long id);
 
     /**
-     * 根据资源类型获取权限列表
-     * @param resourceType
+     * 根据权限类型获取权限列表
+     * @param perType
      * @return
      */
-    List<SysPermission> selectListByResourceType(int resourceType);
+    List<SysPermission> selectListByPerType(int perType);
 
     /**
      * 根据 url 查询权限信息

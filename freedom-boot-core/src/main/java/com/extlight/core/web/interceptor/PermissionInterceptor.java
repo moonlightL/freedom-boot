@@ -2,7 +2,7 @@ package com.extlight.core.web.interceptor;
 
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.HttpUtil;
-import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.PerTypeEnum;
 import com.extlight.core.constant.StateEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysUserVO;
@@ -80,7 +80,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
                    if (permissionList != null && !permissionList.isEmpty()) {
                        StringBuilder sb = new StringBuilder();
                        permissionList.stream().forEach(i -> {
-                           if (!i.getResourceType().equals(PermissionEnum.MODULE)) {
+                           if (!i.getPerType().equals(PerTypeEnum.MODULE.getCode())) {
                                sb.append(i.getPerCode()).append(";");
                            }
                        });

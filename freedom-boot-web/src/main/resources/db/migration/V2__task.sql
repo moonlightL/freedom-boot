@@ -173,7 +173,7 @@ CREATE INDEX IDX_QRTZ_FT_JG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,JOB_GROUP);
 CREATE INDEX IDX_QRTZ_FT_T_G ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
 CREATE INDEX IDX_QRTZ_FT_TG ON QRTZ_FIRED_TRIGGERS(SCHED_NAME,TRIGGER_GROUP);
 
-INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `resource_type`, `business_type`, `per_code`, `pid`, `state`, `sort`, `common`) VALUES
+INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `per_type`, `resource_type`, `per_code`, `pid`, `state`, `sort`, `common`) VALUES
   (33, '任务模块', 'fa fa-clock-o', '', 'TASK', 1, 2, '', 0, 1, 5, 1),
   (34, '任务列表', 'fa fa-task', '/task/job/listUI.html', '', 2, 2, 'task:job:listUI', 33, 1, 1, 1),
   (35, '新增', 'fa fa-plus-circle', '', '', 3, 2, 'task:job:save', 34, 1, 1, 1),

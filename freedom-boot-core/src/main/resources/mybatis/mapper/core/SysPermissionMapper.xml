@@ -9,8 +9,8 @@
         p.`name`,
         p.per_code,
         p.icon,
+        p.per_type,
         p.resource_type,
-        p.business_type,
         p.pid,
         p.url,
         p.module_code,
@@ -32,8 +32,8 @@
         p.`name`,
         p.per_code,
         p.icon,
+        p.per_type,
         p.resource_type,
-        p.business_type,
         p.pid,
         p.url,
         p.module_code,
@@ -64,7 +64,7 @@
                 url = #{url}
         ) a ON p.pid = a.id
         WHERE
-            p.resource_type = 3
+            p.per_type = 3
         AND p.common = 1
         AND p.state = 1
     </select>
@@ -75,8 +75,8 @@
         <result property="icon" column="icon"/>
         <result property="perCode" column="per_code"/>
         <result property="state" column="state"/>
+        <result property="perType" column="per_type"/>
         <result property="resourceType" column="resource_type"/>
-        <result property="businessType" column="business_ype"/>
         <result property="pid" column="pid"/>
         <result property="url" column="url"/>
         <result property="moduleCode" column="module_code"/>
@@ -89,8 +89,8 @@
             <result property="icon" column="icon"/>
             <result property="perCode" column="per_code"/>
             <result property="state" column="state"/>
+            <result property="perType" column="per_type"/>
             <result property="resourceType" column="resource_type"/>
-            <result property="businessType" column="business_ype"/>
             <result property="pid" column="pid"/>
             <result property="url" column="url"/>
             <result property="moduleCode" column="module_code"/>
@@ -107,8 +107,8 @@
             p.per_code,
             p.state,
             p.icon,
+            p.per_type,
             p.resource_type,
-            p.business_type,
             p.pid,
             p.url,
             p.module_code,
@@ -118,7 +118,7 @@
         FROM
             t_sys_permission p
         WHERE
-            p.resource_type = 1
+            p.per_type = 1
         ORDER BY p.sort
     </select>
 
@@ -130,8 +130,8 @@
             p.per_code,
             p.state,
             p.icon,
+            p.per_type,
             p.resource_type,
-            p.business_type,
             p.pid,
             p.url,
             p.module_code,
@@ -146,15 +146,15 @@
     </select>
 
 
-    <select id="selectListByResourceType" parameterType="java.lang.Integer" resultType="com.extlight.core.model.SysPermission">
+    <select id="selectListByPerType" parameterType="java.lang.Integer" resultType="com.extlight.core.model.SysPermission">
         SELECT
             p.id,
             p.`name`,
             p.per_code,
             p.state,
             p.icon,
+            p.per_type,
             p.resource_type,
-            p.business_type,
             p.pid,
             p.url,
             p.module_code,
@@ -164,7 +164,7 @@
         FROM
             t_sys_permission p
         WHERE
-            p.resource_type = #{resourceType}
+            p.per_type = #{perType}
         ORDER BY p.sort
     </select>
 
@@ -175,8 +175,8 @@
             p.per_code,
             p.state,
             p.icon,
+            p.per_type,
             p.resource_type,
-            p.business_type,
             p.pid,
             p.url,
             p.module_code,

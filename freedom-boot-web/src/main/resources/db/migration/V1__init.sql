@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS `t_sys_permission` (
   `icon` varchar(50) NOT NULL DEFAULT '' COMMENT '权限图标',
   `url` varchar(50) NOT NULL DEFAULT '' COMMENT '权限访问地址',
   `module_code` varchar(10) NOT NULL DEFAULT '' COMMENT '模块编码',
-  `resource_type` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '资源类型 1: 模块 2：菜单 3: 按钮',
-  `business_type` TINYINT(4) NOT NULL DEFAULT '3' COMMENT '业务类型 1：核心 2：扩展 3：业务',
+  `per_type` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '权限类型 1: 模块 2：菜单 3: 按钮',
+  `resource_type` TINYINT(4) NOT NULL DEFAULT '3' COMMENT '资源类型 1：核心 2：扩展 3：业务',
   `per_code` varchar(50) NOT NULL DEFAULT '' COMMENT '权限编码',
   `pid` bigint(20) NOT NULL DEFAULT '0' COMMENT '父级 id',
   `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1:可用 0：禁用',
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `t_sys_permission` (
   KEY `idx_pid` (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COMMENT='系统权限表';
 
-INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `resource_type`, `business_type`, `per_code`, `pid`, `state`, `sort`, `common`) VALUES
+INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `per_type`, `resource_type`, `per_code`, `pid`, `state`, `sort`, `common`) VALUES
  (1, '系统管理', 'fa fa-cogs', '', 'SYSTEM', 1, 1, '', 0, 1, 1, 1),
  (2, '用户管理', 'fa fa-users', '/core/user/listUI.html', '', 2, 1, 'core:user:listUI', 1, 1, 1, 1),
  (3, '新增', 'fa fa-plus-circle', '', '', 3, 1, 'core:user:save', 2, 1, 1, 1),

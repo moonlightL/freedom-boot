@@ -226,12 +226,10 @@ public class SysUserController extends BaseController {
             List<Long> checkIdList = roleList.stream().map(i -> i.getId()).collect(Collectors.toList());
             allRoleList.stream().forEach(i -> {
                 SysRoleVO sysRoleVO = i.toVoModel();
-                if (checkIdList.contains(sysRoleVO.getId())) {
-                    sysRoleVO.setChecked(true);
-                }
+                sysRoleVO.setChecked(checkIdList.contains(sysRoleVO.getId()));
                 result.add(sysRoleVO);
             });
-            resultMap.put("roleList", allRoleList);
+            resultMap.put("roleList", result);
         }
 
         resultMap.put("action", super.getPrefix() + "/assignRole.json");

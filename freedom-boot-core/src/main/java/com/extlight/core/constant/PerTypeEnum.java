@@ -4,13 +4,13 @@ import lombok.Getter;
 
 /**
  * @Author: MoonlightL
- * @ClassName: PermissionEnum
+ * @ClassName: PerTypeEnum
  * @ProjectName: freedom-boot
  * @Description: 权限类型
  * @DateTime: 2019-07-06 12:34
  */
 @Getter
-public enum PermissionEnum {
+public enum PerTypeEnum {
 
     MODULE(1, "模块"),
     MENU(2, "菜单"),
@@ -21,7 +21,7 @@ public enum PermissionEnum {
 
     private String message;
 
-    PermissionEnum(int code, String message) {
+    PerTypeEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

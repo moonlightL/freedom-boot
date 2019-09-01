@@ -8,7 +8,8 @@ import com.extlight.common.component.module.ModuleFactory;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.common.utils.ExceptionUtil;
-import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.PerTypeEnum;
+import com.extlight.core.constant.ResourceTypeEnum;
 import com.extlight.core.constant.SysPermissionExceptionEnum;
 import com.extlight.core.mapper.SysPermissionMapper;
 import com.extlight.core.model.SysPermission;
@@ -67,7 +68,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     @Transactional(rollbackFor = GlobalException.class)
     public int save(SysPermission sysPermission) throws GlobalException {
-        if (!sysPermission.getResourceType().equals(PermissionEnum.MODULE.getCode())) {
+        if (!sysPermission.getPerType().equals(PerTypeEnum.MODULE.getCode())) {
             if (sysPermission.getPid() == null || sysPermission.getPid() == 0) {
                 ExceptionUtil.throwEx(GlobalExceptionEnum.ERROR_PARAM);
             }
@@ -92,7 +93,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        if (!sysPermission.getBusinessType().equals(3)) {
+        if (!sysPermission.getResourceType().equals(ResourceTypeEnum.BUSINESS.getCode())) {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_CANNOT_REMOVE);
         }
 
@@ -107,7 +108,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
         List<Long> data = new ArrayList<>(idList.size());
         for (Long permissionId : idList) {
             SysPermission sysPermission = super.getById(permissionId);
-            if (sysPermission != null && sysPermission.getBusinessType().equals(3)) {
+            if (sysPermission != null && sysPermission.getResourceType().equals(ResourceTypeEnum.BUSINESS.getCode())) {
                 data.add(permissionId);
             }
         }
@@ -182,7 +183,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     @Override
     public List<SysPermissionVO> findModuleList() throws GlobalException {
         // 所有模块列表
-        List<SysPermission> sysPermissionList = this.sysPermissionMapper.selectListByResourceType(PermissionEnum.MODULE.getCode());
+        List<SysPermission> sysPermissionList = this.sysPermissionMapper.selectListByPerType(PerTypeEnum.MODULE.getCode());
         // 已加载的模块列表
         List<Module> moduleList = ModuleFactory.getModuleList();
         List<String> moduleCodeList = moduleList.stream().map(i -> i.getCode()).collect(Collectors.toList());
@@ -211,7 +212,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        if (!module.getResourceType().equals(PermissionEnum.MODULE.getCode())) {
+        if (!module.getPerType().equals(PerTypeEnum.MODULE.getCode())) {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_MODULE_TYPE);
         }
 

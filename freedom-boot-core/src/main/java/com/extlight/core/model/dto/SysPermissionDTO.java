@@ -49,21 +49,22 @@ public class SysPermissionDTO extends BaseRequest<SysPermission> {
 
 
     /**
-     * 资源类型 参考：PermissionEnum
+     * 权限类型 参考：PerTypeEnum
      */
-    @NotNull(message="资源类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
-    private Integer resourceType;
-
-    /**
-     * 业务类型 1：核心 2：扩展 3：业务
-     */
-    //@NotNull(message="业务类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
-    private Integer businessType;
+    @NotNull(message="权限类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
+    private Integer perType;
 
     /**
      * 权限编码
      */
     private String perCode;
+
+    /**
+     * 资源类型 1：核心 2：扩展 3：业务
+     */
+    @NotNull(message="资源类型不能为空", groups = {BaseRequest.Save.class, BaseRequest.Update.class})
+    private Integer resourceType;
+
 
     /**
      * 父级 id

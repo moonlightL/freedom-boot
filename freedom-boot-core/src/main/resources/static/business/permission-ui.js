@@ -80,7 +80,8 @@ var PermissionUI = (function ($) {
                 },
                 {
                     title: "权限类型",
-                    field: "resourceType",
+                    field: "perType",
+                    align: "center",
                     formatter: function (value, item, index) {
                         var labelColor;
                         var info;
@@ -102,8 +103,29 @@ var PermissionUI = (function ($) {
                     field: "perCode"
                 },
                 {
+                    title: "资源类型",
+                    field: "resourceType",
+                    align: "center",
+                    formatter: function (value, item, index) {
+                        var labelColor;
+                        var info;
+                        if (value == "1") {
+                            info = "核心";
+                            labelColor = "mint";
+                        } else if (value == "2") {
+                            info = "扩展";
+                            labelColor = "info";
+                        } else if (value == "3") {
+                            info = "业务";
+                            labelColor = "success";
+                        }
+                        return '<div class="label label-table label-' + labelColor + '"> ' + info + '</div>';
+                    }
+                },
+                {
                     title: "状态",
                     field: "state",
+                    align: "center",
                     formatter: function (value, item, index) {
                         var labelColor;
                         var info;
@@ -119,6 +141,7 @@ var PermissionUI = (function ($) {
                 },
                 {
                     title: "操作",
+                    align: "center",
                     formatter: function (value, row) {
                         var btnArr = [];
                         btnArr.push(' <a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');

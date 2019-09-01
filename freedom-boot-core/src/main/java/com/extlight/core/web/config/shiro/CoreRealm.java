@@ -2,7 +2,7 @@ package com.extlight.core.web.config.shiro;
 
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.core.component.ShiroService;
-import com.extlight.core.constant.PermissionEnum;
+import com.extlight.core.constant.PerTypeEnum;
 import com.extlight.core.constant.StateEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.SysPermission;
@@ -89,7 +89,7 @@ public class CoreRealm extends AuthorizingRealm {
             info.addRoles(roleList.stream().map(i -> i.getCode()).collect(Collectors.toList()));
             // 授权-权限
             info.addStringPermissions(
-                    permissionList.stream().filter(i -> !i.getResourceType().equals(PermissionEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getPerCode()))
+                    permissionList.stream().filter(i -> !i.getPerType().equals(PerTypeEnum.MODULE.getCode()) && !StringUtil.isEmpty(i.getPerCode()))
                             .map(i -> i.getPerCode()).collect(Collectors.toList())
             );
         }
