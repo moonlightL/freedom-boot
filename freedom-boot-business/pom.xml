@@ -12,10 +12,11 @@
     <artifactId>freedom-boot-business</artifactId>
 
     <dependencies>
-        <!-- 引入 core  -->
+
+        <!-- 引入 common -->
         <dependency>
             <groupId>com.extlight</groupId>
-            <artifactId>freedom-boot-core</artifactId>
+            <artifactId>freedom-boot-common</artifactId>
             <version>${freedom.boot.version}</version>
         </dependency>
 

@@ -19,6 +19,7 @@
                         toolbar: "#toolbar",
                         type: "table", // 类型 table/tree-table
                         expandColumn: 1,
+                        height: $(window.parent).height() - 320,
                         parentId: ""
                     },
                     init: function(options) {
@@ -28,7 +29,7 @@
                             $table.bootstrapTable('destroy').bootstrapTable({
                                 url: $.freedom.ui.table.getListUrl(),
                                 columns: options.columns,
-                                height: $(window.parent).height() - 320,
+                                height: $.freedom.ui.table.options.height,
                                 idField : 'id',
                                 fixedColumns: true,
                                 fixedNumber: $.freedom.ui.table.options.fixedNumber,
@@ -97,7 +98,7 @@
                                 toolbar: $.freedom.ui.table.options.toolbar,
                                 expandColumn: $.freedom.ui.table.options.expandColumn,
                                 columns: $.freedom.ui.table.options.columns,
-                                height: $(window.parent).height() - 320,
+                                height: $.freedom.ui.table.options.height,
                                 parentId: $.freedom.ui.table.options.parentId,
                                 responseHandler : function(resp) {
                                     return resp.success ? resp.data.list : [];

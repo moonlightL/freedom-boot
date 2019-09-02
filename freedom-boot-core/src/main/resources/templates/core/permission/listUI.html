@@ -53,8 +53,7 @@
     $(function() {
         var prefix = [[${prefix}]];
         var permissions = [[${permissions}]];
-        var permissionUI = new PermissionUI(prefix, permissions);
-        permissionUI.init()
+        Permission.init(prefix, permissions)
     });
 
 </script>
