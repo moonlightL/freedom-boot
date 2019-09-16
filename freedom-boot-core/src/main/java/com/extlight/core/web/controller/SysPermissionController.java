@@ -90,7 +90,7 @@ public class SysPermissionController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermission target = this.sysPermissionService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());
@@ -125,7 +125,7 @@ public class SysPermissionController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysPermission target = this.sysPermissionService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());

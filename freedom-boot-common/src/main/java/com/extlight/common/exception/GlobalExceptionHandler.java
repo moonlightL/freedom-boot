@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv;
         Map<String, Object> resultMap = Result.fail(e.getCode(), e.getMessage()).toMap();
 
-        if (e.getIsJson()) {
+        if (e.getJson()) {
             mv = new ModelAndView("jsonView", resultMap);
 
         } else {

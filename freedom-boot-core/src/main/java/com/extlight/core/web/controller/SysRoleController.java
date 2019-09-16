@@ -70,7 +70,7 @@ public class SysRoleController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRole target = this.sysRoleService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());
@@ -103,7 +103,7 @@ public class SysRoleController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysRole target = this.sysRoleService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysRoleExceptionEnum.ERROR_ROLE_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());

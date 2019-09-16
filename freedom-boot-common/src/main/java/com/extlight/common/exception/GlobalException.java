@@ -20,27 +20,27 @@ public class GlobalException extends RuntimeException {
 
     private String message;
 
-    private Boolean isJson;
+    private Boolean json;
 
-    public GlobalException(GlobalExceptionMap globalExceptionMap) {
+    public GlobalException(GlobalExceptionMap globalExceptionMap, Boolean json) {
         super(globalExceptionMap.getMessage());
         this.code = globalExceptionMap.getCode();
         this.message = globalExceptionMap.getMessage();
-        this.isJson = true;
+        this.json = json;
     }
 
     public GlobalException(int code, String message) {
         super(message);
         this.code = code;
         this.message = message;
-        this.isJson = true;
+        this.json = true;
     }
 
     public GlobalException(String message) {
         super(message);
         this.code = 500;
         this.message = message;
-        this.isJson = false;
+        this.json = false;
     }
 
 }

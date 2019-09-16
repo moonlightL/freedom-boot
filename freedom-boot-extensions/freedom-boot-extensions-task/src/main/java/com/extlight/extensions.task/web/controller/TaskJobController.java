@@ -65,7 +65,7 @@ public class TaskJobController extends BaseController {
 	public String updateUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
 		TaskJob target = this.taskJobService.getById(id);
 		if (target == null) {
-			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+			ExceptionUtil.throwExToPage(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
 		}
 
 		resultMap.put("vo", target);
@@ -99,7 +99,7 @@ public class TaskJobController extends BaseController {
 	public String detailUI(@PathVariable("id") Long id, Map<String, Object> resultMap) throws GlobalException {
 		TaskJob target = this.taskJobService.getById(id);
 		if (target == null) {
-			ExceptionUtil.throwEx(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
+			ExceptionUtil.throwExToPage(TaskJobExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
 		}
 
 		resultMap.put("vo", target);

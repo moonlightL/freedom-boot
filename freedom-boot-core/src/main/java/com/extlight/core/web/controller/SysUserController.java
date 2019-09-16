@@ -83,7 +83,7 @@ public class SysUserController extends BaseController {
     public String updateUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUser target = this.sysUserService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());
@@ -116,7 +116,7 @@ public class SysUserController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysUser target = this.sysUserService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());

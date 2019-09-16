@@ -19,7 +19,15 @@ public class ExceptionUtil {
 	 * @param globalExceptionMap
 	 */
 	public static void throwEx(GlobalExceptionMap globalExceptionMap) {
-		throw new GlobalException(globalExceptionMap);
+		throw new GlobalException(globalExceptionMap, true);
+	}
+
+	/**
+	 * 抛异常到异常页面
+	 * @param globalExceptionMap
+	 */
+	public static void throwExToPage(GlobalExceptionMap globalExceptionMap) {
+		throw new GlobalException(globalExceptionMap, false);
 	}
 
 	/**
