@@ -63,7 +63,7 @@ public class SysLogController extends BaseController {
     public String detailUI(@PathVariable("id") Long id, Map<String,Object> resultMap) throws GlobalException {
         SysLog target = this.sysLogService.getById(id);
         if (target == null) {
-            ExceptionUtil.throwEx(SysLogExceptionEnum.ERROR_LOG_NOT_EXIST);
+            ExceptionUtil.throwExToPage(SysLogExceptionEnum.ERROR_LOG_NOT_EXIST);
         }
 
         resultMap.put("vo", target.toVoModel());
