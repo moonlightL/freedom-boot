@@ -60,8 +60,7 @@
 <!--<script th:src="@{/assets/js/form-validation.js}"></script>-->
 <script>
     $(function() {
-        // 表单通过内嵌属性校验数据，具体 http://bootstrapvalidator.votintsev.ru/getting-started/
-        $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+        $.freedom.action.submit("dataForm");
     });
 </script>
 </body>

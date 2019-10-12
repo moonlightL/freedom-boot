@@ -64,7 +64,7 @@
         if (readOnly) {
             $("input,select,textarea").attr("disabled", "disabled");
         } else {
-            $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+            $.freedom.action.submit("dataForm");
         }
     });
 </script>

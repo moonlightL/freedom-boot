@@ -38,6 +38,14 @@ public interface BaseService<T extends BaseResponse> {
      */
     int removeBatch(List<Long> idList) throws GlobalException;
 
+    /**
+     * 删除对象
+     * @param idStr
+     * @param regex
+     * @return
+     * @throws GlobalException
+     */
+    int removeByIdStr(String idStr, String regex) throws GlobalException;
 
     /**
      * 修改对象

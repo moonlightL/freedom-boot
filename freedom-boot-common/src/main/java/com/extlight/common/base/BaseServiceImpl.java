@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -64,6 +66,22 @@ public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseSer
 
     @Override
     @Transactional(rollbackFor = GlobalException.class)
+    public int removeByIdStr(String idStr, String regex) throws GlobalException {
+        String[] idArr = idStr.split(regex);
+        int num;
+        if (idArr.length == 1) {
+            num = this.remove(Long.valueOf(idArr[0]));
+        } else {
+            String[] idStrArr = idStr.split(",");
+            List<Long> idList = new ArrayList<>(idStr.length());
+            Arrays.stream(idStrArr).forEach(i -> idList.add(Long.valueOf(i)));
+            num = this.removeBatch(idList);
+        }
+        return num;
+    }
+
+    @Override
+    @Transactional(rollbackFor = GlobalException.class)
     public int update(T model) throws GlobalException {
         return this.getBaseMapper().updateByPrimaryKeySelective(model);
     }
@@ -80,7 +98,23 @@ public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseSer
 
     @Override
     public List<T> list(BaseRequest params) throws GlobalException {
-        return this.selectByExample(this.getExample(params));
+        Example example = this.getExample(params);
+
+        if (StringUtils.isEmpty(params.getSortName())) {
+            params.setSortName("id");
+        }
+
+        if (DEFAULT_SORT.equalsIgnoreCase(params.getSortOrder())) {
+            example.orderBy(params.getSortName()).asc();
+        } else {
+            example.orderBy(params.getSortName()).desc();
+        }
+
+        if (params.getPageNum() > 0) {
+            PageHelper.startPage(params.getPageNum(), params.getPageSize());
+        }
+
+        return this.selectByExample(example);
     }
 
     @Override
@@ -88,7 +122,7 @@ public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseSer
         List<T> data = this.list(params);
         Page<T> page = new Page<>(1, data.size(), false);
         page.addAll(data);
-        page.setTotal(this.count(null));
+        page.setTotal(this.count(params));
         return new PageInfo<>(page);
     }
 
@@ -107,8 +141,9 @@ public abstract class BaseServiceImpl<T extends BaseResponse> implements BaseSer
             example.orderBy(params.getSortName()).desc();
         }
 
-        List<T> list = this.listByExample(example, params.getPageNum(), params.getPageSize(), true);
-        return new PageInfo<>(list);
+        PageHelper.startPage(params.getPageNum(), params.getPageSize());
+
+        return new PageInfo<>(this.selectByExample(example));
     }
 
     @Override

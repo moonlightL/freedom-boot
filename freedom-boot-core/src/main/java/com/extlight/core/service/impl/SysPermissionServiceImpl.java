@@ -134,7 +134,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
     public PageInfo<SysPermission> pageAll(BaseRequest params) throws GlobalException {
         SysPermissionDTO sysPermissionDTO = (SysPermissionDTO) params;
         if (sysPermissionDTO.getPid() == null) {
-            return super.pageAll(null);
+            sysPermissionDTO.setPageNum(0);
+            sysPermissionDTO.setSortOrder("ASC");
+            return super.pageAll(sysPermissionDTO);
         }
 
         return this.getPermissionListByModuleId(sysPermissionDTO);

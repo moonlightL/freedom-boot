@@ -89,6 +89,11 @@
                                             $(domEle).prop('disabled', !$table.bootstrapTable('getSelections').length);
                                         });
                                     });
+
+                                    if (typeof options.init == "function") {
+                                        options.init();
+                                    }
+
                                     return false;
                                 }
                             });
@@ -189,9 +194,9 @@
                     $($.freedom.ui.table.options.toolbar).on("click", function(e) {
                         var $target = $(e.target);
                         if ($target.hasClass("freedom-add")) {
-                            $.freedom.action.showAddUI();
+                            $.freedom.action.showAddUI($target);
                         } else if ($target.hasClass("freedom-edit")) {
-                            $.freedom.action.showEditUI();
+                            $.freedom.action.showEditUI($target);
                         } else if ($target.hasClass("freedom-delete")) {
                             $.freedom.action.delete();
                         } else if ($target.hasClass("freedom-query")) {
@@ -199,15 +204,19 @@
                         }
                     });
                 },
-                showAddUI: function() {
+                showAddUI: function($target) {
                     if (!$.freedom.ui.table.options.addUIUrl) {
                         $.freedom.modal.msg("未设置新增页面地址");
                         return;
                     }
 
-                    $.freedom.modal.window("新增", $.freedom.ui.table.getAddUIUrl(), 800, $(window).height() - 80);
+                    var width = $target.data("width") || 800;
+                    var height = $target.data("height") || $(window).height() - 80;
+                    var isFull = $target.data("full");
+
+                    $.freedom.modal.window("新增", $.freedom.ui.table.getAddUIUrl(), width, height, isFull);
                 },
-                showEditUI: function() {
+                showEditUI: function($target) {
                     if (!$.freedom.ui.table.options.editUIUrl) {
                         $.freedom.modal.msg("未设置编辑页面地址");
                         return;
@@ -220,9 +229,13 @@
                         return;
                     }
 
-                    $.freedom.modal.window("编辑", $.freedom.ui.table.getEditUrl(selections[0].id), 800, $(window).height() - 80);
+                    var width = $target.data("width") || 800;
+                    var height = $target.data("height") || $(window).height() - 80;
+                    var isFull = $target.data("full");
+
+                    $.freedom.modal.window("编辑", $.freedom.ui.table.getEditUrl(selections[0].id),  width, height, isFull);
                 },
-                showDetailUI: function(id) {
+                showDetailUI: function(id, $target) {
                     if (!$.freedom.ui.table.options.detailUIUrl) {
                         $.freedom.modal.msg("未设置详情页面地址");
                         return;
@@ -233,25 +246,33 @@
                         return;
                     }
 
-                    $.freedom.modal.window("详情", $.freedom.ui.table.getDetailUIUrl(id), 800, $(window).height() - 80);
+                    var width = $target.data("width") || 800;
+                    var height = $target.data("height") || $(window).height() - 80;
+                    var isFull = $target.data("full");
+
+                    $.freedom.modal.window("详情", $.freedom.ui.table.getDetailUIUrl(id),  width, height, isFull);
                 },
                 /**
-                 * 对外暴露的表单提交方法
-                 * @param formId    表单 id
-                 * @param formData  FormData 对象
-                 * @param fn        回调函数
+                 *  注意：此函数对内使用，外部不要直接使用
+                 * @param url
+                 * @param data
+                 * @param fn
                  */
-                save: function(formId, formData, fn) {
-                    $('#' + formId).bootstrapValidator().on('success.form.bv', function(e) {
-                        e.preventDefault();
-                        var $form = $(e.target);
-                        // 发送请求
-                        if (formData) {
-                            $.freedom.action.submit($form.attr('action'), formData, fn);
-                        } else {
-                            $.freedom.action.submit($form.attr('action'), $form.serialize(), fn);
+                save: function(url, data, fn) {
+                    if (typeof fn != "function") {
+                        fn = function(resp) {
+                            $.freedom.modal.msg(resp.msg, 1, function() {
+                                window.parent.$.freedom.modal.closeAll();
+                                window.parent.$.freedom.ui.table.refreshData();
+                            });
                         }
-                    });
+                    }
+
+                    if (data instanceof FormData) {
+                        $.freedom.action.requestByFormData(url, data, fn);
+                    } else {
+                        $.freedom.action.request(url, data, fn);
+                    }
                 },
                 delete: function(id) {
                     if (!$.freedom.ui.table.options.deleteUrl) {
@@ -277,7 +298,6 @@
                     $.freedom.modal.confirm("确定要删除该记录吗？", function() {
                         $.freedom.action.submit($.freedom.ui.table.getDeleteUrl(), {idStr: idArr.join(",")}, function(resp) {
                             $.freedom.ui.table.refreshData();
-                            $.freedom.modal.closeAll();
                         });
                     });
                 },
@@ -311,33 +331,34 @@
                         $queryBtn.trigger("click");
                     });
                 },
+                /**
+                 * 对外暴露的表单提交方法
+                 * @param formId    表单 id
+                 * @param formData  FormData 对象
+                 * @param fn        回调函数
+                 */
+                submit: function(formId, fn) {
+                    // 表单通过内嵌属性校验数据，具体 http://bootstrapvalidator.votintsev.ru/getting-started/
+                    $('#' + formId).bootstrapValidator().on('success.form.bv', function(e) {
+                        e.preventDefault();
+                        var $form = $(e.target);
+                        // 发送请求
+                        $.freedom.action.save($form.attr('action'), $form.serialize(), fn);
+                    });
+                },
+                submitByFormData: function(formId, formData, fn) {
+                    $('#' + formId).bootstrapValidator().on('success.form.bv', function(e) {
+                        e.preventDefault();
+                        var $form = $(e.target);
+                        // 发送请求
+                        $.freedom.action.save($form.attr('action'), formData, fn);
+                    });
+                },
                 download: function(url) {
                     var index = $.freedom.modal.window("下载", url, 600, 400);
                     setTimeout(function() {
                         $.freedom.modal.close(index);
                     },1500)
-                },
-                /**
-                 *  注意：此函数对内使用，外部不要直接使用
-                 * @param url
-                 * @param data
-                 * @param fn
-                 */
-                submit: function(url, data, fn) {
-                    if (typeof fn != "function") {
-                        fn = function(resp) {
-                            $.freedom.modal.msg(resp.msg, 1, function() {
-                                window.parent.$.freedom.modal.closeAll();
-                                window.parent.$.freedom.ui.table.refreshData();
-                            });
-                        }
-                    }
-
-                    if (data instanceof FormData) {
-                        $.freedom.action.requestByFormData(url, data, fn);
-                    } else {
-                        $.freedom.action.request(url, data, fn);
-                    }
                 },
                 /**
                  * 对外暴露的请求方法
@@ -356,7 +377,7 @@
                                 fn(resp);
                             } else {
                                 // 默认操作
-                                $.freedom.modal.msg(resp.msg);
+                                $.freedom.modal.msg(resp.msg, 1);
                             }
                         }
                     });
@@ -380,7 +401,7 @@
                                 fn(resp);
                             } else {
                                 // 默认操作
-                                $.freedom.modal.msg(resp.msg);
+                                $.freedom.modal.msg(resp.msg, 1);
                             }
                         }
                     });
@@ -398,13 +419,14 @@
                     });
                 },
                 confirm: function(content, fn) {
-                    layer.confirm(content, function(index){
+                    var me = layer.confirm(content, function(index){
                         if (typeof fn == 'function') {
                             fn(index);
                         }
+                        layer.close(me)
                     });
                 },
-                window: function(title, url, width, height) {
+                window: function(title, url, width, height, isFull) {
                     if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
                         width = 'auto';
                         height = 'auto';
@@ -421,6 +443,10 @@
                         shadeClose: true,
                         btn:[]
                     });
+
+                    if (isFull) {
+                        layer.full(index);
+                    }
 
                     return index;
                 },

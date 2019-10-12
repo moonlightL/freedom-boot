@@ -123,7 +123,7 @@
         if (readOnly) {
             $("input,select,textarea").attr("disabled", "disabled");
         } else {
-            $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"), null, function(resp) {
+            $.freedom.action.submit("dataForm", function(resp) {
                 $.freedom.modal.msg(resp.msg, 1, function() {
                     window.parent.location.reload();
                 });

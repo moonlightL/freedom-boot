@@ -18,7 +18,7 @@ $(function() {
         }
     });
 
-    $("#logout-btn").on("click", function() {
+    $(".logout-btn").on("click", function() {
         layer.confirm("确定要注销吗?", function(index){
             $.ajax({
                 type: "POST",
