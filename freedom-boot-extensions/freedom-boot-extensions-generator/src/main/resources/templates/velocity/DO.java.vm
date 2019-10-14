@@ -1,9 +1,9 @@
-package
-
-import com.extlight.common.component.mybatis.CreateTime;${packageName}.${moduleName}.model;
+package ${packageName}.${moduleName}.model;
 
 import com.extlight.common.base.BaseResponse;
+import com.extlight.common.component.mybatis.CreateTime;
 import com.extlight.common.component.mybatis.UpdateTime;
+import ${packageName}.${moduleName}.model.vo.${className}VO;
 import lombok.*;
 import lombok.experimental.Accessors;
 

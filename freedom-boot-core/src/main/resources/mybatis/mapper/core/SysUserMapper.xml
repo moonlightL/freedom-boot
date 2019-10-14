@@ -23,7 +23,7 @@
             t_sys_user u
         WHERE
             u.username = #{username}
-        AND u.del = 0
+        AND u.is_delete = 0
         LIMIT 1
     </select>
     

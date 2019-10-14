@@ -1,12 +1,11 @@
 package ${packageName}.${moduleName}.model.dto;
 
 import com.extlight.common.base.BaseRequest;
+import ${packageName}.${moduleName}.model.${className};
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 #if(${hasBigDecimal})
@@ -23,7 +22,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @ToString
-public class ${className}DTO extends BaseRequest {
+public class ${className}DTO extends BaseRequest<${className}> {
 
 #foreach ($column in $columnList)
 

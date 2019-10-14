@@ -5,7 +5,6 @@ import com.extlight.common.model.Result;
 import com.extlight.common.utils.HttpUtil;
 import com.extlight.common.utils.JsonUtil;
 import com.extlight.common.utils.ThreadUtil;
-import com.extlight.core.constant.StateEnum;
 import com.extlight.core.constant.SysUserExceptionEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.vo.SysUserVO;
@@ -40,7 +39,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		SysUserVO sysUserVO = (SysUserVO) obj;
-		if (!sysUserVO.getState().equals(StateEnum.NORMAL.getCode())) {
+		if (!sysUserVO.getState()) {
 			if (HttpUtil.isAjax(request)) {
 				this.print(response, JsonUtil.toStr(Result.fail(GlobalExceptionEnum.ERROR_STATE_WRONG), false));
 			} else {

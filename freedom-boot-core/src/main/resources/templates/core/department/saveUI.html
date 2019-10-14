@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <head th:include="common :: header"></head>
+    <!--Font Awesome [ OPTIONAL ]-->
+    <link th:href="@{/assets/css/magic-check.min.css}" rel="stylesheet">
+    <!--Bootstrap Select -->
+    <link th:href="@{/plugins/bootstrap-select/bootstrap-select.min.css}" rel="stylesheet">
+</head>
+
+<body>
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <form id="dataForm" class="form-horizontal" th:action="@{${action}}" method="post">
+                    <div class="panel-body">
+                        <p class="text-main text-bold">基本资料</p>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">名称</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="name" placeholder="名称"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="名称不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">编号</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <input type="text" class="form-control" name="code" placeholder="编号"
+                                       data-bv-notempty="true"
+                                       data-bv-notempty-message="编号不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">父级 id</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <select class="selectpicker" name="pid">
+                                    <option value="0">无</option>
+                                    <option th:each="parent:${parentList}" th:value="${parent.id}" th:text="${parent.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">状态</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <select class="selectpicker" name="state">
+                                    <option value="1">可用</option>
+                                    <option value="0">禁用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 col-sm-2 control-label">描述</label>
+                            <div class="col-lg-7 col-sm-9">
+                                <textarea type="text" class="form-control" name="descr" placeholder="描述"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn btn-default" type="reset">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END SETTINGS -->
+<div th:include="common :: script"></div>
+<!--Bootstrap Select -->
+<script type="text/javascript" th:src="@{/plugins/bootstrap-select/bootstrap-select.min.js}"></script>
+<script>
+    $(function () {
+        // 表单通过内嵌属性校验数据，具体 http://bootstrapvalidator.votintsev.ru/getting-started/
+        $.freedom.action.save(document.getElementsByTagName("form")[0].getAttribute("id"));
+    });
+</script>
+</body>
+</html>

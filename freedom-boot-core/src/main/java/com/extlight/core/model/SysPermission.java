@@ -7,6 +7,7 @@ import com.extlight.core.model.vo.SysPermissionVO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -76,9 +77,9 @@ public class SysPermission extends BaseResponse<SysPermissionVO> {
     private Long pid;
 
     /**
-     * 状态 1：可用 0：禁用
+     * 状态
      */
-    private Integer state;
+    private Boolean state;
 
     /**
      * 排序
@@ -86,9 +87,10 @@ public class SysPermission extends BaseResponse<SysPermissionVO> {
     private Integer sort;
 
     /**
-     * 是否普通 1：是 0：否 （增删改查为普通，其余的为特殊）
+     * 是否普通（增删改查为普通，其余的为特殊）
      */
-    private Integer common;
+    @Column(name = "is_common")
+    private Boolean common;
 
     /**
      * 创建时间

@@ -3,7 +3,6 @@ package com.extlight.core.web.config.shiro;
 import com.extlight.common.exception.GlobalExceptionEnum;
 import com.extlight.core.component.ShiroService;
 import com.extlight.core.constant.PerTypeEnum;
-import com.extlight.core.constant.StateEnum;
 import com.extlight.core.constant.SystemContant;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.SysRole;
@@ -54,7 +53,7 @@ public class CoreRealm extends AuthorizingRealm {
         }
 
         // 判断状态
-        if (!sysUser.getState().equals(StateEnum.NORMAL.getCode())) {
+        if (!sysUser.getState()) {
             throw new LockedAccountException(GlobalExceptionEnum.ERROR_STATE_WRONG.getMessage());
         }
 

@@ -314,4 +314,17 @@ public class SysUserController extends BaseController {
         sysUser.setPassword(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
         return this.sysUserService.update(sysUser) > 0 ? Result.success() : Result.fail();
     }
+
+    @PostMapping("/updateState.json")
+    @ResponseBody
+    @ActionLog(value="修改用户状态", module = CoreModule.class, actionType = ActionEnum.UPDATE)
+    public Result updateState(SysUserDTO sysUserDTO) throws GlobalException {
+        SysUser target = this.sysUserService.getById(sysUserDTO.getId());
+        if (target == null) {
+            ExceptionUtil.throwEx(SysUserExceptionEnum.ERROR_USER_NOT_EXIST);
+        }
+
+        target.setState(sysUserDTO.getState());
+        return this.sysUserService.update(target) > 0 ? Result.success() : Result.fail();
+    }
 }

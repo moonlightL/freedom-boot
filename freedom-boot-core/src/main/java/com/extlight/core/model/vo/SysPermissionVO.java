@@ -71,9 +71,9 @@ public class SysPermissionVO implements Serializable {
     private Long pid;
 
     /**
-     * 状态 1：可用 0：禁用
+     * 状态
      */
-    private Integer state;
+    private Boolean state;
 
     /**
      * 排序
@@ -81,9 +81,9 @@ public class SysPermissionVO implements Serializable {
     private Integer sort;
 
     /**
-     * 是否普通 1：是 0：否 （增删改查为普通，其余的为特殊）
+     * 是否普通（增删改查为普通，其余的为特殊）
      */
-    private Integer common;
+    private Boolean common;
 
     /**
      * 创建时间
@@ -103,6 +103,6 @@ public class SysPermissionVO implements Serializable {
     /**
      * 是否加载
      */
-    private Boolean isLoad;
+    private Boolean load;
 
 }

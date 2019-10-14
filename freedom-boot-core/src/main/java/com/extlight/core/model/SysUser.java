@@ -7,6 +7,7 @@ import com.extlight.core.model.vo.SysUserVO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -89,12 +90,13 @@ public class SysUser extends BaseResponse<SysUserVO> {
     /**
      * 删除标志 1：是 0：否
      */
-    private Integer del;
+    @Column(name = "is_delete")
+    private Boolean delete;
 
     /**
-     * 状态 0：禁用 1：开启 2：锁定
+     * 状态
      */
-    private Integer state;
+    private Boolean state;
 
     /**
      * 是否是超级管理员 1：是 0：否

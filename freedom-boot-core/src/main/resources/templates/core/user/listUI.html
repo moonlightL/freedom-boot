@@ -171,7 +171,8 @@
                     var name = $(this).data("name");
                     var tip = (checked ? "开启" : "禁用");
                     $.freedom.modal.confirm("确定要【" + tip + "】" + name + "的账号吗?", function () {
-                        $.freedom.action.request(prefix + "/updateState.json", function (resp) {
+                        $.freedom.action.request(prefix + "/updateState.json", {id: id, state: checked}, function (resp) {
+                            $.freedom.modal.msg(resp.msg, 1);
                             $.freedom.ui.table.refreshData();
                         })
                     });

@@ -66,6 +66,11 @@ public class SysUserDTO extends BaseRequest<SysUser> {
     private Integer qq;
 
     /**
+     * 状态
+     */
+    private Boolean state;
+
+    /**
      * 备注
      */
     private String remark;

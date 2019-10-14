@@ -7,12 +7,12 @@ import com.extlight.common.component.file.FileService;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.IoUtil;
+import com.extlight.common.utils.JsonUtil;
 import com.extlight.common.utils.StringUtil;
 import com.extlight.extensions.file.constant.FileConfigExceptionEnum;
 import com.extlight.extensions.file.constant.FileConstant;
 import com.extlight.extensions.file.constant.FileDataExceptionEnum;
 import com.extlight.extensions.file.service.FileConfigService;
-import com.google.gson.Gson;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -67,7 +67,7 @@ public class QiniuFileService implements FileService {
 				return fileResponse;
 			}
 
-			fileResponse = new Gson().fromJson(response.bodyString(), FileResponse.class);
+			fileResponse = JsonUtil.parseObj(response.bodyString(), FileResponse.class);
 			fileResponse.setSuccess(true).setUrl(this.parseUrl(this.getDomain() + "/" + fileResponse.getKey()));
 
 		} catch(GlobalException e) {

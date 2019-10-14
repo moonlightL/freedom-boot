@@ -4,7 +4,6 @@ import com.extlight.common.constant.BrowserConstant;
 import com.extlight.common.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletOutputStream;
@@ -59,21 +58,17 @@ public abstract class BaseController {
         ACTION_MAP.put(UPDATE_PAGE, "update.json");
     }
 
-    protected String render(String toPage, Map<String,Object> resultMap) {
+    protected String render(String pageName, Map<String,Object> resultMap) {
 
         if (!resultMap.containsKey(PREFIX)) {
             resultMap.put(PREFIX, this.getPrefix());
         }
 
         if (!resultMap.containsKey(ACTION)) {
-            resultMap.put(ACTION, String.format("%s/%s", resultMap.get(PREFIX).toString(), ACTION_MAP.get(toPage.replace("/", ""))));
+            resultMap.put(ACTION, String.format("%s/%s", resultMap.get(PREFIX).toString(), ACTION_MAP.get(pageName.replace("/", ""))));
         }
 
-        if (StringUtils.isEmpty(toPage)) {
-            return resultMap.get(PREFIX).toString();
-        }
-
-        return String.format("%s/%s", resultMap.get(PREFIX).toString(), toPage);
+        return String.format("%s/%s", resultMap.get(PREFIX).toString(), pageName);
     }
 
     /**

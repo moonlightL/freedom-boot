@@ -74,9 +74,9 @@ public class SysUserVO implements Serializable {
     private Integer qq;
 
     /**
-     * 状态 0：禁用 1：开启 2：锁定
+     * 状态
      */
-    private Integer state;
+    private Boolean state;
 
 
     /**

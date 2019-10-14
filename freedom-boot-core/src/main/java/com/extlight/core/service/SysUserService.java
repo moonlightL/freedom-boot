@@ -3,7 +3,6 @@ package com.extlight.core.service;
 import com.extlight.common.base.BaseService;
 import com.extlight.common.exception.GlobalException;
 import com.extlight.core.model.SysUser;
-import com.extlight.core.model.vo.SysUserVO;
 
 /**
  * @Author MoonlightL

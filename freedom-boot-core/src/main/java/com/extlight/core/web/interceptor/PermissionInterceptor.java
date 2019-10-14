@@ -3,7 +3,6 @@ package com.extlight.core.web.interceptor;
 import com.extlight.common.utils.ExceptionUtil;
 import com.extlight.common.utils.HttpUtil;
 import com.extlight.core.constant.PerTypeEnum;
-import com.extlight.core.constant.StateEnum;
 import com.extlight.core.model.SysPermission;
 import com.extlight.core.model.vo.SysUserVO;
 import com.extlight.core.service.SysPermissionService;
@@ -52,7 +51,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        if (sysPermission.getState().equals(StateEnum.NORMAL.getCode())) {
+        if (sysPermission.getState()) {
             return true;
         }
 

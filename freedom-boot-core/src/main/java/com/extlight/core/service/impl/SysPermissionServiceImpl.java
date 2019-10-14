@@ -93,7 +93,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_NOT_EXIST);
         }
 
-        if (!sysPermission.getResourceType().equals(ResourceTypeEnum.BUSINESS.getCode())) {
+        if (sysPermission.getResourceType().equals(ResourceTypeEnum.CORE.getCode())) {
             ExceptionUtil.throwEx(SysPermissionExceptionEnum.ERROR_PERMISSION_CANNOT_REMOVE);
         }
 
@@ -108,7 +108,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
         List<Long> data = new ArrayList<>(idList.size());
         for (Long permissionId : idList) {
             SysPermission sysPermission = super.getById(permissionId);
-            if (sysPermission != null && sysPermission.getResourceType().equals(ResourceTypeEnum.BUSINESS.getCode())) {
+            if (sysPermission != null && !sysPermission.getResourceType().equals(ResourceTypeEnum.CORE.getCode())) {
                 data.add(permissionId);
             }
         }
@@ -194,7 +194,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
         // 判断加载状态
         sysPermissionList.forEach(i -> {
             SysPermissionVO sysPermissionVO = i.toVoModel();
-            sysPermissionVO.setIsLoad(moduleCodeList.contains(i.getModuleCode()));
+            sysPermissionVO.setLoad(moduleCodeList.contains(i.getModuleCode()));
             result.add(sysPermissionVO);
 
         });

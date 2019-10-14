@@ -296,7 +296,7 @@
                     }
 
                     $.freedom.modal.confirm("确定要删除该记录吗？", function() {
-                        $.freedom.action.submit($.freedom.ui.table.getDeleteUrl(), {idStr: idArr.join(",")}, function(resp) {
+                        $.freedom.action.request($.freedom.ui.table.getDeleteUrl(), {idStr: idArr.join(",")}, function(resp) {
                             $.freedom.ui.table.refreshData();
                         });
                     });

@@ -3,6 +3,7 @@ package ${packageName}.${moduleName}.web.controller;
 import com.extlight.common.base.BaseController;
 import com.extlight.common.base.BaseRequest;
 import com.extlight.common.component.log.ActionLog;
+import com.extlight.common.component.module.Module;
 import com.extlight.common.constant.ActionEnum;
 import com.extlight.common.constant.ModuleEnum;
 import com.extlight.common.exception.GlobalException;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @Author ${author}
  * @ClassName: ${className}Controller
  * @ProjectName: ${projectName}
- * @Description: ${tableComment}控制器
+ * @Description: ${tableComment}控制器 注意：需要修改 @ActionLog 的 module
  * @DateTime: ${dateTime}
  */
 @Controller
@@ -109,16 +110,16 @@ public class ${className}Controller extends BaseController {
     @PostMapping("/save.json")
     @RequiresPermissions("${permission}:save")
     @ResponseBody
-    @ActionLog(value="新增", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.SAVE)
+    @ActionLog(value="新增", module = Module.class, actionType = ActionEnum.SAVE)
     public Result save(@Validated(BaseRequest.Save.class) ${className}DTO ${variableName}Dto) throws GlobalException {
-        ${className} ${variableName} = ${variableName}Dto.toDo(${className}.class);
+        ${className} ${variableName} = ${variableName}Dto.toDoModel();
         return this.${variableName}Service.save(${variableName}) > 0 ? Result.success() : Result.fail();
     }
 
     @PostMapping("/remove.json")
     @RequiresPermissions("${permission}:remove")
     @ResponseBody
-    @ActionLog(value="删除", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.REMOVE)
+    @ActionLog(value="删除", module = Module.class, actionType = ActionEnum.REMOVE)
     public Result remove(@RequestParam String idStr) throws GlobalException {
         String[] idArr = idStr.split(",");
         int num;
@@ -136,14 +137,14 @@ public class ${className}Controller extends BaseController {
     @PostMapping("/update.json")
     @RequiresPermissions("${permission}:update")
     @ResponseBody
-    @ActionLog(value="编辑", moduleName = ModuleEnum.SYSTEM, actionType = ActionEnum.UPDATE)
+    @ActionLog(value="编辑", module = Module.class, actionType = ActionEnum.UPDATE)
     public Result update(@Validated(BaseRequest.Update.class) ${className}DTO ${variableName}DTO) throws GlobalException {
         ${className} target = this.${variableName}Service.getById(${variableName}DTO.getId());
         if (target == null) {
 	        ExceptionUtil.throwEx(${className}ExceptionEnum.ERROR_RESOURCE_NOT_EXIST);
         }
 
-        ${className} ${variableName} = ${variableName}DTO.toDo(${className}.class);
+        ${className} ${variableName} = ${variableName}DTO.toDoModel();
         return this.${variableName}Service.update(${variableName}) > 0 ? Result.success() : Result.fail();
     }
 

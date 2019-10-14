@@ -17,7 +17,7 @@ public enum GlobalExceptionEnum implements GlobalExceptionMap {
     ERROR_PARAM(400, "请求参数有误"),
     ERROR_UNAUTHORIZED(401, "用户未授权"),
     ERROR_FORBIDDEN(403, "资源被禁止访问"),
-    ERROR_STATE_WRONG(406, "该用户被锁定或禁用"),
+    ERROR_STATE_WRONG(406, "该用户被禁用"),
     ERROR_SERVER(500, "系统异常"),
     ERROR_VERIFY_CODE_WRONG(600, "验证码不正确"),
     ERROR_CAN_NOT_DELETE_RESOURCE(999, "该资源无法删除");

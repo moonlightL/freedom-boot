@@ -15,7 +15,7 @@ var Permission = (function ($) {
                         htmlArr.push('<a href="#" class="list-group-item text-semibold text-main" data-id="' + module.id + '">');
                         var cls;
                         var state;
-                        if (module.isLoad) {
+                        if (module.load) {
                             cls = "badge-success";
                             state = "已加载";
                         } else {
@@ -136,7 +136,7 @@ var Permission = (function ($) {
                         align: "center",
                         formatter: function (value, row) {
                             var btnArr = [];
-                            btnArr.push(' <a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
+                            btnArr.push(' <a class="btn btn-default btn-xs" href="javascript:;;"  data-width="800" data-height="630" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\', $(this))"><i class="fa fa-user-o"></i> 详情</a> ');
                             if (permissions.indexOf("core:permission:remove") > -1) {
                                 btnArr.push('<a class="btn btn-danger btn-xs" href="javascript:;;" onclick="$.freedom.action.delete(\'' + row.id + '\')"><i class="fa fa-remove"></i> 删除</a>');
                             }

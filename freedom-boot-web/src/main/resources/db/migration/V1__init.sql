@@ -10,14 +10,14 @@ CREATE TABLE IF NOT EXISTS `t_sys_permission` (
   `pid` bigint(20) NOT NULL DEFAULT '0' COMMENT '父级 id',
   `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1:可用 0：禁用',
   `sort` tinyint(4) NOT NULL DEFAULT '1' COMMENT '排序',
-  `common` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '是否通用 1：是 0：否， 针对 type=3',
+  `is_common` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '是否通用 1:是 0：否， 针对 type=3',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
   KEY `idx_pid` (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COMMENT='系统权限表';
 
-INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `per_type`, `resource_type`, `per_code`, `pid`, `state`, `sort`, `common`) VALUES
+INSERT INTO `t_sys_permission` (`id`, `name`, `icon`, `url`,`module_code`, `per_type`, `resource_type`, `per_code`, `pid`, `state`, `sort`, `is_common`) VALUES
  (1, '系统管理', 'fa fa-cogs', '', 'SYSTEM', 1, 1, '', 0, 1, 1, 1),
  (2, '用户管理', 'fa fa-users', '/core/user/listUI.html', '', 2, 1, 'core:user:listUI', 1, 1, 1, 1),
  (3, '新增', 'fa fa-plus-circle', '', '', 3, 1, 'core:user:save', 2, 1, 1, 1),
@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `t_sys_user` (
   `mobile` varchar(32) NOT NULL DEFAULT '' COMMENT '手机号',
   `address` varchar(50) NOT NULL DEFAULT '' COMMENT '住址',
   `salt` varchar(12) NOT NULL DEFAULT 'freedom-boot' COMMENT '盐',
-  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态  0：禁用 1：正常 2：锁定',
-  `del` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 1：是 0：否',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态  0：禁用 1：正常',
+  `is_delete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 1:是 0：否',
   `super_admin` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否是超级管理员 1：是 0：否',
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `t_sys_user` (
   UNIQUE KEY `idx_email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
-INSERT INTO `t_sys_user` (`id`, `username`, `nickname`, `password`, `avatar`, `gender`, `email`, `qq`, `mobile`, `address`, `salt`, `state`, `del`, `super_admin`, `remark`) VALUES
+INSERT INTO `t_sys_user` (`id`, `username`, `nickname`, `password`, `avatar`, `gender`, `email`, `qq`, `mobile`, `address`, `salt`, `state`, `is_delete`, `super_admin`, `remark`) VALUES
 	(1, 'admin', '超级管理员', '21232f297a57a5a743894a0e4a801fc3', '/assets/picture/default-avatar.png', 1, 'jx8996@163.com', 0, '', '', 'freedom-boot', 1, 0, 1, '拥有最高权限'),
   (2, 'guest', '游客', 'e10adc3949ba59abbe56e057f20f883e', '/assets/picture/default-avatar.png', 1, 'guest@163.com', 0, '', '', 'freedom-boot', 1, 0, 0, '拥有查看权限');
 
