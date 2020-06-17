@@ -12,7 +12,7 @@ CREATE TABLE `t_sys_department` (
 )
 ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
-INSERT INTO `freedom-boot`.`sys_department` (`name`, `code`, `descr`) VALUES ('总裁办', 'boss', '总裁办');
+INSERT INTO `freedom-boot`.`t_sys_department` (`name`, `code`, `descr`) VALUES ('总裁办', 'boss', '总裁办');
 
 ALTER TABLE `t_sys_user`
 	ADD COLUMN `department_id` BIGINT NOT NULL DEFAULT '1' COMMENT '部门 id' AFTER `remark`,
