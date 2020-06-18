@@ -196,7 +196,6 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission> imp
             SysPermissionVO sysPermissionVO = i.toVoModel();
             sysPermissionVO.setLoad(moduleCodeList.contains(i.getModuleCode()));
             result.add(sysPermissionVO);
-
         });
 
         return result;

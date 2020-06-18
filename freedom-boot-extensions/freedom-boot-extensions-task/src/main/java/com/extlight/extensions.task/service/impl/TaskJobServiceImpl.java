@@ -123,7 +123,7 @@ public class TaskJobServiceImpl extends BaseServiceImpl<TaskJob> implements Task
 
         int num = super.update(taskJob);
         if (num > 0) {
-            this.scheduleJobService.rescheduleTaskJob(dbJob.getId());
+            this.scheduleJobService.rescheduleTaskJob(taskJob);
 
             if (taskJob.getState() == 0) {
                 this.scheduleJobService.pauseTaskJob(taskJob.getId());

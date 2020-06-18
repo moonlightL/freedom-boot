@@ -76,13 +76,15 @@ public class ScheduleJobService {
 
 	/**
 	 * 重新调度定时器
-	 * @param jobId
+	 * @param taskJob
 	 * @return
 	 */
-	public boolean rescheduleTaskJob(Long jobId) {
+	public boolean rescheduleTaskJob(TaskJob taskJob) {
 		boolean result = false;
 		try {
-			this.scheduler.rescheduleJob(this.getTriggerKey(jobId), this.getCronTrigger(jobId));
+			CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(taskJob.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+			CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(this.getTriggerKey(taskJob.getId())).withSchedule(cronScheduleBuilder).build();
+			this.scheduler.rescheduleJob(this.getTriggerKey(taskJob.getId()), cronTrigger);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
