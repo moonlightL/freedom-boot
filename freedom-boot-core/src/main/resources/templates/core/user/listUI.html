@@ -125,7 +125,7 @@
         var btnArr = [];
         var permissions = [[${permissions}]];
         if (permissions.indexOf("core:user:query") > -1) {
-            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\')"><i class="fa fa-user-o"></i> 详情</a> ');
+            btnArr.push('<a class="btn btn-default btn-xs" href="javascript:;;" onclick="$.freedom.action.showDetailUI(\'' + row.id + '\', $(this))"><i class="fa fa-user-o"></i> 详情</a> ');
         }
 
         if (permissions.indexOf("core:user:assign:role") > -1) {
