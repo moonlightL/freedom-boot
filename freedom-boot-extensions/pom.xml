@@ -12,6 +12,7 @@
     <artifactId>freedom-boot-extensions</artifactId>
     <packaging>pom</packaging>
 
+
     <modules>
         <module>freedom-boot-extensions-monitor</module>
         <module>freedom-boot-extensions-generator</module>
