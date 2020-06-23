@@ -38,6 +38,7 @@ public class ServerController extends BaseController {
     @GetMapping("/listUI.html")
     @RequiresPermissions("monitor:server:listUI")
     public String listUI(Map<String,Object> resultMap) {
+        // TODO
         return render("listUI", resultMap);
     }
 
