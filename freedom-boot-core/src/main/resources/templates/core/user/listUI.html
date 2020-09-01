@@ -118,7 +118,7 @@
 
     function statusFormatter(value, row) {
         var checked = (value == "0" ? "" : "checked");
-        return '<input type="checkbox" class="state-checkbox" '+ checked +' data-id="'+row.id+'" data-name="'+row.nickname+'">';
+        return '<input id="demo-online-status-checkbox" class="toggle-switch" type="checkbox" '+ checked +' data-id="'+row.id+'" data-name="'+row.nickname+'"><label for="demo-online-status-checkbox"></label>';
     }
 
     function actionFormatter(value, row) {
@@ -162,9 +162,7 @@
         $.freedom.ui.table.init({
             baseUrl: prefix,
             init: function () {
-                var elem = document.querySelector('.state-checkbox');
-                var init = new Switchery(elem, {size: 'small'});
-
+                var elem = document.querySelector('.toggle-switch');
                 $(elem).on("change", function () {
                     var checked = $(this).prop("checked");
                     var id = $(this).data("id");
