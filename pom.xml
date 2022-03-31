@@ -38,7 +38,7 @@
     <properties>
         <freedom.boot.version>1.0</freedom.boot.version>
         <java.version>1.8</java.version>
-        <spring.boot.version>2.1.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <druid.version>1.1.10</druid.version>
     </properties>
 
